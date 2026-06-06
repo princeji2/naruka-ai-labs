@@ -1,7 +1,7 @@
 # Naruka AI Labs
 
 Building AI-powered educational, productivity, and intelligent assistant solutions.
-
+ 
 ## About
 
 Naruka AI Labs is an early-stage AI startup focused on developing intelligent software solutions that improve learning, productivity, and accessibility.
