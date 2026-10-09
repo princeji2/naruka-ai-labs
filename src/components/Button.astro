@@ -1,0 +1,118 @@
+---
+interface Props {
+  href?: string;
+  variant?: 'primary' | 'secondary' | 'ghost';
+  size?: 'sm' | 'md' | 'lg';
+  external?: boolean;
+  type?: 'button' | 'submit' | 'reset';
+  class?: string;
+  [key: string]: any;
+}
+
+const {
+  href,
+  variant = 'primary',
+  size = 'md',
+  external = false,
+  type = 'button',
+  class: className = '',
+  ...rest
+} = Astro.props;
+
+const Element = href ? 'a' : 'button';
+const elementProps = href
+  ? {
+      href,
+      target: external ? '_blank' : undefined,
+      rel: external ? 'noopener noreferrer' : undefined,
+      ...rest
+    }
+  : {
+      type,
+      ...rest
+    };
+---
+
+<Element class={`btn btn-${variant} btn-${size} ${className}`} {...elementProps}>
+  <slot />
+</Element>
+
+<style>
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    font-family: var(--font-body);
+    font-weight: 600;
+    text-decoration: none;
+    border-radius: var(--radius-sm);
+    cursor: pointer;
+    border: 1px solid transparent;
+    transition: all var(--transition-base);
+    white-space: nowrap;
+    user-select: none;
+  }
+
+  /* Sizes */
+  .btn-sm {
+    min-height: 36px;
+    padding: 6px 14px;
+    font-size: 0.825rem;
+  }
+
+  .btn-md {
+    min-height: 44px;
+    padding: 9px 20px;
+    font-size: 0.925rem;
+  }
+
+  .btn-lg {
+    min-height: 50px;
+    padding: 13px 28px;
+    font-size: 1rem;
+    border-radius: var(--radius-md);
+  }
+
+  /* Primary */
+  .btn-primary {
+    background: #4338CA;
+    color: #FFFFFF;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.4), 0 0 16px rgba(67, 56, 202, 0.3);
+  }
+  .btn-primary:hover {
+    background: #3730A3;
+    box-shadow: 0 4px 20px rgba(67, 56, 202, 0.45);
+    transform: translateY(-1px);
+  }
+  .btn-primary:active {
+    transform: translateY(0);
+  }
+
+  /* Secondary */
+  .btn-secondary {
+    background: rgba(255, 255, 255, 0.05);
+    color: var(--text-primary);
+    border: 1px solid var(--border-glass);
+    backdrop-filter: blur(10px);
+  }
+  .btn-secondary:hover {
+    background: rgba(255, 255, 255, 0.09);
+    border-color: var(--border-glass-hover);
+    color: #FFFFFF;
+    transform: translateY(-1px);
+  }
+  .btn-secondary:active {
+    transform: translateY(0);
+  }
+
+  /* Ghost */
+  .btn-ghost {
+    background: transparent;
+    color: var(--text-secondary);
+  }
+  .btn-ghost:hover {
+    color: var(--text-primary);
+    background: rgba(255, 255, 255, 0.04);
+  }
+</style>

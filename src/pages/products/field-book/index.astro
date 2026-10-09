@@ -1,0 +1,707 @@
+---
+import BaseLayout from '../../../layouts/BaseLayout.astro';
+import Badge from '../../../components/Badge.astro';
+import Button from '../../../components/Button.astro';
+---
+
+<BaseLayout
+  title="Field Book — Campus Event Attendance & Certification"
+  description="A multi-role campus event attendance and verified credentialing platform with QR check-in, automated PDF certificates, and 67 database RLS security policies."
+  canonicalPath="/products/field-book"
+>
+  <article class="product-detail-page">
+    <!-- Header -->
+    <section class="section detail-hero-section">
+      <div class="container hero-layout">
+        <div class="hero-text-col">
+          <div class="kicker-row">
+            <a href="/products" class="breadcrumb-link">← All Products</a>
+            <span class="sep">/</span>
+            <Badge variant="live-prototype" text="Live Prototype" />
+            <Badge variant="in-development" text="Active Development" />
+          </div>
+
+          <h1 class="detail-title">
+            Structured campus attendance and <br />
+            <span class="text-gradient-amber">verified credentialing</span>.
+          </h1>
+
+          <p class="detail-lead">
+            Field Book provides universities, student clubs, and event organizers with a lightweight, multi-role ledger to track event attendance via QR scanning and issue verifiable PDF certificates without heavyweight LMS bloat.
+          </p>
+
+          <div class="live-deployment-card glass-panel">
+            <div class="deployment-badge-wrap">
+              <span class="live-pulse"></span>
+              <span class="deployment-status">Functional Prototype Deployed</span>
+            </div>
+            <p class="deployment-text">
+              Field Book is currently accessible as a functional prototype with live authentication, role switching, and certificate generation.
+            </p>
+            <div class="deployment-actions">
+              <Button href="https://fieldbook.orgs.social" variant="primary" size="sm" external={true}>
+                Launch Live Prototype ↗
+              </Button>
+              <span class="url-hint">fieldbook.orgs.social</span>
+            </div>
+          </div>
+
+          <div class="detail-ctas">
+            <Button href="#roles" variant="secondary" size="md">
+              Role Workflows ↓
+            </Button>
+            <Button href="#security" variant="secondary" size="md">
+              Security & RLS Architecture ↓
+            </Button>
+          </div>
+        </div>
+
+        <!-- Role Architecture Visual Preview -->
+        <div class="hero-visual-col">
+          <div class="roles-preview-card glass-panel">
+            <div class="preview-header">
+              <span class="preview-tag">THREE-TIER ROLE ENGINE</span>
+              <span class="preview-status">Role-Based Access Control</span>
+            </div>
+
+            <div class="roles-visual-stack">
+              <!-- Student Role -->
+              <div class="role-layer student-layer">
+                <div class="role-layer-header">
+                  <span class="role-pill">Student</span>
+                  <span class="role-desc">Event Discovery & Check-in</span>
+                </div>
+                <div class="role-features-row">
+                  <span>• Scan event QR code</span>
+                  <span>• Instant duplicate check-in rejection</span>
+                  <span>• On-demand PDF certificate generation</span>
+                </div>
+              </div>
+
+              <!-- Organizer Role -->
+              <div class="role-layer organizer-layer">
+                <div class="role-layer-header">
+                  <span class="role-pill">Organizer</span>
+                  <span class="role-desc">Event Creation & Management</span>
+                </div>
+                <div class="role-features-row">
+                  <span>• Submit events for administrative approval</span>
+                  <span>• Display attendance QR check-in passes</span>
+                  <span>• Real-time attendee roster inspection</span>
+                </div>
+              </div>
+
+              <!-- Admin Role -->
+              <div class="role-layer admin-layer">
+                <div class="role-layer-header">
+                  <span class="role-pill">Administrator</span>
+                  <span class="role-desc">Governance & Security</span>
+                </div>
+                <div class="role-features-row">
+                  <span>• Approve/reject event submissions</span>
+                  <span>• Review role change requests</span>
+                  <span>• Append-only audit log oversight</span>
+                </div>
+              </div>
+            </div>
+
+            <div class="preview-footer">
+              <span>Security enforced via 67 Postgres Row-Level Security policies.</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Key Workflow Features -->
+    <section class="section workflow-section" id="roles">
+      <div class="container">
+        <div class="section-heading">
+          <Badge variant="in-development" text="System Capabilities" />
+          <h2 class="section-title">Core Platform Architecture</h2>
+          <p class="section-lead">
+            Designed to solve the administrative bottleneck of managing hundreds of event attendees while maintaining tamper-resistant credential integrity.
+          </p>
+        </div>
+
+        <div class="workflow-grid">
+          <!-- Feature 1: QR Attendance -->
+          <div class="workflow-card glass-panel">
+            <div class="workflow-num">01</div>
+            <h3 class="workflow-title">Event-Code QR Attendance</h3>
+            <p class="workflow-desc">
+              Organizers project an active attendance QR code containing the structured event identifier. Students scan via the built-in browser scanner.
+            </p>
+            <div class="workflow-callout">
+              <strong>Duplicate Prevention:</strong> Enforced at the database layer via a compound unique constraint on <code>(student_id, event_id)</code>. Repeat scans are caught by Postgres (Error 23505) and rejected instantly.
+            </div>
+          </div>
+
+          <!-- Feature 2: PDF Certificate Engine -->
+          <div class="workflow-card glass-panel">
+            <div class="workflow-num">02</div>
+            <h3 class="workflow-title">Automated PDF Certificate Generation</h3>
+            <p class="workflow-desc">
+              Once attendance is confirmed in the database, eligible students can trigger automated certificate compilation.
+            </p>
+            <div class="workflow-callout">
+              <strong>Dedicated Microservice:</strong> Powered by a separate Java 17 / Spring Boot service utilizing Apache PDFBox 3 to dynamically composite student names, event metadata, and template background art into signed PDF documents.
+            </div>
+          </div>
+
+          <!-- Feature 3: Approval Pipeline -->
+          <div class="workflow-card glass-panel">
+            <div class="workflow-num">03</div>
+            <h3 class="workflow-title">Two-Tier Event Approval Pipeline</h3>
+            <p class="workflow-desc">
+              Club organizers can draft and submit event proposals, but events do not enter public discovery until reviewed and approved by institution administrators.
+            </p>
+            <div class="workflow-callout">
+              <strong>Permission Guards:</strong> Role changes are submitted through formal review requests, ensuring student users cannot self-escalate to organizer or administrator privileges.
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Security & Audit Section -->
+    <section class="section security-section" id="security">
+      <div class="container">
+        <div class="security-box glass-panel">
+          <div class="security-header">
+            <span class="security-badge">DATABASE-ENFORCED PERMISSIONS</span>
+            <h3 class="security-title">Technical Verification & Security Audit</h3>
+            <p class="security-lead">
+              Field Book delegates authorization entirely to the database tier rather than relying on frontend client-side validation alone.
+            </p>
+          </div>
+
+          <div class="security-stats-grid">
+            <div class="sec-stat-item">
+              <span class="sec-number">67</span>
+              <span class="sec-label">Active RLS Policies</span>
+              <span class="sec-sub">Enforced across profiles, events, approvals, certificates, and storage buckets</span>
+            </div>
+
+            <div class="sec-stat-item">
+              <span class="sec-number">Append-Only</span>
+              <span class="sec-label">Audit Trail Design</span>
+              <span class="sec-sub">RLS permits INSERT and SELECT for administrators; zero UPDATE or DELETE policies exist for application roles</span>
+            </div>
+
+            <div class="sec-stat-item">
+              <span class="sec-number">3-Tier</span>
+              <span class="sec-label">Role Isolation</span>
+              <span class="sec-sub">Role guards at route, RPC, and PostgreSQL table levels prevent privilege escalation</span>
+            </div>
+          </div>
+
+          <div class="security-clarification">
+            <p>
+              <strong>Technical Disclosure:</strong> Attendance QR codes encode structured event tokens (<code>fieldbook:attendance:&lt;CODE&gt;</code>) rather than asymmetric cryptographic signatures; uniqueness and integrity are enforced by PostgreSQL relational constraints and authenticated session IDs. Audit logs are append-only at the application/RLS layer, preventing accidental or malicious modification through the web application.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Tech Stack Summary -->
+    <section class="section tech-summary-section">
+      <div class="container">
+        <div class="tech-table-wrap glass-panel">
+          <h3 class="table-title">Field Book Production Stack</h3>
+          <div class="table-grid">
+            <div class="table-row header-row">
+              <span>Layer</span>
+              <span>Technology</span>
+              <span>Role in Architecture</span>
+            </div>
+            <div class="table-row">
+              <span class="row-layer">Frontend SPA</span>
+              <span class="row-tech">React 18 · Vite · TypeScript · Tailwind CSS</span>
+              <span class="row-desc">Client interface, QR camera capture, role dashboards</span>
+            </div>
+            <div class="table-row">
+              <span class="row-layer">Database & Auth</span>
+              <span class="row-tech">Supabase (PostgreSQL 15)</span>
+              <span class="row-desc">Row-Level Security, Auth PKCE, Storage Buckets, Triggers</span>
+            </div>
+            <div class="table-row">
+              <span class="row-layer">Certificate Service</span>
+              <span class="row-tech">Java 17 · Spring Boot 4 · Apache PDFBox 3</span>
+              <span class="row-desc">Server-side vector rendering of verified PDF certificates</span>
+            </div>
+            <div class="table-row">
+              <span class="row-layer">Deployment</span>
+              <span class="row-tech">Vercel (Frontend) · Docker / Render (Backend)</span>
+              <span class="row-desc">High-availability static frontend and microservice host</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </article>
+</BaseLayout>
+
+<style>
+  .product-detail-page {
+    padding-bottom: var(--space-4xl);
+  }
+
+  .detail-hero-section {
+    padding-top: var(--space-3xl);
+    padding-bottom: var(--space-3xl);
+  }
+
+  .hero-layout {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: var(--space-2xl);
+    align-items: center;
+  }
+
+  @media (min-width: 960px) {
+    .hero-layout {
+      grid-template-columns: 1.15fr 0.85fr;
+      gap: var(--space-3xl);
+    }
+  }
+
+  .hero-text-col {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-md);
+  }
+
+  .kicker-row {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    flex-wrap: wrap;
+    margin-bottom: var(--space-xs);
+  }
+
+  .breadcrumb-link {
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: var(--text-muted);
+  }
+
+  .breadcrumb-link:hover {
+    color: var(--text-primary);
+  }
+
+  .sep {
+    color: var(--text-muted);
+    font-size: 0.85rem;
+  }
+
+  .detail-title {
+    font-size: clamp(2rem, 3.8vw, 3.25rem);
+    line-height: 1.12;
+  }
+
+  .text-gradient-amber {
+    background: linear-gradient(135deg, #FBBF24 0%, #F59E0B 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+
+  .detail-lead {
+    font-size: 1.15rem;
+    color: var(--text-secondary);
+    line-height: 1.6;
+  }
+
+  /* Live Deployment Card */
+  .live-deployment-card {
+    padding: var(--space-md) var(--space-lg);
+    background: rgba(245, 158, 11, 0.05);
+    border: 1px solid var(--fieldbook-amber-border);
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-xs);
+    margin-top: var(--space-xs);
+  }
+
+  .deployment-badge-wrap {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .live-pulse {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: #10B981;
+    box-shadow: 0 0 10px #10B981;
+  }
+
+  .deployment-status {
+    font-size: 0.75rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: var(--fieldbook-amber-light);
+  }
+
+  .deployment-text {
+    font-size: 0.875rem;
+    color: var(--text-secondary);
+    line-height: 1.5;
+  }
+
+  .deployment-actions {
+    display: flex;
+    align-items: center;
+    gap: var(--space-md);
+    margin-top: 4px;
+    flex-wrap: wrap;
+  }
+
+  .url-hint {
+    font-size: 0.8rem;
+    font-family: var(--font-mono);
+    color: var(--text-muted);
+  }
+
+  .detail-ctas {
+    display: flex;
+    align-items: center;
+    gap: var(--space-md);
+    flex-wrap: wrap;
+    margin-top: var(--space-sm);
+  }
+
+  /* Roles Preview Card */
+  .roles-preview-card {
+    padding: var(--space-lg);
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-md);
+    background: #0B0E14;
+    border: 1px solid var(--border-glass-hover);
+  }
+
+  .preview-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 0.75rem;
+    padding-bottom: var(--space-xs);
+    border-bottom: 1px solid var(--border-subtle);
+  }
+
+  .preview-tag {
+    font-family: var(--font-mono);
+    color: var(--text-muted);
+    font-weight: 600;
+  }
+
+  .preview-status {
+    color: var(--accent-indigo-light);
+    font-weight: 600;
+  }
+
+  .roles-visual-stack {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-sm);
+  }
+
+  .role-layer {
+    padding: var(--space-md);
+    border-radius: var(--radius-sm);
+    background: rgba(255, 255, 255, 0.02);
+    border: 1px solid var(--border-subtle);
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+
+  .role-layer-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .role-pill {
+    font-size: 0.75rem;
+    font-weight: 700;
+    padding: 2px 8px;
+    border-radius: var(--radius-xs);
+    text-transform: uppercase;
+  }
+
+  .student-layer .role-pill {
+    background: rgba(99, 102, 241, 0.15);
+    color: var(--accent-indigo-light);
+  }
+
+  .organizer-layer .role-pill {
+    background: rgba(245, 158, 11, 0.15);
+    color: var(--fieldbook-amber-light);
+  }
+
+  .admin-layer .role-pill {
+    background: rgba(16, 185, 129, 0.15);
+    color: var(--setu-emerald-light);
+  }
+
+  .role-desc {
+    font-size: 0.78rem;
+    color: var(--text-muted);
+  }
+
+  .role-features-row {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    font-size: 0.82rem;
+    color: var(--text-secondary);
+  }
+
+  .preview-footer {
+    font-size: 0.75rem;
+    color: var(--text-muted);
+    padding-top: var(--space-xs);
+    border-top: 1px solid var(--border-subtle);
+  }
+
+  /* Workflow Grid */
+  .section-heading {
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--space-sm);
+    margin-bottom: var(--space-2xl);
+  }
+
+  .section-title {
+    font-size: clamp(1.8rem, 3vw, 2.4rem);
+  }
+
+  .section-lead {
+    max-width: 680px;
+    font-size: 1.05rem;
+    color: var(--text-secondary);
+  }
+
+  .workflow-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: var(--space-xl);
+  }
+
+  @media (min-width: 900px) {
+    .workflow-grid {
+      grid-template-columns: repeat(3, 1fr);
+    }
+  }
+
+  .workflow-card {
+    padding: var(--space-xl);
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-md);
+  }
+
+  .workflow-num {
+    font-family: var(--font-mono);
+    font-size: 1.75rem;
+    font-weight: 800;
+    color: rgba(255, 255, 255, 0.15);
+  }
+
+  .workflow-title {
+    font-size: 1.25rem;
+    font-weight: 700;
+  }
+
+  .workflow-desc {
+    font-size: 0.925rem;
+    color: var(--text-secondary);
+    line-height: 1.55;
+  }
+
+  .workflow-callout {
+    margin-top: auto;
+    padding: var(--space-sm) var(--space-md);
+    background: rgba(0, 0, 0, 0.3);
+    border-left: 2px solid var(--fieldbook-amber);
+    font-size: 0.8rem;
+    color: var(--text-muted);
+    border-radius: 0 var(--radius-xs) var(--radius-xs) 0;
+    line-height: 1.5;
+  }
+
+  .workflow-callout strong {
+    color: var(--text-secondary);
+  }
+
+  .workflow-callout code {
+    background: rgba(255, 255, 255, 0.05);
+    padding: 1px 4px;
+    border-radius: 3px;
+    color: #FBBF24;
+  }
+
+  /* Security Box */
+  .security-box {
+    padding: clamp(var(--space-lg), 4vw, var(--space-2xl));
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-xl);
+    background: rgba(14, 18, 27, 0.6);
+  }
+
+  .security-header {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-xs);
+  }
+
+  .security-badge {
+    font-size: 0.75rem;
+    font-family: var(--font-mono);
+    color: var(--accent-indigo-light);
+    font-weight: 700;
+    letter-spacing: 0.05em;
+  }
+
+  .security-title {
+    font-size: 1.6rem;
+    font-weight: 700;
+  }
+
+  .security-lead {
+    font-size: 1rem;
+    color: var(--text-secondary);
+    max-width: 720px;
+  }
+
+  .security-stats-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: var(--space-md);
+  }
+
+  @media (min-width: 768px) {
+    .security-stats-grid {
+      grid-template-columns: repeat(3, 1fr);
+    }
+  }
+
+  .sec-stat-item {
+    padding: var(--space-lg);
+    background: rgba(0, 0, 0, 0.3);
+    border: 1px solid var(--border-subtle);
+    border-radius: var(--radius-sm);
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
+
+  .sec-number {
+    font-family: var(--font-display);
+    font-size: 1.75rem;
+    font-weight: 800;
+    color: var(--text-primary);
+  }
+
+  .sec-label {
+    font-size: 0.85rem;
+    font-weight: 700;
+    color: var(--fieldbook-amber-light);
+  }
+
+  .sec-sub {
+    font-size: 0.8rem;
+    color: var(--text-muted);
+    line-height: 1.45;
+    margin-top: 4px;
+  }
+
+  .security-clarification {
+    padding: var(--space-md);
+    background: rgba(255, 255, 255, 0.02);
+    border-left: 2px solid var(--accent-indigo);
+    font-size: 0.825rem;
+    color: var(--text-muted);
+    line-height: 1.55;
+  }
+
+  .security-clarification strong {
+    color: var(--text-secondary);
+  }
+
+  /* Tech Table */
+  .tech-table-wrap {
+    padding: var(--space-xl);
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-lg);
+  }
+
+  .table-title {
+    font-size: 1.25rem;
+  }
+
+  .table-grid {
+    display: flex;
+    flex-direction: column;
+    border: 1px solid var(--border-subtle);
+    border-radius: var(--radius-sm);
+    overflow: hidden;
+  }
+
+  .table-row {
+    display: grid;
+    grid-template-columns: 1.2fr 1.5fr 2fr;
+    padding: var(--space-sm) var(--space-md);
+    border-bottom: 1px solid var(--border-subtle);
+    font-size: 0.875rem;
+    align-items: center;
+  }
+
+  .table-row:last-child {
+    border-bottom: none;
+  }
+
+  .header-row {
+    background: rgba(255, 255, 255, 0.04);
+    font-weight: 700;
+    text-transform: uppercase;
+    font-size: 0.75rem;
+    letter-spacing: 0.04em;
+    color: var(--text-muted);
+  }
+
+  .row-layer {
+    font-weight: 600;
+    color: var(--text-primary);
+  }
+
+  .row-tech {
+    color: var(--fieldbook-amber-light);
+    font-family: var(--font-mono);
+    font-size: 0.8rem;
+  }
+
+  .row-desc {
+    color: var(--text-secondary);
+  }
+
+  @media (max-width: 640px) {
+    .table-row {
+      grid-template-columns: 1fr;
+      gap: 4px;
+      padding: var(--space-md);
+    }
+    .header-row {
+      display: none;
+    }
+  }
+</style>

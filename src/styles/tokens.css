@@ -1,0 +1,85 @@
+:root {
+  /* Brand & Studio Colors */
+  --color-bg-base: #07080B;
+  --color-bg-deep: #0B0D13;
+  --color-bg-surface: #11141D;
+  --color-bg-surface-raised: #161A26;
+  --color-bg-surface-hover: #1C2232;
+  
+  /* Borders & Glass */
+  --border-subtle: rgba(255, 255, 255, 0.06);
+  --border-glass: rgba(255, 255, 255, 0.10);
+  --border-glass-hover: rgba(255, 255, 255, 0.20);
+  --border-focus: rgba(99, 102, 241, 0.55);
+  
+  /* Text */
+  --text-primary: #F8FAFC;
+  --text-secondary: #CBD5E1;
+  --text-muted: #94A3B8;
+  --text-inverse: #07080B;
+  
+  /* Primary Studio Accents */
+  --accent-indigo: #4F46E5;
+  --accent-indigo-light: #818CF8;
+  --accent-indigo-glow: rgba(79, 70, 229, 0.25);
+  --accent-violet: #8B5CF6;
+  --accent-violet-glow: rgba(139, 92, 246, 0.20);
+  
+  /* Product Identity Accents */
+  --setu-emerald: #10B981;
+  --setu-emerald-light: #34D399;
+  --setu-emerald-bg: rgba(16, 185, 129, 0.10);
+  --setu-emerald-border: rgba(16, 185, 129, 0.25);
+  
+  --fieldbook-amber: #F59E0B;
+  --fieldbook-amber-light: #FBBF24;
+  --fieldbook-amber-bg: rgba(245, 158, 11, 0.10);
+  --fieldbook-amber-border: rgba(245, 158, 11, 0.25);
+  
+  /* Gradients */
+  --grad-studio-brand: linear-gradient(135deg, #6366F1 0%, #A855F7 60%, #EC4899 100%);
+  --grad-surface-card: linear-gradient(180deg, rgba(22, 26, 38, 0.75) 0%, rgba(17, 20, 29, 0.6) 100%);
+  --grad-aurora-top: radial-gradient(ellipse 80% 50% at 50% -20%, rgba(99, 102, 241, 0.18), transparent 70%);
+  --grad-aurora-accent: radial-gradient(circle 400px at 80% 20%, rgba(139, 92, 246, 0.12), transparent 80%);
+
+  /* Typography */
+  --font-display: 'Plus Jakarta Sans', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+  --font-body: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+  --font-mono: 'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+
+  /* Spacing Scale */
+  --space-2xs: 4px;
+  --space-xs: 8px;
+  --space-sm: 12px;
+  --space-md: 16px;
+  --space-lg: 24px;
+  --space-xl: 32px;
+  --space-2xl: 48px;
+  --space-3xl: 64px;
+  --space-4xl: 96px;
+  --space-5xl: 128px;
+
+  /* Container Constraints */
+  --container-max: 1200px;
+  --container-pad: 24px;
+
+  /* Radii */
+  --radius-xs: 4px;
+  --radius-sm: 8px;
+  --radius-md: 12px;
+  --radius-lg: 18px;
+  --radius-xl: 26px;
+  --radius-full: 9999px;
+
+  /* Elevations & Shadows */
+  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.4);
+  --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.45);
+  --shadow-lg: 0 12px 32px rgba(0, 0, 0, 0.55);
+  --shadow-glow: 0 0 32px rgba(99, 102, 241, 0.25);
+
+  /* Transitions */
+  --ease-spring: cubic-bezier(0.16, 1, 0.3, 1);
+  --transition-fast: 150ms var(--ease-spring);
+  --transition-base: 240ms var(--ease-spring);
+  --transition-slow: 400ms var(--ease-spring);
+}

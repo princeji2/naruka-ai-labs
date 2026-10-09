@@ -1,0 +1,5 @@
+# robots.txt for Naruka AI Labs (https://orgs.social)
+User-agent: *
+Allow: /
+
+Sitemap: https://orgs.social/sitemap.xml

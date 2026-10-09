@@ -1,0 +1,89 @@
+---
+interface Props {
+  showText?: boolean;
+  size?: number;
+  class?: string;
+}
+
+const { showText = true, size = 32, class: className = '' } = Astro.props;
+---
+
+<div class={`logo-container ${className}`}>
+  <svg
+    width={size}
+    height={size}
+    viewBox="0 0 40 40"
+    fill="none"
+    xmlns="http://www.w3.org/2000/svg"
+    aria-hidden="true"
+    class="logo-icon"
+  >
+    <defs>
+      <linearGradient id="logoGrad" x1="4" y1="4" x2="36" y2="36" gradientUnits="userSpaceOnUse">
+        <stop offset="0%" stop-color="#818CF8" />
+        <stop offset="50%" stop-color="#6366F1" />
+        <stop offset="100%" stop-color="#A855F7" />
+      </linearGradient>
+      <linearGradient id="facetGrad" x1="8" y1="12" x2="32" y2="28" gradientUnits="userSpaceOnUse">
+        <stop offset="0%" stop-color="rgba(255, 255, 255, 0.45)" />
+        <stop offset="100%" stop-color="rgba(255, 255, 255, 0.05)" />
+      </linearGradient>
+    </defs>
+    <!-- Outer hexagonal node prism -->
+    <rect x="4" y="4" width="32" height="32" rx="10" fill="#0D0F18" stroke="url(#logoGrad)" stroke-width="1.75" />
+    <!-- Stylized dynamic "N" / AI vector bridge -->
+    <path
+      d="M13 28V12L20 22L27 12V28"
+      stroke="url(#logoGrad)"
+      stroke-width="2.5"
+      stroke-linecap="round"
+      stroke-linejoin="round"
+    />
+    <!-- Center focal node -->
+    <circle cx="20" cy="22" r="2.5" fill="#F8FAFC" />
+  </svg>
+  {showText && (
+    <div class="logo-text">
+      <span class="logo-name">Naruka <span class="logo-tag">AI Labs</span></span>
+    </div>
+  )}
+</div>
+
+<style>
+  .logo-container {
+    display: inline-flex;
+    align-items: center;
+    gap: 12px;
+    text-decoration: none;
+    user-select: none;
+  }
+
+  .logo-icon {
+    flex-shrink: 0;
+    filter: drop-shadow(0 0 12px rgba(99, 102, 241, 0.35));
+    transition: transform var(--transition-base);
+  }
+
+  .logo-container:hover .logo-icon {
+    transform: scale(1.05);
+  }
+
+  .logo-text {
+    display: flex;
+    flex-direction: column;
+    line-height: 1.1;
+  }
+
+  .logo-name {
+    font-family: var(--font-display);
+    font-size: 1.05rem;
+    font-weight: 700;
+    color: var(--text-primary);
+    letter-spacing: -0.02em;
+  }
+
+  .logo-tag {
+    font-weight: 600;
+    color: var(--accent-indigo-light);
+  }
+</style>

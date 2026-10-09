@@ -1,0 +1,76 @@
+<svg width="1200" height="630" viewBox="0 0 1200 630" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="bgGrad" x1="0" y1="0" x2="1200" y2="630" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#08090D" />
+      <stop offset="100%" stop-color="#0D1017" />
+    </linearGradient>
+    <radialGradient id="glowTop" cx="600" cy="0" r="500" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#6366F1" stop-opacity="0.35" />
+      <stop offset="100%" stop-color="#6366F1" stop-opacity="0" />
+    </radialGradient>
+    <radialGradient id="glowAccent" cx="1000" cy="500" r="400" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#A855F7" stop-opacity="0.2" />
+      <stop offset="100%" stop-color="#A855F7" stop-opacity="0" />
+    </radialGradient>
+    <linearGradient id="brandLinear" x1="120" y1="200" x2="400" y2="200" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#818CF8" />
+      <stop offset="50%" stop-color="#6366F1" />
+      <stop offset="100%" stop-color="#C084FC" />
+    </linearGradient>
+  </defs>
+
+  <!-- Background Base -->
+  <rect width="1200" height="630" fill="url(#bgGrad)" />
+  <rect width="1200" height="630" fill="url(#glowTop)" />
+  <rect width="1200" height="630" fill="url(#glowAccent)" />
+
+  <!-- Subtle Grid Lines -->
+  <g stroke="rgba(255, 255, 255, 0.04)" stroke-width="1">
+    <line x1="100" y1="0" x2="100" y2="630" />
+    <line x1="300" y1="0" x2="300" y2="630" />
+    <line x1="500" y1="0" x2="500" y2="630" />
+    <line x1="700" y1="0" x2="700" y2="630" />
+    <line x1="900" y1="0" x2="900" y2="630" />
+    <line x1="1100" y1="0" x2="1100" y2="630" />
+    <line x1="0" y1="150" x2="1200" y2="150" />
+    <line x1="0" y1="315" x2="1200" y2="315" />
+    <line x1="0" y1="480" x2="1200" y2="480" />
+  </g>
+
+  <!-- Card Frame -->
+  <rect x="80" y="70" width="1040" height="490" rx="24" fill="#0E121B" fill-opacity="0.6" stroke="rgba(255, 255, 255, 0.1)" stroke-width="1.5" />
+
+  <!-- Logo Mark -->
+  <g transform="translate(140, 130)">
+    <rect x="0" y="0" width="72" height="72" rx="18" fill="#141824" stroke="url(#brandLinear)" stroke-width="3" />
+    <path d="M22 52V20L36 38L50 20V52" stroke="url(#brandLinear)" stroke-width="4.5" stroke-linecap="round" stroke-linejoin="round" />
+    <circle cx="36" cy="38" r="4" fill="#F8FAFC" />
+  </g>
+
+  <!-- Brand Typography -->
+  <text x="235" y="176" fill="#F8FAFC" font-family="-apple-system, system-ui, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="34" font-weight="700" letter-spacing="-0.5">Naruka AI Labs</text>
+  <text x="490" y="176" fill="#818CF8" font-family="-apple-system, system-ui, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="20" font-weight="600" letter-spacing="1">STUDIO</text>
+
+  <!-- Main Headline -->
+  <text x="140" y="275" fill="#FFFFFF" font-family="-apple-system, system-ui, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="52" font-weight="800" letter-spacing="-1.5">Building practical</text>
+  <text x="140" y="340" fill="#A5B4FC" font-family="-apple-system, system-ui, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="52" font-weight="800" letter-spacing="-1.5">AI-powered software.</text>
+
+  <!-- Subtitle -->
+  <text x="140" y="415" fill="#94A3B8" font-family="-apple-system, system-ui, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="22" font-weight="400">An independent, founder-led product studio. Creator of Setu and Field Book.</text>
+
+  <!-- Bottom Pills -->
+  <g transform="translate(140, 470)">
+    <!-- Pill 1: Setu -->
+    <rect x="0" y="0" width="230" height="42" rx="21" fill="rgba(16, 185, 129, 0.12)" stroke="rgba(16, 185, 129, 0.3)" />
+    <circle cx="20" cy="21" r="5" fill="#10B981" />
+    <text x="35" y="27" fill="#34D399" font-family="-apple-system, system-ui, sans-serif" font-size="15" font-weight="600">Setu · Gateway</text>
+
+    <!-- Pill 2: Field Book -->
+    <rect x="250" y="0" width="270" height="42" rx="21" fill="rgba(245, 158, 11, 0.12)" stroke="rgba(245, 158, 11, 0.3)" />
+    <circle cx="270" cy="21" r="5" fill="#F59E0B" />
+    <text x="285" y="27" fill="#FBBF24" font-family="-apple-system, system-ui, sans-serif" font-size="15" font-weight="600">Field Book · Attendance</text>
+
+    <!-- Domain -->
+    <text x="830" y="27" fill="#64748B" font-family="-apple-system, system-ui, sans-serif" font-size="18" font-weight="500">orgs.social</text>
+  </g>
+</svg>
