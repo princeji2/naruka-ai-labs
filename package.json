@@ -10,7 +10,8 @@
     "build": "astro build",
     "preview": "astro preview",
     "check": "astro check",
-    "lint": "astro check"
+    "check:secrets": "node scripts/check-secrets.js",
+    "prepare": "git config core.hooksPath .githooks"
   },
   "dependencies": {
     "astro": "^7.3.8"

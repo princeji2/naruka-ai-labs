@@ -1,0 +1,3 @@
+#!/bin/sh
+# Git pre-commit hook to block unmasked secrets from being committed
+node scripts/check-secrets.js

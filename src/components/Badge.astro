@@ -27,21 +27,32 @@ const displayText = text || defaultTexts[variant];
   .badge {
     display: inline-flex;
     align-items: center;
-    gap: 7px;
-    padding: 4px 11px;
+    gap: var(--space-3);
+    padding: var(--space-2) var(--space-4);
     border-radius: var(--radius-full);
-    font-size: 0.75rem;
-    font-weight: 600;
-    letter-spacing: 0.02em;
+    font-family: var(--font-mono);
+    font-size: var(--font-size-xs);
+    font-weight: var(--font-weight-semibold);
+    letter-spacing: var(--letter-spacing-wide);
     text-transform: uppercase;
     width: fit-content;
+    max-width: 100%;
+    white-space: nowrap;
+    box-sizing: border-box;
+    user-select: none;
+    line-height: 1;
+  }
+
+  .badge-label {
+    overflow: hidden;
+    text-overflow: ellipsis;
     white-space: nowrap;
   }
 
   .badge-dot {
-    width: 6px;
-    height: 6px;
-    border-radius: 50%;
+    width: var(--space-3);
+    height: var(--space-3);
+    border-radius: var(--radius-full);
     flex-shrink: 0;
   }
 
@@ -53,7 +64,7 @@ const displayText = text || defaultTexts[variant];
   }
   .badge-in-development .badge-dot {
     background: var(--accent-indigo-light);
-    box-shadow: 0 0 8px var(--accent-indigo);
+    box-shadow: 0 0 var(--space-sm) var(--accent-indigo);
   }
 
   /* Live Prototype */
@@ -64,7 +75,7 @@ const displayText = text || defaultTexts[variant];
   }
   .badge-live-prototype .badge-dot {
     background: var(--setu-emerald);
-    box-shadow: 0 0 8px var(--setu-emerald);
+    box-shadow: 0 0 var(--space-sm) var(--setu-emerald);
   }
 
   /* Demo Data / Simulated */
@@ -75,26 +86,26 @@ const displayText = text || defaultTexts[variant];
   }
   .badge-demo-data .badge-dot {
     background: var(--fieldbook-amber);
-    box-shadow: 0 0 8px var(--fieldbook-amber);
+    box-shadow: 0 0 var(--space-sm) var(--fieldbook-amber);
   }
 
   /* Planned / Concept */
   .badge-planned {
     background: rgba(148, 163, 184, 0.10);
-    color: #CBD5E1;
+    color: var(--color-text-secondary);
     border: 1px solid rgba(148, 163, 184, 0.22);
   }
   .badge-planned .badge-dot {
-    background: #94A3B8;
+    background: var(--color-text-muted);
   }
 
   /* Neutral */
   .badge-neutral {
     background: rgba(255, 255, 255, 0.06);
-    color: var(--text-secondary);
+    color: var(--color-text-secondary);
     border: 1px solid var(--border-glass);
   }
   .badge-neutral .badge-dot {
-    background: var(--text-muted);
+    background: var(--color-text-muted);
   }
 </style>

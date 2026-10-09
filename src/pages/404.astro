@@ -54,14 +54,15 @@ import Button from '../components/Button.astro';
   }
 
   .error-title {
-    font-size: clamp(2.5rem, 5vw, 4rem);
-    font-weight: 800;
+    font-size: var(--font-size-6xl);
+    font-weight: var(--font-weight-extrabold);
+    line-height: var(--line-height-tight);
   }
 
   .error-lead {
-    font-size: 1.1rem;
-    color: var(--text-secondary);
-    line-height: 1.6;
+    font-size: var(--font-size-lg);
+    color: var(--color-text-secondary);
+    line-height: var(--line-height-relaxed);
     margin-bottom: var(--space-lg);
   }
 
@@ -82,24 +83,30 @@ import Button from '../components/Button.astro';
     text-align: left;
     display: flex;
     flex-direction: column;
-    gap: 4px;
+    gap: var(--space-1);
     width: 100%;
     max-width: 520px;
   }
 
   .hint-title {
-    font-size: 0.85rem;
-    font-weight: 600;
-    color: var(--text-primary);
+    font-size: var(--font-size-sm);
+    font-weight: var(--font-weight-semibold);
+    color: var(--color-text-primary);
   }
 
   .hint-text {
-    font-size: 0.825rem;
-    color: var(--text-muted);
+    font-size: var(--font-size-sm);
+    color: var(--color-text-muted);
   }
 
   .hint-text a {
     color: var(--accent-indigo-light);
     text-decoration: underline;
+    border-radius: var(--radius-xs);
+  }
+
+  .hint-text a:focus-visible {
+    outline: var(--state-focus-outline);
+    outline-offset: var(--state-focus-ring-offset);
   }
 </style>

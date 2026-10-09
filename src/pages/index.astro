@@ -2,6 +2,7 @@
 import BaseLayout from '../layouts/BaseLayout.astro';
 import Badge from '../components/Badge.astro';
 import Button from '../components/Button.astro';
+import HeroPrism from '../components/HeroPrism.astro';
 ---
 
 <BaseLayout
@@ -11,6 +12,7 @@ import Button from '../components/Button.astro';
 >
   <!-- 1. Hero Section -->
   <section class="hero-section section">
+    <HeroPrism />
     <div class="container hero-container">
       <div class="hero-badge-wrap">
         <Badge variant="in-development" text="Founder-Led Product Studio" />
@@ -198,12 +200,6 @@ import Button from '../components/Button.astro';
             </p>
           </div>
 
-          <div class="ai-column">
-            <h3 class="ai-col-title">In Engineering Workflows</h3>
-            <p class="ai-col-text">
-              We use AI coding assistants, including Google Antigravity, Kiro, and Claude, for planning and drafting code. Every change is reviewed by the founder before it ships.
-            </p>
-          </div>
         </div>
 
         <div class="ai-footer-note">
@@ -343,14 +339,18 @@ import Button from '../components/Button.astro';
 <style>
   /* Hero */
   .hero-section {
+    position: relative;
     min-height: calc(85vh - 72px);
     display: flex;
     align-items: center;
     padding-top: var(--space-4xl);
     padding-bottom: var(--space-4xl);
+    overflow: hidden;
   }
 
   .hero-container {
+    position: relative;
+    z-index: 1;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -591,15 +591,9 @@ import Button from '../components/Button.astro';
   }
 
   .ai-columns-grid {
-    display: grid;
-    grid-template-columns: 1fr;
+    display: flex;
+    flex-direction: column;
     gap: var(--space-xl);
-  }
-
-  @media (min-width: 768px) {
-    .ai-columns-grid {
-      grid-template-columns: 1fr 1fr;
-    }
   }
 
   .ai-column {
@@ -657,7 +651,7 @@ import Button from '../components/Button.astro';
     font-family: var(--font-display);
     font-weight: 800;
     font-size: 1.25rem;
-    color: #FFFFFF;
+    color: var(--color-text-primary);
     flex-shrink: 0;
   }
 
@@ -788,7 +782,7 @@ import Button from '../components/Button.astro';
     background: rgba(0, 0, 0, 0.35);
     padding: 1px 4px;
     border-radius: 3px;
-    color: #CBD5E1;
+    color: var(--color-text-secondary);
   }
 
   /* Bottom CTA */

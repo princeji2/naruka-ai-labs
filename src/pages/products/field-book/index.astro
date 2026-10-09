@@ -276,41 +276,47 @@ import Button from '../../../components/Button.astro';
   .kicker-row {
     display: flex;
     align-items: center;
-    gap: 8px;
+    gap: var(--space-xs);
     flex-wrap: wrap;
     margin-bottom: var(--space-xs);
   }
 
   .breadcrumb-link {
-    font-size: 0.85rem;
-    font-weight: 600;
-    color: var(--text-muted);
+    font-size: var(--font-size-sm);
+    font-weight: var(--font-weight-semibold);
+    color: var(--color-text-muted);
+    border-radius: var(--radius-xs);
   }
 
   .breadcrumb-link:hover {
-    color: var(--text-primary);
+    color: var(--color-text-primary);
+  }
+
+  .breadcrumb-link:focus-visible {
+    outline: var(--state-focus-outline);
+    outline-offset: var(--state-focus-ring-offset);
   }
 
   .sep {
-    color: var(--text-muted);
-    font-size: 0.85rem;
+    color: var(--color-text-muted);
+    font-size: var(--font-size-sm);
   }
 
   .detail-title {
-    font-size: clamp(2rem, 3.8vw, 3.25rem);
-    line-height: 1.12;
+    font-size: var(--font-size-6xl);
+    line-height: var(--line-height-tight);
   }
 
   .text-gradient-amber {
-    background: linear-gradient(135deg, #FBBF24 0%, #F59E0B 100%);
+    background: linear-gradient(135deg, var(--fieldbook-amber-light) 0%, var(--fieldbook-amber) 100%);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
   }
 
   .detail-lead {
-    font-size: 1.15rem;
-    color: var(--text-secondary);
-    line-height: 1.6;
+    font-size: var(--font-size-lg);
+    color: var(--color-text-secondary);
+    line-height: var(--line-height-relaxed);
   }
 
   /* Live Deployment Card */
@@ -334,8 +340,8 @@ import Button from '../../../components/Button.astro';
     width: 8px;
     height: 8px;
     border-radius: 50%;
-    background: #10B981;
-    box-shadow: 0 0 10px #10B981;
+    background: var(--setu-emerald);
+    box-shadow: 0 0 10px var(--setu-emerald);
   }
 
   .deployment-status {
@@ -380,7 +386,7 @@ import Button from '../../../components/Button.astro';
     display: flex;
     flex-direction: column;
     gap: var(--space-md);
-    background: #0B0E14;
+    background: var(--color-surface-deep);
     border: 1px solid var(--border-glass-hover);
   }
 
@@ -545,7 +551,7 @@ import Button from '../../../components/Button.astro';
     background: rgba(255, 255, 255, 0.05);
     padding: 1px 4px;
     border-radius: 3px;
-    color: #FBBF24;
+    color: var(--fieldbook-amber-light);
   }
 
   /* Security Box */
