@@ -31,10 +31,13 @@ import Badge from '../../components/Badge.astro';
           <section class="legal-section">
             <h2>2. Information We Do NOT Collect</h2>
             <p>
-              We prioritize data minimization:
+              We prioritize data minimization and technical independence:
             </p>
             <ul>
-              <li><strong>No tracking cookies:</strong> This website does not utilize third-party advertising trackers, cross-site profiling scripts, or marketing cookies.</li>
+              <li><strong>Zero third-party network requests:</strong> All web fonts, stylesheets, and scripts are 100% self-hosted. When you browse this site, your browser makes zero network connections to third-party CDNs, Google Fonts, or external asset providers.</li>
+              <li><strong>No tracking cookies:</strong> This website sets zero advertising cookies, zero session tracking cookies, and zero cross-site fingerprinting tokens.</li>
+              <li><strong>No analytics or telemetry:</strong> We do not embed Google Analytics, PostHog, telemetry beacons, or any third-party tracking scripts.</li>
+              <li><strong>No web forms:</strong> There are no marketing forms, lead-capture forms, or input collection scripts on this site. Direct communication is handled exclusively via your own email client.</li>
               <li><strong>No user accounts on this site:</strong> The marketing and information site does not require registration, passwords, or personal profiles.</li>
             </ul>
           </section>
@@ -60,7 +63,7 @@ import Badge from '../../components/Badge.astro';
           <section class="legal-section">
             <h2>5. Hosting & Infrastructure</h2>
             <p>
-              This website is hosted on <strong>Vercel</strong>. Like all web hosts, server logs may record standard network metadata (such as IP address, user-agent, and request timestamp) for security monitoring, DDoS prevention, and uptime diagnostics.
+              This website is hosted statically on <strong>Vercel</strong>. Like all web hosts, edge servers may record ephemeral network metadata (such as IP address, user-agent, and request timestamp) for security monitoring, DDoS prevention, and routing diagnostics. We do not run analytics processing on these logs.
             </p>
           </section>
 
