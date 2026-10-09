@@ -186,7 +186,7 @@ import Button from '../../components/Button.astro';
   }
 
   .page-lead {
-    font-size: 1.15rem;
+    font-size: var(--font-size-lg);
     color: var(--text-secondary);
     max-width: 680px;
   }
@@ -267,18 +267,18 @@ import Button from '../../components/Button.astro';
   }
 
   .product-name {
-    font-size: 1.75rem;
+    font-size: var(--font-size-4xl);
     font-weight: 700;
   }
 
   .product-category {
-    font-size: 0.85rem;
+    font-size: var(--font-size-sm);
     color: var(--text-muted);
     font-weight: 500;
   }
 
   .product-desc {
-    font-size: 1rem;
+    font-size: var(--font-size-md);
     color: var(--text-secondary);
     line-height: 1.6;
   }
@@ -308,7 +308,7 @@ import Button from '../../components/Button.astro';
   }
 
   .spec-label {
-    font-size: 0.75rem;
+    font-size: var(--font-size-xs);
     text-transform: uppercase;
     letter-spacing: 0.05em;
     color: var(--text-muted);
@@ -316,7 +316,7 @@ import Button from '../../components/Button.astro';
   }
 
   .spec-value {
-    font-size: 0.85rem;
+    font-size: var(--font-size-sm);
     color: var(--text-primary);
     font-weight: 500;
     text-align: right;
@@ -326,7 +326,7 @@ import Button from '../../components/Button.astro';
     padding: var(--space-sm) var(--space-md);
     background: rgba(255, 255, 255, 0.02);
     border-left: 2px solid var(--border-glass-hover);
-    font-size: 0.8rem;
+    font-size: var(--font-size-xs);
     line-height: 1.5;
     color: var(--text-muted);
     border-radius: 0 var(--radius-xs) var(--radius-xs) 0;
@@ -374,12 +374,12 @@ import Button from '../../components/Button.astro';
   }
 
   .r-and-d-title {
-    font-size: 1.35rem;
+    font-size: var(--font-size-2xl);
     margin-top: 4px;
   }
 
   .r-and-d-text {
-    font-size: 0.95rem;
+    font-size: var(--font-size-sm);
     color: var(--text-secondary);
   }
 

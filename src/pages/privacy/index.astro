@@ -97,11 +97,11 @@ import Badge from '../../components/Badge.astro';
   }
 
   .legal-title {
-    font-size: clamp(2.2rem, 3.5vw, 3rem);
+    font-size: var(--font-size-6xl);
   }
 
   .legal-date {
-    font-size: 0.85rem;
+    font-size: var(--font-size-sm);
     color: var(--text-muted);
   }
 
@@ -109,7 +109,7 @@ import Badge from '../../components/Badge.astro';
     padding: var(--space-md) var(--space-lg);
     background: rgba(99, 102, 241, 0.08);
     border: 1px solid rgba(99, 102, 241, 0.25);
-    font-size: 0.875rem;
+    font-size: var(--font-size-sm);
     color: var(--text-secondary);
     border-radius: var(--radius-sm);
   }
@@ -132,12 +132,12 @@ import Badge from '../../components/Badge.astro';
   }
 
   .legal-section h2 {
-    font-size: 1.35rem;
+    font-size: var(--font-size-2xl);
     color: var(--text-primary);
   }
 
   .legal-section p {
-    font-size: 0.95rem;
+    font-size: var(--font-size-sm);
     color: var(--text-secondary);
     line-height: 1.65;
   }
@@ -148,7 +148,7 @@ import Badge from '../../components/Badge.astro';
     display: flex;
     flex-direction: column;
     gap: 6px;
-    font-size: 0.925rem;
+    font-size: var(--font-size-sm);
     color: var(--text-secondary);
     line-height: 1.6;
   }
@@ -165,7 +165,7 @@ import Badge from '../../components/Badge.astro';
   .legal-section code {
     background: rgba(0, 0, 0, 0.35);
     padding: 1px 4px;
-    border-radius: 3px;
+    border-radius: var(--radius-xs);
     color: var(--color-text-secondary);
   }
 </style>

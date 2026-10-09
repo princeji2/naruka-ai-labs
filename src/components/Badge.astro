@@ -15,10 +15,15 @@ const defaultTexts: Record<string, string> = {
   'neutral': 'Studio Project'
 };
 
+/** Labels longer than this read slowly in wide-tracked all-caps, so they keep their original case. */
+const LONG_LABEL_THRESHOLD = 20;
+
 const displayText = text || defaultTexts[variant];
+const isLongLabel = Array.from(displayText.trim()).length > LONG_LABEL_THRESHOLD;
+const lengthClass = isLongLabel ? 'badge-long' : 'badge-short';
 ---
 
-<span class={`badge badge-${variant} ${className}`}>
+<span class={`badge badge-${variant} ${lengthClass} ${className}`}>
   <span class="badge-dot" aria-hidden="true"></span>
   <span class="badge-label">{displayText}</span>
 </span>
@@ -33,15 +38,24 @@ const displayText = text || defaultTexts[variant];
     font-family: var(--font-mono);
     font-size: var(--font-size-xs);
     font-weight: var(--font-weight-semibold);
-    /* Sentence/title case reads faster than all-caps; wide tracking is only for caps */
-    letter-spacing: 0.02em;
-    text-transform: none;
     width: fit-content;
     max-width: 100%;
     white-space: nowrap;
     box-sizing: border-box;
     user-select: none;
     line-height: 1;
+  }
+
+  /* Short labels (20 characters or fewer): wide-tracked caps scan quickly */
+  .badge-short {
+    text-transform: uppercase;
+    letter-spacing: var(--letter-spacing-wide);
+  }
+
+  /* Long labels (more than 20 characters): keep original case, normal tracking */
+  .badge-long {
+    text-transform: none;
+    letter-spacing: 0.02em;
   }
 
   .badge-label {

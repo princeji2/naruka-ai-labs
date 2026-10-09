@@ -345,7 +345,7 @@ import Button from '../../../components/Button.astro';
   }
 
   .deployment-status {
-    font-size: 0.75rem;
+    font-size: var(--font-size-xs);
     font-weight: 700;
     text-transform: uppercase;
     letter-spacing: 0.05em;
@@ -353,7 +353,7 @@ import Button from '../../../components/Button.astro';
   }
 
   .deployment-text {
-    font-size: 0.875rem;
+    font-size: var(--font-size-sm);
     color: var(--text-secondary);
     line-height: 1.5;
   }
@@ -367,7 +367,7 @@ import Button from '../../../components/Button.astro';
   }
 
   .url-hint {
-    font-size: 0.8rem;
+    font-size: var(--font-size-xs);
     font-family: var(--font-mono);
     color: var(--text-muted);
   }
@@ -394,7 +394,7 @@ import Button from '../../../components/Button.astro';
     display: flex;
     justify-content: space-between;
     align-items: center;
-    font-size: 0.75rem;
+    font-size: var(--font-size-xs);
     padding-bottom: var(--space-xs);
     border-bottom: 1px solid var(--border-subtle);
   }
@@ -433,7 +433,7 @@ import Button from '../../../components/Button.astro';
   }
 
   .role-pill {
-    font-size: 0.75rem;
+    font-size: var(--font-size-xs);
     font-weight: 700;
     padding: 2px 8px;
     border-radius: var(--radius-xs);
@@ -456,7 +456,7 @@ import Button from '../../../components/Button.astro';
   }
 
   .role-desc {
-    font-size: 0.78rem;
+    font-size: var(--font-size-xs);
     color: var(--text-muted);
   }
 
@@ -464,12 +464,12 @@ import Button from '../../../components/Button.astro';
     display: flex;
     flex-direction: column;
     gap: 2px;
-    font-size: 0.82rem;
+    font-size: var(--font-size-sm);
     color: var(--text-secondary);
   }
 
   .preview-footer {
-    font-size: 0.75rem;
+    font-size: var(--font-size-xs);
     color: var(--text-muted);
     padding-top: var(--space-xs);
     border-top: 1px solid var(--border-subtle);
@@ -486,12 +486,12 @@ import Button from '../../../components/Button.astro';
   }
 
   .section-title {
-    font-size: clamp(1.8rem, 3vw, 2.4rem);
+    font-size: var(--font-size-5xl);
   }
 
   .section-lead {
     max-width: 680px;
-    font-size: 1.05rem;
+    font-size: var(--font-size-md);
     color: var(--text-secondary);
   }
 
@@ -516,18 +516,18 @@ import Button from '../../../components/Button.astro';
 
   .workflow-num {
     font-family: var(--font-mono);
-    font-size: 1.75rem;
+    font-size: var(--font-size-4xl);
     font-weight: 800;
     color: rgba(255, 255, 255, 0.15);
   }
 
   .workflow-title {
-    font-size: 1.25rem;
+    font-size: var(--font-size-2xl);
     font-weight: 700;
   }
 
   .workflow-desc {
-    font-size: 0.925rem;
+    font-size: var(--font-size-sm);
     color: var(--text-secondary);
     line-height: 1.55;
   }
@@ -537,7 +537,7 @@ import Button from '../../../components/Button.astro';
     padding: var(--space-sm) var(--space-md);
     background: rgba(0, 0, 0, 0.3);
     border-left: 2px solid var(--fieldbook-amber);
-    font-size: 0.8rem;
+    font-size: var(--font-size-xs);
     color: var(--text-muted);
     border-radius: 0 var(--radius-xs) var(--radius-xs) 0;
     line-height: 1.5;
@@ -550,7 +550,7 @@ import Button from '../../../components/Button.astro';
   .workflow-callout code {
     background: rgba(255, 255, 255, 0.05);
     padding: 1px 4px;
-    border-radius: 3px;
+    border-radius: var(--radius-xs);
     color: var(--fieldbook-amber-light);
   }
 
@@ -570,7 +570,7 @@ import Button from '../../../components/Button.astro';
   }
 
   .security-badge {
-    font-size: 0.75rem;
+    font-size: var(--font-size-xs);
     font-family: var(--font-mono);
     color: var(--accent-indigo-light);
     font-weight: 700;
@@ -578,12 +578,12 @@ import Button from '../../../components/Button.astro';
   }
 
   .security-title {
-    font-size: 1.6rem;
+    font-size: var(--font-size-3xl);
     font-weight: 700;
   }
 
   .security-lead {
-    font-size: 1rem;
+    font-size: var(--font-size-md);
     color: var(--text-secondary);
     max-width: 720px;
   }
@@ -612,19 +612,19 @@ import Button from '../../../components/Button.astro';
 
   .sec-number {
     font-family: var(--font-display);
-    font-size: 1.75rem;
+    font-size: var(--font-size-4xl);
     font-weight: 800;
     color: var(--text-primary);
   }
 
   .sec-label {
-    font-size: 0.85rem;
+    font-size: var(--font-size-sm);
     font-weight: 700;
     color: var(--fieldbook-amber-light);
   }
 
   .sec-sub {
-    font-size: 0.8rem;
+    font-size: var(--font-size-xs);
     color: var(--text-muted);
     line-height: 1.45;
     margin-top: 4px;
@@ -634,7 +634,7 @@ import Button from '../../../components/Button.astro';
     padding: var(--space-md);
     background: rgba(255, 255, 255, 0.02);
     border-left: 2px solid var(--accent-indigo);
-    font-size: 0.825rem;
+    font-size: var(--font-size-sm);
     color: var(--text-muted);
     line-height: 1.55;
   }
@@ -652,7 +652,7 @@ import Button from '../../../components/Button.astro';
   }
 
   .table-title {
-    font-size: 1.25rem;
+    font-size: var(--font-size-2xl);
   }
 
   .table-grid {
@@ -668,7 +668,7 @@ import Button from '../../../components/Button.astro';
     grid-template-columns: 1.2fr 1.5fr 2fr;
     padding: var(--space-sm) var(--space-md);
     border-bottom: 1px solid var(--border-subtle);
-    font-size: 0.875rem;
+    font-size: var(--font-size-sm);
     align-items: center;
   }
 
@@ -680,7 +680,7 @@ import Button from '../../../components/Button.astro';
     background: rgba(255, 255, 255, 0.04);
     font-weight: 700;
     text-transform: uppercase;
-    font-size: 0.75rem;
+    font-size: var(--font-size-xs);
     letter-spacing: 0.04em;
     color: var(--text-muted);
   }
@@ -693,7 +693,7 @@ import Button from '../../../components/Button.astro';
   .row-tech {
     color: var(--fieldbook-amber-light);
     font-family: var(--font-mono);
-    font-size: 0.8rem;
+    font-size: var(--font-size-xs);
   }
 
   .row-desc {

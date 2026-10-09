@@ -124,7 +124,7 @@ h5 {
 }
 
 h6 {
-  font-size: var(--font-size-xl);
+  font-size: var(--font-size-lg);
   letter-spacing: var(--letter-spacing-snug);
 }
 
