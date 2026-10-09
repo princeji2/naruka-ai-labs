@@ -1,0 +1,377 @@
+---
+// HeroPrism.astro: Bespoke fluted-glass & chromatic prism hero backdrop.
+// Pure progressive enhancement:
+// Layer 1 (Zero JS / universal fallback): CSS-only fluted glass + studio aurora gradients.
+// Layer 2 (Enhanced): Native WebGL fragment shader quad (<10KB, zero libraries).
+// Strictly disabled on prefers-reduced-motion, low-power devices, mobile, or WebGL absence.
+---
+
+<div class="hero-prism-stage" aria-hidden="true">
+  <!-- Layer 1: Universal CSS-only poster & fallback -->
+  <div class="hero-poster" id="hero-poster">
+    <div class="aurora-glow aurora-primary"></div>
+    <div class="aurora-glow aurora-secondary"></div>
+    <div class="fluted-glass-grid"></div>
+    <div class="specular-highlight"></div>
+  </div>
+
+  <!-- Layer 2: Canvas quad (loaded conditionally) -->
+  <canvas id="hero-prism-canvas" class="hero-prism-canvas"></canvas>
+</div>
+
+<script>
+  function initHeroPrism() {
+    const canvas = document.getElementById('hero-prism-canvas') as HTMLCanvasElement | null;
+    const poster = document.getElementById('hero-poster');
+    if (!canvas || !poster) return;
+    const heroCanvas: HTMLCanvasElement = canvas;
+
+    // 1. Environmental & Capability Checks
+    const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if (prefersReducedMotion) return; // Keep Layer 1
+
+    // Mobile / Low power checks
+    const isMobile = window.innerWidth < 768;
+    if (isMobile) return; // Keep Layer 1 for battery & mobile GPU efficiency
+
+    const nav = navigator as any;
+    if (nav.connection && nav.connection.saveData) return;
+    if (nav.hardwareConcurrency && nav.hardwareConcurrency <= 4) return;
+    if (nav.deviceMemory && nav.deviceMemory < 4) return;
+
+    // 2. WebGL Context Initialization
+    let gl: WebGLRenderingContext | null = null;
+    try {
+      gl = (canvas.getContext('webgl', {
+        alpha: true,
+        antialias: false,
+        depth: false,
+        stencil: false,
+        powerPreference: 'low-power',
+        preserveDrawingBuffer: false
+      }) || canvas.getContext('experimental-webgl')) as WebGLRenderingContext | null;
+    } catch {
+      return; // Clean fallback
+    }
+
+    if (!gl) return; // Fall back to Layer 1
+
+    // 3. Shaders
+    const vsSource = `
+      attribute vec2 a_position;
+      varying vec2 v_uv;
+      void main() {
+        v_uv = (a_position + 1.0) * 0.5;
+        gl_Position = vec4(a_position, 0.0, 1.0);
+      }
+    `;
+
+    const fsSource = `
+      precision mediump float;
+      uniform vec2 u_resolution;
+      uniform float u_time;
+      uniform vec2 u_mouse;
+      varying vec2 v_uv;
+
+      void main() {
+        vec2 uv = gl_FragCoord.xy / u_resolution.xy;
+        // Invert Y for WebGL screen coordinates
+        uv.y = 1.0 - uv.y;
+
+        // Slow subtle parallax lerp offset
+        vec2 pOffset = (u_mouse - 0.5) * 0.08;
+
+        // Fluted glass optical normal calculation (vertical flutes)
+        float fluteCount = 28.0;
+        float flutePhase = uv.x * fluteCount;
+        float normalX = sin(flutePhase * 6.283185) * 0.35;
+
+        // Chromatic dispersion (RGB refractive separation at flute ridges)
+        float dispersion = 0.012 * (1.0 + abs(normalX));
+        
+        // Sample 3 color rays for dispersion effect
+        vec2 uvR = uv + vec2(normalX * 0.04 + dispersion + pOffset.x, pOffset.y * 0.5);
+        vec2 uvG = uv + vec2(normalX * 0.04 + pOffset.x, pOffset.y * 0.5);
+        vec2 uvB = uv + vec2(normalX * 0.04 - dispersion + pOffset.x, pOffset.y * 0.5);
+
+        // Aurora field coordinates
+        float waveTime = u_time * 0.15;
+        
+        // Red channel: Indigo accent influence (4F46E5)
+        float r1 = sin(uvR.x * 2.5 + waveTime) * cos(uvR.y * 2.0 - waveTime * 0.7);
+        float rDist = length(uvR - vec2(0.65 + pOffset.x, 0.35 + pOffset.y));
+        float rIntensity = exp(-rDist * 2.8) * 0.45;
+
+        // Green channel: Subtle neutral blend
+        float g1 = sin(uvG.x * 2.5 + waveTime * 1.1) * cos(uvG.y * 2.0 - waveTime * 0.8);
+        float gDist = length(uvG - vec2(0.55 + pOffset.x, 0.45 + pOffset.y));
+        float gIntensity = exp(-gDist * 3.2) * 0.28;
+
+        // Blue channel: Violet accent influence (8B5CF6)
+        float b1 = cos(uvB.x * 2.2 - waveTime * 0.9) * sin(uvB.y * 2.3 + waveTime);
+        float bDist = length(uvB - vec2(0.40 + pOffset.x, 0.60 + pOffset.y));
+        float bIntensity = exp(-bDist * 2.6) * 0.55;
+
+        // Ridge specular highlights on flute crests
+        float crest = max(0.0, normalX);
+        float specular = pow(crest, 6.0) * 0.14;
+
+        // Dark Studio base color mixing (#07080B background floor)
+        vec3 color = vec3(0.027, 0.031, 0.043); // #07080B
+        color.r += rIntensity * 0.31 + specular;
+        color.g += gIntensity * 0.22 + specular * 0.9;
+        color.b += bIntensity * 0.62 + specular * 1.1;
+
+        // Dark edge vignetting so text maintains contrast
+        float edgeVignette = smoothstep(0.0, 0.7, 1.0 - length((uv - 0.5) * 1.2));
+        color *= (0.55 + 0.45 * edgeVignette);
+
+        // Alpha transparency for seamless composition
+        float alpha = clamp(length(color) * 1.6, 0.0, 0.85);
+
+        gl_FragColor = vec4(color, alpha);
+      }
+    `;
+
+    function createShader(glCtx: WebGLRenderingContext, type: number, source: string) {
+      const shader = glCtx.createShader(type);
+      if (!shader) return null;
+      glCtx.shaderSource(shader, source);
+      glCtx.compileShader(shader);
+      if (!glCtx.getShaderParameter(shader, glCtx.COMPILE_STATUS)) {
+        glCtx.deleteShader(shader);
+        return null;
+      }
+      return shader;
+    }
+
+    const vs = createShader(gl, gl.VERTEX_SHADER, vsSource);
+    const fs = createShader(gl, gl.FRAGMENT_SHADER, fsSource);
+    if (!vs || !fs) return;
+
+    const program = gl.createProgram();
+    if (!program) return;
+    gl.attachShader(program, vs);
+    gl.attachShader(program, fs);
+    gl.linkProgram(program);
+
+    if (!gl.getProgramParameter(program, gl.LINK_STATUS)) {
+      gl.deleteProgram(program);
+      return;
+    }
+
+    // Geometry: Fullscreen Quad
+    const positionBuffer = gl.createBuffer();
+    gl.bindBuffer(gl.ARRAY_BUFFER, positionBuffer);
+    const positions = new Float32Array([
+      -1, -1,
+       1, -1,
+      -1,  1,
+       1,  1
+    ]);
+    gl.bufferData(gl.ARRAY_BUFFER, positions, gl.STATIC_DRAW);
+
+    const aPositionLoc = gl.getAttribLocation(program, 'a_position');
+    const uResolutionLoc = gl.getUniformLocation(program, 'u_resolution');
+    const uTimeLoc = gl.getUniformLocation(program, 'u_time');
+    const uMouseLoc = gl.getUniformLocation(program, 'u_mouse');
+
+    // 4. Parallax & Animation State
+    let targetMouseX = 0.5;
+    let targetMouseY = 0.5;
+    let currentMouseX = 0.5;
+    let currentMouseY = 0.5;
+    let isVisible = false;
+    let animFrameId = 0;
+    let lastRenderTime = 0;
+    const targetFps = 45;
+    const frameInterval = 1000 / targetFps;
+
+    function handleMouseMove(e: MouseEvent) {
+      const rect = heroCanvas.getBoundingClientRect();
+      if (rect.width > 0 && rect.height > 0) {
+        targetMouseX = (e.clientX - rect.left) / rect.width;
+        targetMouseY = (e.clientY - rect.top) / rect.height;
+      }
+    }
+
+    window.addEventListener('pointermove', handleMouseMove, { passive: true });
+
+    // Handle Resize & Device Pixel Ratio
+    function resizeCanvas() {
+      if (!heroCanvas || !gl) return;
+      const dpr = Math.min(window.devicePixelRatio || 1, 1.5);
+      const width = Math.floor(heroCanvas.clientWidth * dpr);
+      const height = Math.floor(heroCanvas.clientHeight * dpr);
+      if (heroCanvas.width !== width || heroCanvas.height !== height) {
+        heroCanvas.width = width;
+        heroCanvas.height = height;
+        gl.viewport(0, 0, width, height);
+      }
+    }
+
+    window.addEventListener('resize', resizeCanvas, { passive: true });
+    resizeCanvas();
+
+    // Fade in canvas smoothly once ready
+    heroCanvas.style.opacity = '1';
+
+    // 5. Render Loop with Viewport Visibility Throttling
+    function render(now: number) {
+      if (!isVisible || document.hidden) {
+        animFrameId = requestAnimationFrame(render);
+        return;
+      }
+
+      if (now - lastRenderTime < frameInterval) {
+        animFrameId = requestAnimationFrame(render);
+        return;
+      }
+      lastRenderTime = now;
+
+      // Pointer lerp smoothing
+      currentMouseX += (targetMouseX - currentMouseX) * 0.05;
+      currentMouseY += (targetMouseY - currentMouseY) * 0.05;
+
+      gl!.useProgram(program);
+      gl!.bindBuffer(gl!.ARRAY_BUFFER, positionBuffer);
+      gl!.enableVertexAttribArray(aPositionLoc);
+      gl!.vertexAttribPointer(aPositionLoc, 2, gl!.FLOAT, false, 0, 0);
+
+      gl!.uniform2f(uResolutionLoc, heroCanvas.width, heroCanvas.height);
+      gl!.uniform1f(uTimeLoc, now * 0.001);
+      gl!.uniform2f(uMouseLoc, currentMouseX, currentMouseY);
+
+      gl!.drawArrays(gl!.TRIANGLE_STRIP, 0, 4);
+
+      animFrameId = requestAnimationFrame(render);
+    }
+
+    // 6. Intersection Observer: Pause when scrolled out of view
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        isVisible = entry.isIntersecting;
+      });
+    }, { threshold: 0.05 });
+
+    observer.observe(canvas);
+
+    // 7. Context Loss Handling
+    canvas.addEventListener('webglcontextlost', (e) => {
+      e.preventDefault();
+      cancelAnimationFrame(animFrameId);
+      observer.disconnect();
+      window.removeEventListener('pointermove', handleMouseMove);
+      window.removeEventListener('resize', resizeCanvas);
+      canvas.style.opacity = '0';
+    }, false);
+
+    // Start render loop after first paint
+    requestAnimationFrame((t) => {
+      isVisible = true;
+      render(t);
+    });
+  }
+
+  // Defer initialization until DOM is ready and hero is visible
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initHeroPrism);
+  } else {
+    initHeroPrism();
+  }
+  document.addEventListener('astro:after-swap', initHeroPrism);
+</script>
+
+<style>
+  .hero-prism-stage {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    pointer-events: none;
+    z-index: 0;
+    contain: strict;
+  }
+
+  /* Layer 1: Zero-JS CSS-only Poster & Fallback */
+  .hero-poster {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    background-color: var(--color-surface-base);
+  }
+
+  .aurora-glow {
+    position: absolute;
+    border-radius: var(--radius-full);
+    filter: blur(var(--glass-blur-lg));
+    pointer-events: none;
+    opacity: 0.65;
+  }
+
+  .aurora-primary {
+    top: -15%;
+    right: 10%;
+    width: clamp(280px, 45vw, 620px);
+    height: clamp(280px, 45vw, 620px);
+    background: radial-gradient(circle, rgba(79, 70, 229, 0.24) 0%, rgba(139, 92, 246, 0.12) 50%, transparent 75%);
+  }
+
+  .aurora-secondary {
+    bottom: -10%;
+    left: 5%;
+    width: clamp(240px, 40vw, 520px);
+    height: clamp(240px, 40vw, 520px);
+    background: radial-gradient(circle, rgba(139, 92, 246, 0.18) 0%, rgba(99, 102, 241, 0.08) 55%, transparent 75%);
+  }
+
+  /* Fluted glass ribbed lines via repeating linear gradient */
+  .fluted-glass-grid {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    background-image: repeating-linear-gradient(
+      90deg,
+      rgba(255, 255, 255, 0.025) 0px,
+      rgba(255, 255, 255, 0.01) 6px,
+      rgba(0, 0, 0, 0.35) 12px,
+      rgba(255, 255, 255, 0.035) 16px
+    );
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    opacity: 0.85;
+  }
+
+  .specular-highlight {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 1px;
+    background: linear-gradient(90deg, transparent 0%, rgba(255, 255, 255, 0.12) 50%, transparent 100%);
+  }
+
+  /* Layer 2: WebGL Canvas */
+  .hero-prism-canvas {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    opacity: 0;
+    transition: opacity 0.8s var(--ease-spring);
+    pointer-events: none;
+  }
+
+  /* Prefers-reduced-motion: Ensure canvas never shows, keep poster static */
+  @media (prefers-reduced-motion: reduce) {
+    .hero-prism-canvas {
+      display: none !important;
+    }
+    .aurora-glow {
+      filter: blur(20px);
+    }
+  }
+</style>
