@@ -1,0 +1,22 @@
+{
+  "name": "naruka-ai-labs-site",
+  "type": "module",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Official website for Naruka AI Labs (https://orgs.social)",
+  "scripts": {
+    "dev": "astro dev",
+    "start": "astro dev",
+    "build": "astro build",
+    "preview": "astro preview",
+    "check": "astro check",
+    "lint": "astro check"
+  },
+  "dependencies": {
+    "astro": "^7.3.8"
+  },
+  "devDependencies": {
+    "@astrojs/check": "^0.9.10",
+    "typescript": "^5.7.3"
+  }
+}

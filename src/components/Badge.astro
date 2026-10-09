@@ -1,0 +1,100 @@
+---
+interface Props {
+  variant?: 'in-development' | 'live-prototype' | 'demo-data' | 'planned' | 'neutral';
+  text?: string;
+  class?: string;
+}
+
+const { variant = 'in-development', text, class: className = '' } = Astro.props;
+
+const defaultTexts: Record<string, string> = {
+  'in-development': 'In Active Development',
+  'live-prototype': 'Live Prototype',
+  'demo-data': 'Demo Data / Simulated',
+  'planned': 'Planned / Concept',
+  'neutral': 'Studio Project'
+};
+
+const displayText = text || defaultTexts[variant];
+---
+
+<span class={`badge badge-${variant} ${className}`}>
+  <span class="badge-dot" aria-hidden="true"></span>
+  <span class="badge-label">{displayText}</span>
+</span>
+
+<style>
+  .badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    padding: 4px 11px;
+    border-radius: var(--radius-full);
+    font-size: 0.75rem;
+    font-weight: 600;
+    letter-spacing: 0.02em;
+    text-transform: uppercase;
+    width: fit-content;
+    white-space: nowrap;
+  }
+
+  .badge-dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    flex-shrink: 0;
+  }
+
+  /* In Development */
+  .badge-in-development {
+    background: rgba(99, 102, 241, 0.12);
+    color: var(--accent-indigo-light);
+    border: 1px solid rgba(99, 102, 241, 0.28);
+  }
+  .badge-in-development .badge-dot {
+    background: var(--accent-indigo-light);
+    box-shadow: 0 0 8px var(--accent-indigo);
+  }
+
+  /* Live Prototype */
+  .badge-live-prototype {
+    background: var(--setu-emerald-bg);
+    color: var(--setu-emerald-light);
+    border: 1px solid var(--setu-emerald-border);
+  }
+  .badge-live-prototype .badge-dot {
+    background: var(--setu-emerald);
+    box-shadow: 0 0 8px var(--setu-emerald);
+  }
+
+  /* Demo Data / Simulated */
+  .badge-demo-data {
+    background: var(--fieldbook-amber-bg);
+    color: var(--fieldbook-amber-light);
+    border: 1px solid var(--fieldbook-amber-border);
+  }
+  .badge-demo-data .badge-dot {
+    background: var(--fieldbook-amber);
+    box-shadow: 0 0 8px var(--fieldbook-amber);
+  }
+
+  /* Planned / Concept */
+  .badge-planned {
+    background: rgba(148, 163, 184, 0.10);
+    color: #CBD5E1;
+    border: 1px solid rgba(148, 163, 184, 0.22);
+  }
+  .badge-planned .badge-dot {
+    background: #94A3B8;
+  }
+
+  /* Neutral */
+  .badge-neutral {
+    background: rgba(255, 255, 255, 0.06);
+    color: var(--text-secondary);
+    border: 1px solid var(--border-glass);
+  }
+  .badge-neutral .badge-dot {
+    background: var(--text-muted);
+  }
+</style>

@@ -1,0 +1,122 @@
+---
+import Navbar from '../components/Navbar.astro';
+import Footer from '../components/Footer.astro';
+import '../styles/global.css';
+
+interface Props {
+  title?: string;
+  description?: string;
+  ogImage?: string;
+  ogType?: string;
+  canonicalPath?: string;
+}
+
+const {
+  title = 'Naruka AI Labs — Practical AI Product Studio',
+  description = 'An early-stage, founder-led AI product studio building practical software products, including Setu (interoperability gateway) and Field Book (campus attendance & certificates).',
+  ogImage = '/og-image.svg',
+  ogType = 'website',
+  canonicalPath
+} = Astro.props;
+
+const siteUrl = 'https://orgs.social';
+const canonicalURL = canonicalPath
+  ? new URL(canonicalPath, siteUrl).toString()
+  : new URL(Astro.url.pathname, siteUrl).toString();
+
+const pageTitle = title.includes('Naruka AI Labs') ? title : `${title} | Naruka AI Labs`;
+
+const schemaData = {
+  '@context': 'https://schema.org',
+  '@graph': [
+    {
+      '@type': 'Organization',
+      '@id': `${siteUrl}/#organization`,
+      name: 'Naruka AI Labs',
+      url: siteUrl,
+      logo: `${siteUrl}/favicon.svg`,
+      founder: {
+        '@type': 'Person',
+        name: 'Prince Naruka',
+        url: 'https://www.linkedin.com/in/prince-naruka-26581236b/'
+      },
+      sameAs: [
+        'https://github.com/princeji2/naruka-ai-labs',
+        'https://www.linkedin.com/in/prince-naruka-26581236b/'
+      ],
+      description: 'An independent, founder-led AI product studio building practical software products.'
+    },
+    {
+      '@type': 'WebSite',
+      '@id': `${siteUrl}/#website`,
+      url: siteUrl,
+      name: 'Naruka AI Labs',
+      publisher: {
+        '@id': `${siteUrl}/#organization`
+      }
+    }
+  ]
+};
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="generator" content={Astro.generator} />
+
+    <!-- Canonical URL -->
+    <link rel="canonical" href={canonicalURL} />
+
+    <!-- SEO Primary -->
+    <title>{pageTitle}</title>
+    <meta name="title" content={pageTitle} />
+    <meta name="description" content={description} />
+    <meta name="theme-color" content="#07080B" />
+    <meta name="color-scheme" content="dark" />
+
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content={ogType} />
+    <meta property="og:url" content={canonicalURL} />
+    <meta property="og:title" content={pageTitle} />
+    <meta property="og:description" content={description} />
+    <meta property="og:image" content={new URL(ogImage, siteUrl).toString()} />
+    <meta property="og:site_name" content="Naruka AI Labs" />
+
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image" />
+    <meta property="twitter:url" content={canonicalURL} />
+    <meta property="twitter:title" content={pageTitle} />
+    <meta property="twitter:description" content={description} />
+    <meta property="twitter:image" content={new URL(ogImage, siteUrl).toString()} />
+
+    <!-- Optimized Typography Loading -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Plus+Jakarta+Sans:wght@600;700;800&family=JetBrains+Mono:wght@400;500&display=swap"
+      rel="stylesheet"
+    />
+
+    <!-- JSON-LD Structured Data -->
+    <script type="application/ld+json" set:html={JSON.stringify(schemaData)} />
+  </head>
+  <body>
+    <a href="#main-content" class="skip-link">Skip to main content</a>
+    <Navbar />
+    <main id="main-content">
+      <slot />
+    </main>
+    <Footer />
+  </body>
+</html>
+
+<style>
+  main {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+  }
+</style>

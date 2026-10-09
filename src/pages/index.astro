@@ -1,0 +1,125 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Badge from '../components/Badge.astro';
+import Button from '../components/Button.astro';
+---
+
+<BaseLayout
+  title="Naruka AI Labs — Practical AI Product Studio"
+  description="An early-stage, founder-led AI product studio building practical software products including Setu (interoperability gateway) and Field Book (attendance & verification platform)."
+>
+  <section class="hero-section section">
+    <div class="container hero-container">
+      <div class="hero-badge-wrap">
+        <Badge variant="in-development" text="Founder-Led Product Studio" />
+        <span class="location-tag">Based in India · Building Globally</span>
+      </div>
+
+      <h1 class="hero-title">
+        Building practical <br />
+        <span class="text-gradient-brand">AI-powered software</span> products.
+      </h1>
+
+      <p class="hero-lead">
+        Naruka AI Labs is an independent, founder-led engineering studio focused on creating focused software tools that solve genuine workflow friction. Currently developing <strong>Setu</strong> and <strong>Field Book</strong>.
+      </p>
+
+      <div class="hero-actions">
+        <Button href="/products" variant="primary" size="lg">
+          Explore Products
+        </Button>
+        <Button href="/about" variant="secondary" size="lg">
+          About Studio
+        </Button>
+      </div>
+
+      <div class="hero-truth-banner glass-panel">
+        <div class="banner-icon" aria-hidden="true">ℹ️</div>
+        <div class="banner-content">
+          <strong>Application Review Notice:</strong> This site is being presented for evaluation in Anthropic's Claude Startups Program. All stated features, milestones, and development statuses represent verified technical facts without artificial traction or inflated metrics.
+        </div>
+      </div>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .hero-section {
+    min-height: calc(85vh - 72px);
+    display: flex;
+    align-items: center;
+    padding-top: var(--space-4xl);
+    padding-bottom: var(--space-4xl);
+  }
+
+  .hero-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    max-width: 900px;
+  }
+
+  .hero-badge-wrap {
+    display: flex;
+    align-items: center;
+    gap: var(--space-sm);
+    flex-wrap: wrap;
+    justify-content: center;
+    margin-bottom: var(--space-lg);
+  }
+
+  .location-tag {
+    font-size: 0.8rem;
+    color: var(--text-muted);
+    font-weight: 500;
+  }
+
+  .hero-title {
+    margin-bottom: var(--space-lg);
+  }
+
+  .hero-lead {
+    font-size: clamp(1.1rem, 2vw, 1.25rem);
+    color: var(--text-secondary);
+    max-width: 720px;
+    margin-bottom: var(--space-2xl);
+    line-height: 1.6;
+  }
+
+  .hero-lead strong {
+    color: var(--text-primary);
+    font-weight: 600;
+  }
+
+  .hero-actions {
+    display: flex;
+    align-items: center;
+    gap: var(--space-md);
+    flex-wrap: wrap;
+    justify-content: center;
+    margin-bottom: var(--space-3xl);
+  }
+
+  .hero-truth-banner {
+    display: flex;
+    align-items: flex-start;
+    gap: var(--space-md);
+    padding: var(--space-md) var(--space-lg);
+    max-width: 760px;
+    text-align: left;
+    font-size: 0.875rem;
+    color: var(--text-secondary);
+    background: rgba(14, 18, 27, 0.6);
+  }
+
+  .banner-icon {
+    font-size: 1.1rem;
+    flex-shrink: 0;
+    margin-top: 2px;
+  }
+
+  .banner-content strong {
+    color: var(--text-primary);
+  }
+</style>

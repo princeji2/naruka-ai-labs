@@ -1,0 +1,266 @@
+---
+import Logo from './Logo.astro';
+---
+
+<footer class="site-footer" id="site-footer">
+  <div class="container footer-container">
+    <div class="footer-top">
+      <div class="footer-brand">
+        <a href="/" class="footer-logo-link" aria-label="Naruka AI Labs Home">
+          <Logo size={28} />
+        </a>
+        <p class="footer-tagline">
+          An independent, founder-led AI product studio building practical, domain-focused software.
+        </p>
+        <div class="footer-contact-item">
+          <span class="label">Inquiries & Contact:</span>
+          <a href="mailto:naruka@orgs.social" class="email-link">naruka@orgs.social</a>
+        </div>
+      </div>
+
+      <div class="footer-nav-grid">
+        <div class="footer-col">
+          <h4 class="footer-col-title">Products</h4>
+          <ul class="footer-link-list">
+            <li><a href="/products/setu" class="footer-link">Setu (Interoperability Gateway)</a></li>
+            <li><a href="/products/field-book" class="footer-link">Field Book (Attendance Ledger)</a></li>
+            <li><a href="/products" class="footer-link">Products Overview</a></li>
+          </ul>
+        </div>
+
+        <div class="footer-col">
+          <h4 class="footer-col-title">Studio</h4>
+          <ul class="footer-link-list">
+            <li><a href="/about" class="footer-link">About Studio</a></li>
+            <li><a href="/contact" class="footer-link">Contact & Inquiries</a></li>
+            <li>
+              <a href="https://github.com/princeji2/naruka-ai-labs" target="_blank" rel="noopener noreferrer" class="footer-link">
+                GitHub Repository
+              </a>
+            </li>
+            <li>
+              <a href="https://www.linkedin.com/in/prince-naruka-26581236b/" target="_blank" rel="noopener noreferrer" class="footer-link">
+                Founder LinkedIn
+              </a>
+            </li>
+          </ul>
+        </div>
+
+        <div class="footer-col">
+          <h4 class="footer-col-title">Legal & Trust</h4>
+          <ul class="footer-link-list">
+            <li><a href="/privacy" class="footer-link">Privacy Policy</a></li>
+            <li><a href="/terms" class="footer-link">Terms of Service</a></li>
+            <li>
+              <span class="host-pill">Hosted on Vercel · orgs.social</span>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <!-- Truthful Verification Notice -->
+    <div class="footer-disclosure">
+      <p>
+        <strong>Truthful Disclosure:</strong> Naruka AI Labs is an early-stage, founder-led software venture founded by Prince Naruka. 
+        Setu originated as a Smart India Hackathon project (SIH 26129) and operates with simulated demo backends; it is not affiliated with or endorsed by government agencies. 
+        Field Book is an active campus attendance & certificate verification prototype.
+      </p>
+    </div>
+
+    <div class="footer-bottom">
+      <p class="copyright">
+        © 2026 Naruka AI Labs. Website open source under MIT License. Product code and trademarks separate.
+      </p>
+      <div class="footer-badges">
+        <span class="status-indicator">
+          <span class="pulse-dot"></span>
+          Claude Startups Program Applicant
+        </span>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<style>
+  .site-footer {
+    background: #060709;
+    border-top: 1px solid var(--border-glass);
+    padding-top: var(--space-4xl);
+    padding-bottom: var(--space-2xl);
+    margin-top: auto;
+  }
+
+  .footer-container {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-2xl);
+  }
+
+  .footer-top {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: var(--space-2xl);
+  }
+
+  @media (min-width: 860px) {
+    .footer-top {
+      grid-template-columns: 1.3fr 2fr;
+      gap: var(--space-3xl);
+    }
+  }
+
+  .footer-brand {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-md);
+    max-width: 380px;
+  }
+
+  .footer-logo-link {
+    display: inline-block;
+  }
+
+  .footer-tagline {
+    font-size: 0.95rem;
+    color: var(--text-secondary);
+    line-height: 1.6;
+  }
+
+  .footer-contact-item {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    margin-top: var(--space-xs);
+  }
+
+  .footer-contact-item .label {
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: var(--text-muted);
+  }
+
+  .email-link {
+    font-size: 0.95rem;
+    color: var(--accent-indigo-light);
+    font-weight: 500;
+  }
+
+  .email-link:hover {
+    text-decoration: underline;
+  }
+
+  .footer-nav-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+    gap: var(--space-xl);
+  }
+
+  .footer-col {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-md);
+  }
+
+  .footer-col-title {
+    font-size: 0.85rem;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: var(--text-primary);
+    font-weight: 700;
+  }
+
+  .footer-link-list {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-sm);
+  }
+
+  .footer-link {
+    font-size: 0.9rem;
+    color: var(--text-secondary);
+    transition: color var(--transition-fast);
+  }
+
+  .footer-link:hover {
+    color: var(--text-primary);
+  }
+
+  .host-pill {
+    display: inline-block;
+    font-size: 0.75rem;
+    padding: 3px 8px;
+    background: rgba(255, 255, 255, 0.04);
+    border: 1px solid var(--border-subtle);
+    border-radius: var(--radius-xs);
+    color: var(--text-muted);
+  }
+
+  /* Disclosure */
+  .footer-disclosure {
+    padding: var(--space-md) var(--space-lg);
+    background: rgba(255, 255, 255, 0.02);
+    border: 1px solid var(--border-subtle);
+    border-radius: var(--radius-sm);
+  }
+
+  .footer-disclosure p {
+    font-size: 0.825rem;
+    line-height: 1.6;
+    color: var(--text-muted);
+  }
+
+  .footer-disclosure strong {
+    color: var(--text-secondary);
+  }
+
+  /* Footer Bottom */
+  .footer-bottom {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-md);
+    padding-top: var(--space-lg);
+    border-top: 1px solid var(--border-subtle);
+    align-items: flex-start;
+  }
+
+  @media (min-width: 640px) {
+    .footer-bottom {
+      flex-direction: row;
+      justify-content: space-between;
+      align-items: center;
+    }
+  }
+
+  .copyright {
+    font-size: 0.825rem;
+    color: var(--text-muted);
+  }
+
+  .footer-badges {
+    display: flex;
+    align-items: center;
+  }
+
+  .status-indicator {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 0.775rem;
+    color: var(--text-secondary);
+    background: rgba(99, 102, 241, 0.08);
+    border: 1px solid rgba(99, 102, 241, 0.2);
+    padding: 4px 10px;
+    border-radius: var(--radius-full);
+  }
+
+  .pulse-dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: var(--accent-indigo-light);
+    box-shadow: 0 0 8px var(--accent-indigo);
+  }
+</style>
