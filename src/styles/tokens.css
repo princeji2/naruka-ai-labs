@@ -146,7 +146,7 @@
   /* 5b. Palette-derived roles (mixes of the colours above, no new hues) */
   --surface-2: color-mix(in srgb, var(--surface) 50%, var(--border));
   /* Hover brightens Primary: dark --on-brand text gains contrast (5.5:1 -> 6.5:1) instead of losing it */
-  --primary-hover: color-mix(in srgb, var(--primary) 85%, #fff);
+  --primary-hover: color-mix(in srgb, var(--primary) 85%, rgb(var(--white-rgb)));
   --success: var(--primary);  /* not in the image: reuses Primary */
   --warning: var(--accent);   /* not in the image: mapped to Accent by decision */
 
@@ -168,7 +168,7 @@
 
   /* Surfaces */
   --color-surface-base: var(--bg);
-  --color-surface-deep: color-mix(in srgb, var(--bg) 78%, #000);
+  --color-surface-deep: color-mix(in srgb, var(--bg) 78%, rgb(var(--black-rgb)));
   --color-surface-card: var(--surface);
   --color-surface-raised: var(--surface-2);
   --color-surface-hover: color-mix(in srgb, var(--surface) 25%, var(--border));
@@ -199,7 +199,7 @@
        accent-indigo -> Primary (green)    accent-violet -> Accent (cornflower) */
   --accent-indigo: var(--primary);
   --accent-indigo-hover: var(--primary-hover);
-  --accent-indigo-light: color-mix(in srgb, var(--primary) 70%, #fff);
+  --accent-indigo-light: color-mix(in srgb, var(--primary) 70%, rgb(var(--white-rgb)));
   --accent-indigo-glow: rgba(var(--primary-rgb), 0.25);
   --accent-violet: var(--accent);
   --accent-violet-glow: rgba(var(--accent-rgb), 0.20);
@@ -213,7 +213,7 @@
   --setu-emerald-border: rgba(var(--primary-rgb), 0.25);
 
   --fieldbook-amber: var(--accent);
-  --fieldbook-amber-light: color-mix(in srgb, var(--accent) 75%, #fff);
+  --fieldbook-amber-light: color-mix(in srgb, var(--accent) 75%, rgb(var(--white-rgb)));
   --fieldbook-amber-bg: rgba(var(--accent-rgb), 0.10);
   --fieldbook-amber-border: rgba(var(--accent-rgb), 0.25);
 
@@ -251,7 +251,7 @@
   /* Bigger surfaces read thicker: top-edge highlight + deeper, softer drop shadow */
   --shadow-card: inset 0 1px 0 0 rgba(var(--white-rgb), 0.07), 0 18px 48px -18px rgba(var(--black-rgb), 0.7);
   --shadow-card-hover: inset 0 1px 0 0 rgba(var(--white-rgb), 0.10), 0 24px 56px -20px rgba(var(--black-rgb), 0.8);
-  /* Card lift (card spec: 0 20px 40px rgba(0,0,0,.35)) */
+  /* Card lift (card spec: 0 20px 40px, black at 35%) */
   --shadow-card-lift: 0 20px 40px rgba(var(--black-rgb), 0.35);
 
   /* Card gradients: diagonal, lighter top-left to deeper bottom-right, tinted from the palette.

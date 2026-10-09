@@ -428,6 +428,8 @@ const hasSlot = Astro.slots.has('default');
 
   /* ---------------- Variants (via the `class` prop) ---------------- */
   .card-wide {
+    /* Content sets the height: the 220px floor left empty space under short clauses */
+    min-height: 0;
     --card-hover-lift: -3px;
     --card-hover-scale: 1.005;
   }

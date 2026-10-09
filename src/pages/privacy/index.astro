@@ -122,8 +122,9 @@ import Card from '../../components/ui/Card.astro';
     color: var(--accent-indigo-light);
   }
 
-  /* One card per clause */
+  /* One card per clause. Top margin matches the clause-to-clause gap after the advisory notice. */
   .legal-body {
+    margin-top: var(--space-md);
     display: flex;
     flex-direction: column;
     gap: var(--space-xl);

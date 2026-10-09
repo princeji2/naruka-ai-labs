@@ -10,6 +10,8 @@ interface Props {
   ogImage?: string;
   ogType?: string;
   canonicalPath?: string;
+  /** Adds <meta name="robots" content="noindex, nofollow">. For placeholder pages such as /signin. */
+  noindex?: boolean;
 }
 
 const {
@@ -17,7 +19,8 @@ const {
   description = 'An early-stage, founder-led AI product studio building practical software products, including Setu (interoperability gateway) and Field Book (campus attendance & certificates).',
   ogImage = '/og-image.svg',
   ogType = 'website',
-  canonicalPath
+  canonicalPath,
+  noindex = false
 } = Astro.props;
 
 const siteUrl = 'https://orgs.social';
@@ -67,6 +70,7 @@ const schemaData = {
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <meta name="generator" content={Astro.generator} />
+    {noindex && <meta name="robots" content="noindex, nofollow" />}
 
     <!-- Canonical URL -->
     <link rel="canonical" href={canonicalURL} />
@@ -75,6 +79,7 @@ const schemaData = {
     <title>{pageTitle}</title>
     <meta name="title" content={pageTitle} />
     <meta name="description" content={description} />
+    {/* theme-color must be a literal value (HTML attributes cannot read CSS variables). Keep in sync with --bg in tokens.css. */}
     <meta name="theme-color" content="#1A1D23" />
     <meta name="color-scheme" content="dark" />
 
