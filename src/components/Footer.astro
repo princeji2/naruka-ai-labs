@@ -84,7 +84,7 @@ import Logo from './Logo.astro';
 
 <style>
   .site-footer {
-    background: #060709;
+    background: var(--color-surface-base);
     border-top: 1px solid var(--border-glass);
     padding-top: var(--space-4xl);
     padding-bottom: var(--space-2xl);
@@ -119,36 +119,48 @@ import Logo from './Logo.astro';
 
   .footer-logo-link {
     display: inline-block;
+    border-radius: var(--radius-xs);
+  }
+
+  .footer-logo-link:focus-visible {
+    outline: var(--state-focus-outline);
+    outline-offset: var(--state-focus-ring-offset);
   }
 
   .footer-tagline {
-    font-size: 0.95rem;
-    color: var(--text-secondary);
-    line-height: 1.6;
+    font-size: var(--font-size-md);
+    color: var(--color-text-secondary);
+    line-height: var(--line-height-relaxed);
   }
 
   .footer-contact-item {
     display: flex;
     flex-direction: column;
-    gap: 4px;
+    gap: var(--space-1);
     margin-top: var(--space-xs);
   }
 
   .footer-contact-item .label {
-    font-size: 0.75rem;
+    font-size: var(--font-size-xs);
     text-transform: uppercase;
-    letter-spacing: 0.05em;
-    color: var(--text-muted);
+    letter-spacing: var(--letter-spacing-wide);
+    color: var(--color-text-muted);
   }
 
   .email-link {
-    font-size: 0.95rem;
+    font-size: var(--font-size-md);
     color: var(--accent-indigo-light);
-    font-weight: 500;
+    font-weight: var(--font-weight-medium);
+    border-radius: var(--radius-xs);
   }
 
   .email-link:hover {
     text-decoration: underline;
+  }
+
+  .email-link:focus-visible {
+    outline: var(--state-focus-outline);
+    outline-offset: var(--state-focus-ring-offset);
   }
 
   .footer-nav-grid {
@@ -164,11 +176,11 @@ import Logo from './Logo.astro';
   }
 
   .footer-col-title {
-    font-size: 0.85rem;
+    font-size: var(--font-size-sm);
     text-transform: uppercase;
-    letter-spacing: 0.06em;
-    color: var(--text-primary);
-    font-weight: 700;
+    letter-spacing: var(--letter-spacing-wide);
+    color: var(--color-text-primary);
+    font-weight: var(--font-weight-bold);
   }
 
   .footer-link-list {
@@ -179,23 +191,30 @@ import Logo from './Logo.astro';
   }
 
   .footer-link {
-    font-size: 0.9rem;
-    color: var(--text-secondary);
+    font-size: var(--font-size-md);
+    color: var(--color-text-secondary);
     transition: color var(--transition-fast);
+    border-radius: var(--radius-xs);
+    display: inline-block;
   }
 
   .footer-link:hover {
-    color: var(--text-primary);
+    color: var(--color-text-primary);
+  }
+
+  .footer-link:focus-visible {
+    outline: var(--state-focus-outline);
+    outline-offset: var(--state-focus-ring-offset);
   }
 
   .host-pill {
     display: inline-block;
-    font-size: 0.75rem;
-    padding: 3px 8px;
+    font-size: var(--font-size-xs);
+    padding: var(--space-1) var(--space-3);
     background: rgba(255, 255, 255, 0.04);
     border: 1px solid var(--border-subtle);
     border-radius: var(--radius-xs);
-    color: var(--text-muted);
+    color: var(--color-text-muted);
   }
 
   /* Disclosure */
@@ -207,13 +226,13 @@ import Logo from './Logo.astro';
   }
 
   .footer-disclosure p {
-    font-size: 0.825rem;
-    line-height: 1.6;
-    color: var(--text-muted);
+    font-size: var(--font-size-sm);
+    line-height: var(--line-height-relaxed);
+    color: var(--color-text-muted);
   }
 
   .footer-disclosure strong {
-    color: var(--text-secondary);
+    color: var(--color-text-secondary);
   }
 
   /* Footer Bottom */
@@ -235,8 +254,8 @@ import Logo from './Logo.astro';
   }
 
   .copyright {
-    font-size: 0.825rem;
-    color: var(--text-muted);
+    font-size: var(--font-size-sm);
+    color: var(--color-text-muted);
   }
 
   .footer-badges {
@@ -247,20 +266,20 @@ import Logo from './Logo.astro';
   .status-indicator {
     display: inline-flex;
     align-items: center;
-    gap: 8px;
-    font-size: 0.775rem;
-    color: var(--text-secondary);
+    gap: var(--space-3);
+    font-size: var(--font-size-xs);
+    color: var(--color-text-secondary);
     background: rgba(99, 102, 241, 0.08);
     border: 1px solid rgba(99, 102, 241, 0.2);
-    padding: 4px 10px;
+    padding: var(--space-2) var(--space-4);
     border-radius: var(--radius-full);
   }
 
   .pulse-dot {
-    width: 6px;
-    height: 6px;
-    border-radius: 50%;
+    width: var(--space-3);
+    height: var(--space-3);
+    border-radius: var(--radius-full);
     background: var(--accent-indigo-light);
-    box-shadow: 0 0 8px var(--accent-indigo);
+    box-shadow: 0 0 var(--space-3) var(--accent-indigo);
   }
 </style>

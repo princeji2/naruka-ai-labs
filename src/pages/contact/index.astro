@@ -44,7 +44,12 @@ import Button from '../../components/Button.astro';
               <Button href="mailto:naruka@orgs.social" variant="primary" size="md">
                 Compose Email ↗
               </Button>
-              <button type="button" class="copy-email-btn" id="copy-btn">
+              <button
+                type="button"
+                class="copy-email-btn"
+                id="copy-btn"
+                aria-label="Copy Address: naruka@orgs.social"
+              >
                 <span id="copy-text">Copy Address</span>
               </button>
             </div>
@@ -116,16 +121,30 @@ import Button from '../../components/Button.astro';
     if (!copyBtn || !copyText) return;
 
     copyBtn.addEventListener('click', async () => {
+      copyBtn.setAttribute('aria-busy', 'true');
       try {
+        if (!navigator.clipboard || !navigator.clipboard.writeText) {
+          throw new Error('Clipboard API not supported');
+        }
         await navigator.clipboard.writeText('naruka@orgs.social');
         copyText.textContent = 'Copied to Clipboard!';
+        copyBtn.classList.remove('is-error');
         copyBtn.classList.add('copied');
         setTimeout(() => {
           copyText.textContent = 'Copy Address';
           copyBtn.classList.remove('copied');
+          copyBtn.removeAttribute('aria-busy');
         }, 2200);
       } catch (err) {
-        copyText.textContent = 'naruka@orgs.social';
+        console.warn('Clipboard write failed:', err);
+        copyText.textContent = 'Copy Failed — Select Below';
+        copyBtn.classList.remove('copied');
+        copyBtn.classList.add('is-error');
+        setTimeout(() => {
+          copyText.textContent = 'Copy Address';
+          copyBtn.classList.remove('is-error');
+          copyBtn.removeAttribute('aria-busy');
+        }, 3000);
       }
     });
   }
@@ -154,13 +173,13 @@ import Button from '../../components/Button.astro';
   }
 
   .contact-title {
-    font-size: clamp(2.2rem, 4vw, 3.25rem);
-    line-height: 1.15;
+    font-size: var(--font-size-6xl);
+    line-height: var(--line-height-tight);
   }
 
   .contact-lead {
-    font-size: 1.15rem;
-    color: var(--text-secondary);
+    font-size: var(--font-size-lg);
+    color: var(--color-text-secondary);
     max-width: 680px;
     margin-bottom: var(--space-xl);
   }
@@ -193,8 +212,8 @@ import Button from '../../components/Button.astro';
   }
 
   .channel-icon {
-    width: 48px;
-    height: 48px;
+    width: var(--space-8);
+    height: var(--space-8);
     border-radius: var(--radius-md);
     background: rgba(99, 102, 241, 0.15);
     color: var(--accent-indigo-light);
@@ -207,39 +226,46 @@ import Button from '../../components/Button.astro';
   .channel-body {
     display: flex;
     flex-direction: column;
-    gap: 4px;
+    gap: var(--space-1);
     flex: 1;
   }
 
   .channel-label {
-    font-size: 0.75rem;
+    font-size: var(--font-size-xs);
     text-transform: uppercase;
-    letter-spacing: 0.05em;
-    color: var(--text-muted);
-    font-weight: 700;
+    letter-spacing: var(--letter-spacing-wide);
+    color: var(--color-text-muted);
+    font-weight: var(--font-weight-bold);
   }
 
   .channel-main-link {
     font-family: var(--font-display);
-    font-size: clamp(1.3rem, 2.5vw, 1.75rem);
-    font-weight: 700;
-    color: var(--text-primary);
+    font-size: var(--font-size-4xl);
+    font-weight: var(--font-weight-bold);
+    color: var(--color-text-primary);
+    border-radius: var(--radius-xs);
+    display: inline-block;
   }
 
   .channel-main-link:hover {
     color: var(--accent-indigo-light);
   }
 
+  .channel-main-link:focus-visible {
+    outline: var(--state-focus-outline);
+    outline-offset: var(--state-focus-ring-offset);
+  }
+
   .channel-note {
-    font-size: 0.85rem;
-    color: var(--text-muted);
+    font-size: var(--font-size-sm);
+    color: var(--color-text-muted);
   }
 
   .channel-note code {
     background: rgba(0, 0, 0, 0.4);
-    padding: 1px 4px;
-    border-radius: 3px;
-    color: #CBD5E1;
+    padding: var(--space-1) var(--space-2);
+    border-radius: var(--radius-xs);
+    color: var(--color-text-secondary);
   }
 
   .channel-action {
@@ -250,27 +276,43 @@ import Button from '../../components/Button.astro';
   }
 
   .copy-email-btn {
-    min-height: 44px;
-    padding: 9px 16px;
-    font-size: 0.85rem;
-    font-weight: 600;
+    min-height: var(--target-min-size);
+    padding: var(--space-3) var(--space-5);
+    font-family: var(--font-body);
+    font-size: var(--font-size-sm);
+    font-weight: var(--font-weight-semibold);
     border-radius: var(--radius-sm);
     background: rgba(255, 255, 255, 0.05);
     border: 1px solid var(--border-glass);
-    color: var(--text-secondary);
+    color: var(--color-text-secondary);
     cursor: pointer;
     transition: all var(--transition-fast);
   }
 
   .copy-email-btn:hover {
     background: rgba(255, 255, 255, 0.1);
-    color: var(--text-primary);
+    color: var(--color-text-primary);
+  }
+
+  .copy-email-btn:focus-visible {
+    outline: var(--state-focus-outline);
+    outline-offset: var(--state-focus-ring-offset);
+  }
+
+  .copy-email-btn:active {
+    transform: translateY(0);
   }
 
   .copy-email-btn.copied {
-    background: rgba(16, 185, 129, 0.15);
-    border-color: var(--setu-emerald-border);
-    color: var(--setu-emerald-light);
+    background: var(--state-success-bg);
+    border-color: var(--state-success-border);
+    color: var(--state-success-text);
+  }
+
+  .copy-email-btn.is-error {
+    background: var(--state-error-bg);
+    border-color: var(--state-error-border);
+    color: var(--state-error-text);
   }
 
   /* Secondary Channels */
@@ -292,6 +334,7 @@ import Button from '../../components/Button.astro';
     align-items: center;
     gap: var(--space-md);
     text-decoration: none;
+    border-radius: var(--radius-lg);
     transition: transform var(--transition-fast), border-color var(--transition-fast);
   }
 
@@ -300,33 +343,38 @@ import Button from '../../components/Button.astro';
     border-color: var(--border-glass-hover);
   }
 
+  .sub-channel-card:focus-visible {
+    outline: var(--state-focus-outline);
+    outline-offset: var(--state-focus-ring-offset);
+  }
+
   .sub-icon {
-    width: 42px;
-    height: 42px;
+    width: var(--target-min-size);
+    height: var(--target-min-size);
     border-radius: var(--radius-sm);
     background: rgba(255, 255, 255, 0.04);
     display: flex;
     align-items: center;
     justify-content: center;
-    color: var(--text-secondary);
+    color: var(--color-text-secondary);
     flex-shrink: 0;
   }
 
   .sub-info {
     display: flex;
     flex-direction: column;
-    gap: 2px;
+    gap: var(--space-1);
   }
 
   .sub-title {
-    font-size: 0.95rem;
-    font-weight: 600;
-    color: var(--text-primary);
+    font-size: var(--font-size-md);
+    font-weight: var(--font-weight-semibold);
+    color: var(--color-text-primary);
   }
 
   .sub-desc {
-    font-size: 0.775rem;
-    color: var(--text-muted);
+    font-size: var(--font-size-xs);
+    color: var(--color-text-muted);
   }
 
   /* Inquiry Info Box */
@@ -340,7 +388,7 @@ import Button from '../../components/Button.astro';
   }
 
   .info-title {
-    font-size: 1.15rem;
+    font-size: var(--font-size-2xl);
   }
 
   .info-columns {
@@ -356,12 +404,12 @@ import Button from '../../components/Button.astro';
   }
 
   .info-col {
-    font-size: 0.875rem;
-    color: var(--text-secondary);
-    line-height: 1.6;
+    font-size: var(--font-size-sm);
+    color: var(--color-text-secondary);
+    line-height: var(--line-height-relaxed);
   }
 
   .info-col strong {
-    color: var(--text-primary);
+    color: var(--color-text-primary);
   }
 </style>

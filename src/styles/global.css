@@ -10,10 +10,12 @@
 
 html {
   font-family: var(--font-body);
-  background-color: var(--color-bg-base);
-  color: var(--text-primary);
+  font-size: var(--font-size-base);
+  font-weight: var(--font-weight-regular);
+  line-height: var(--line-height-base);
+  background-color: var(--color-surface-base);
+  color: var(--color-text-primary);
   color-scheme: dark;
-  line-height: 1.6;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   scroll-behavior: smooth;
@@ -26,7 +28,8 @@ body {
   flex-direction: column;
   position: relative;
   overflow-x: hidden;
-  background-color: var(--color-bg-base);
+  background-color: var(--color-surface-base);
+  color: var(--color-text-primary);
 }
 
 /* Background Atmosphere */
@@ -45,9 +48,9 @@ body::after {
   position: fixed;
   inset: 0;
   background-image: radial-gradient(rgba(255, 255, 255, 0.04) 1px, transparent 1px);
-  background-size: 32px 32px;
-  mask-image: radial-gradient(ellipse 60% 60% at 50% 50%, #000 70%, transparent 100%);
-  -webkit-mask-image: radial-gradient(ellipse 60% 60% at 50% 50%, #000 70%, transparent 100%);
+  background-size: var(--space-11) var(--space-11);
+  mask-image: radial-gradient(ellipse 60% 60% at 50% 50%, #000000 70%, transparent 100%);
+  -webkit-mask-image: radial-gradient(ellipse 60% 60% at 50% 50%, #000000 70%, transparent 100%);
   pointer-events: none;
   z-index: -1;
   opacity: 0.6;
@@ -60,64 +63,75 @@ body::after {
   left: var(--space-md);
   padding: var(--space-sm) var(--space-lg);
   background: var(--accent-indigo);
-  color: #FFFFFF;
-  font-weight: 600;
-  font-size: 0.875rem;
+  color: var(--color-text-primary);
+  font-weight: var(--font-weight-semibold);
+  font-size: var(--font-size-sm);
   border-radius: var(--radius-sm);
   z-index: 1000;
   text-decoration: none;
   transition: top var(--transition-fast);
 }
 
-.skip-link:focus {
+.skip-link:focus-visible {
   top: var(--space-md);
-  outline: 2px solid #FFFFFF;
-  outline-offset: 2px;
+  outline: var(--state-focus-outline);
+  outline-offset: var(--state-focus-ring-offset);
 }
 
-/* Focus Visibility Standards */
+/* Focus Visibility Standards (WCAG 2.2 AA) */
 :focus-visible {
-  outline: 2px solid var(--border-focus);
-  outline-offset: 3px;
+  outline: var(--state-focus-outline);
+  outline-offset: var(--state-focus-ring-offset);
   border-radius: var(--radius-xs);
 }
 
 /* Typography Hierarchy */
 h1, h2, h3, h4, h5, h6 {
   font-family: var(--font-display);
-  color: var(--text-primary);
-  font-weight: 700;
-  line-height: 1.2;
-  letter-spacing: -0.025em;
+  color: var(--color-text-primary);
+  font-weight: var(--font-weight-bold);
+  line-height: var(--line-height-snug);
+  letter-spacing: var(--letter-spacing-snug);
 }
 
 h1 {
-  font-size: clamp(2.25rem, 4.5vw + 1rem, 3.75rem);
-  font-weight: 800;
-  letter-spacing: -0.035em;
-  line-height: 1.1;
+  font-size: var(--font-size-7xl);
+  font-weight: var(--font-weight-extrabold);
+  letter-spacing: var(--letter-spacing-tight);
+  line-height: var(--line-height-tight);
 }
 
 h2 {
-  font-size: clamp(1.75rem, 3vw + 0.5rem, 2.5rem);
-  letter-spacing: -0.025em;
-  line-height: 1.2;
+  font-size: var(--font-size-6xl);
+  letter-spacing: var(--letter-spacing-snug);
+  line-height: var(--line-height-snug);
 }
 
 h3 {
-  font-size: clamp(1.25rem, 2vw + 0.25rem, 1.75rem);
-  letter-spacing: -0.02em;
+  font-size: var(--font-size-5xl);
+  letter-spacing: var(--letter-spacing-snug);
+  line-height: var(--line-height-snug);
 }
 
 h4 {
-  font-size: 1.15rem;
-  letter-spacing: -0.015em;
+  font-size: var(--font-size-3xl);
+  letter-spacing: var(--letter-spacing-snug);
+}
+
+h5 {
+  font-size: var(--font-size-2xl);
+  letter-spacing: var(--letter-spacing-snug);
+}
+
+h6 {
+  font-size: var(--font-size-xl);
+  letter-spacing: var(--letter-spacing-snug);
 }
 
 p {
-  color: var(--text-secondary);
-  font-size: 1.05rem;
-  line-height: 1.65;
+  color: var(--color-text-secondary);
+  font-size: var(--font-size-md);
+  line-height: var(--line-height-relaxed);
 }
 
 a {
@@ -128,7 +142,7 @@ a {
 
 code, pre {
   font-family: var(--font-mono);
-  font-size: 0.875em;
+  font-size: var(--font-size-sm);
 }
 
 /* Layout Utilities */
@@ -150,8 +164,8 @@ code, pre {
 /* Glassmorphism Surface Classes */
 .glass-panel {
   background: var(--grad-surface-card);
-  backdrop-filter: blur(16px);
-  -webkit-backdrop-filter: blur(16px);
+  backdrop-filter: blur(var(--glass-blur-md));
+  -webkit-backdrop-filter: blur(var(--glass-blur-md));
   border: 1px solid var(--border-glass);
   border-radius: var(--radius-lg);
   box-shadow: var(--shadow-md);
@@ -171,15 +185,15 @@ code, pre {
 }
 
 .text-gradient-silver {
-  background: linear-gradient(180deg, #FFFFFF 0%, #94A3B8 100%);
+  background: linear-gradient(180deg, var(--color-text-primary) 0%, var(--color-text-muted) 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   display: inline-block;
 }
 
-/* Touch Targets >= 44px */
+/* Touch Targets >= 44px (WCAG Success Criterion 2.5.5 / 2.5.8) */
 button, input, select, textarea, a.interactive-target {
-  min-height: 44px;
+  min-height: var(--target-min-size);
 }
 
 /* Reduced Motion Override */

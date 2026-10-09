@@ -5,6 +5,9 @@ interface Props {
   size?: 'sm' | 'md' | 'lg';
   external?: boolean;
   type?: 'button' | 'submit' | 'reset';
+  disabled?: boolean;
+  loading?: boolean;
+  error?: boolean;
   class?: string;
   [key: string]: any;
 }
@@ -15,25 +18,42 @@ const {
   size = 'md',
   external = false,
   type = 'button',
+  disabled = false,
+  loading = false,
+  error = false,
   class: className = '',
   ...rest
 } = Astro.props;
 
-const Element = href ? 'a' : 'button';
-const elementProps = href
+const Element = href && !disabled ? 'a' : 'button';
+const elementProps = href && !disabled
   ? {
       href,
       target: external ? '_blank' : undefined,
       rel: external ? 'noopener noreferrer' : undefined,
+      'aria-disabled': disabled || undefined,
+      'aria-busy': loading || undefined,
       ...rest
     }
   : {
-      type,
+      type: href ? undefined : type,
+      disabled: disabled || loading,
+      'aria-disabled': disabled || undefined,
+      'aria-busy': loading || undefined,
       ...rest
     };
+
+const stateClasses = [
+  disabled ? 'is-disabled' : '',
+  loading ? 'is-loading' : '',
+  error ? 'is-error' : ''
+].filter(Boolean).join(' ');
 ---
 
-<Element class={`btn btn-${variant} btn-${size} ${className}`} {...elementProps}>
+<Element class={`btn btn-${variant} btn-${size} ${stateClasses} ${className}`} {...elementProps}>
+  {loading && (
+    <span class="btn-spinner" aria-hidden="true"></span>
+  )}
   <slot />
 </Element>
 
@@ -42,77 +62,144 @@ const elementProps = href
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    gap: 8px;
+    gap: var(--space-3);
     font-family: var(--font-body);
-    font-weight: 600;
+    font-weight: var(--font-weight-semibold);
     text-decoration: none;
     border-radius: var(--radius-sm);
     cursor: pointer;
     border: 1px solid transparent;
-    transition: all var(--transition-base);
+    transition: background-color var(--transition-fast),
+                border-color var(--transition-fast),
+                color var(--transition-fast),
+                transform var(--transition-fast),
+                box-shadow var(--transition-fast);
     white-space: nowrap;
     user-select: none;
+    min-height: var(--target-min-size);
+    position: relative;
+    box-sizing: border-box;
   }
 
   /* Sizes */
   .btn-sm {
-    min-height: 36px;
-    padding: 6px 14px;
-    font-size: 0.825rem;
+    min-height: var(--target-min-size);
+    padding: var(--space-3) var(--space-6);
+    font-size: var(--font-size-sm);
+    border-radius: var(--radius-xs);
   }
 
   .btn-md {
-    min-height: 44px;
-    padding: 9px 20px;
-    font-size: 0.925rem;
+    min-height: var(--target-min-size);
+    padding: var(--space-4) var(--space-9);
+    font-size: var(--font-size-md);
+    border-radius: var(--radius-sm);
   }
 
   .btn-lg {
-    min-height: 50px;
-    padding: 13px 28px;
-    font-size: 1rem;
+    min-height: var(--space-12);
+    padding: var(--space-7) var(--space-10);
+    font-size: var(--font-size-lg);
     border-radius: var(--radius-md);
   }
 
-  /* Primary */
+  /* Focus-Visible (Standard 7 States: focus-visible) */
+  .btn:focus-visible {
+    outline: var(--state-focus-outline);
+    outline-offset: var(--state-focus-ring-offset);
+  }
+
+  /* Primary Variant */
   .btn-primary {
-    background: #4338CA;
-    color: #FFFFFF;
-    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.4), 0 0 16px rgba(67, 56, 202, 0.3);
+    background: var(--accent-indigo);
+    color: var(--color-text-primary);
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    box-shadow: var(--shadow-sm), 0 0 16px var(--accent-indigo-glow);
   }
-  .btn-primary:hover {
-    background: #3730A3;
-    box-shadow: 0 4px 20px rgba(67, 56, 202, 0.45);
+  .btn-primary:hover:not(:disabled):not(.is-disabled) {
+    background: var(--accent-indigo-hover);
+    box-shadow: var(--shadow-md), 0 0 24px var(--accent-indigo-glow);
     transform: translateY(-1px);
   }
-  .btn-primary:active {
+  .btn-primary:active:not(:disabled):not(.is-disabled) {
     transform: translateY(0);
+    filter: brightness(0.95);
   }
 
-  /* Secondary */
+  /* Secondary Variant */
   .btn-secondary {
-    background: rgba(255, 255, 255, 0.05);
-    color: var(--text-primary);
+    background: var(--grad-surface-glass);
+    color: var(--color-text-primary);
     border: 1px solid var(--border-glass);
-    backdrop-filter: blur(10px);
+    backdrop-filter: blur(var(--glass-blur-sm));
+    -webkit-backdrop-filter: blur(var(--glass-blur-sm));
   }
-  .btn-secondary:hover {
-    background: rgba(255, 255, 255, 0.09);
+  .btn-secondary:hover:not(:disabled):not(.is-disabled) {
+    background: rgba(255, 255, 255, 0.08);
     border-color: var(--border-glass-hover);
-    color: #FFFFFF;
+    color: var(--color-text-primary);
     transform: translateY(-1px);
   }
-  .btn-secondary:active {
+  .btn-secondary:active:not(:disabled):not(.is-disabled) {
     transform: translateY(0);
+    background: rgba(255, 255, 255, 0.05);
   }
 
-  /* Ghost */
+  /* Ghost Variant */
   .btn-ghost {
     background: transparent;
-    color: var(--text-secondary);
+    color: var(--color-text-secondary);
+    border: 1px solid transparent;
   }
-  .btn-ghost:hover {
-    color: var(--text-primary);
-    background: rgba(255, 255, 255, 0.04);
+  .btn-ghost:hover:not(:disabled):not(.is-disabled) {
+    color: var(--color-text-primary);
+    background: rgba(255, 255, 255, 0.05);
+    border-color: var(--border-subtle);
+  }
+  .btn-ghost:active:not(:disabled):not(.is-disabled) {
+    background: rgba(255, 255, 255, 0.08);
+  }
+
+  /* Disabled State (Standard 7 States: disabled) */
+  .btn:disabled,
+  .btn.is-disabled {
+    opacity: var(--state-disabled-opacity);
+    cursor: var(--state-disabled-cursor);
+    pointer-events: none;
+    box-shadow: none;
+    transform: none;
+  }
+
+  /* Loading State (Standard 7 States: loading) */
+  .btn.is-loading {
+    opacity: var(--state-loading-opacity);
+    cursor: var(--state-loading-cursor);
+    pointer-events: none;
+  }
+
+  .btn-spinner {
+    width: 14px;
+    height: 14px;
+    border: 2px solid rgba(255, 255, 255, 0.3);
+    border-top-color: currentColor;
+    border-radius: var(--radius-full);
+    animation: btn-spin 0.6s linear infinite;
+    display: inline-block;
+  }
+
+  @keyframes btn-spin {
+    to {
+      transform: rotate(360deg);
+    }
+  }
+
+  /* Error State (Standard 7 States: error) */
+  .btn.is-error {
+    background: var(--state-error-bg);
+    border-color: var(--state-error-border);
+    color: var(--state-error-text);
+  }
+  .btn.is-error:focus-visible {
+    outline: var(--state-error-focus-ring);
   }
 </style>

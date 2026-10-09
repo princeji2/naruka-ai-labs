@@ -5,7 +5,7 @@ interface Props {
   class?: string;
 }
 
-const { showText = true, size = 32, class: className = '' } = Astro.props;
+const { showText = 32, size = 32, class: className = '' } = Astro.props;
 ---
 
 <div class={`logo-container ${className}`}>
@@ -53,14 +53,14 @@ const { showText = true, size = 32, class: className = '' } = Astro.props;
   .logo-container {
     display: inline-flex;
     align-items: center;
-    gap: 12px;
+    gap: var(--space-6);
     text-decoration: none;
     user-select: none;
   }
 
   .logo-icon {
     flex-shrink: 0;
-    filter: drop-shadow(0 0 12px rgba(99, 102, 241, 0.35));
+    filter: drop-shadow(0 0 var(--space-sm) var(--accent-indigo-glow));
     transition: transform var(--transition-base);
   }
 
@@ -71,19 +71,19 @@ const { showText = true, size = 32, class: className = '' } = Astro.props;
   .logo-text {
     display: flex;
     flex-direction: column;
-    line-height: 1.1;
+    line-height: var(--line-height-tight);
   }
 
   .logo-name {
     font-family: var(--font-display);
-    font-size: 1.05rem;
-    font-weight: 700;
-    color: var(--text-primary);
-    letter-spacing: -0.02em;
+    font-size: var(--font-size-md);
+    font-weight: var(--font-weight-bold);
+    color: var(--color-text-primary);
+    letter-spacing: var(--letter-spacing-snug);
   }
 
   .logo-tag {
-    font-weight: 600;
+    font-weight: var(--font-weight-semibold);
     color: var(--accent-indigo-light);
   }
 </style>

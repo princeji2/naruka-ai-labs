@@ -170,10 +170,10 @@ import Button from '../../components/Button.astro';
   }
 
   .about-lead {
-    font-size: 1.15rem;
-    color: var(--text-secondary);
+    font-size: var(--font-size-lg);
+    color: var(--color-text-secondary);
     max-width: 720px;
-    line-height: 1.6;
+    line-height: var(--line-height-relaxed);
   }
 
   /* Story Grid */
@@ -202,14 +202,14 @@ import Button from '../../components/Button.astro';
   }
 
   .col-title {
-    font-size: 1.6rem;
-    font-weight: 700;
+    font-size: var(--font-size-3xl);
+    font-weight: var(--font-weight-bold);
   }
 
   .story-p {
-    font-size: 0.95rem;
-    color: var(--text-secondary);
-    line-height: 1.65;
+    font-size: var(--font-size-md);
+    color: var(--color-text-secondary);
+    line-height: var(--line-height-relaxed);
   }
 
   /* Contrast Box */
@@ -238,10 +238,10 @@ import Button from '../../components/Button.astro';
   }
 
   .contrast-pill {
-    font-size: 0.72rem;
+    font-size: var(--font-size-xs);
     font-family: var(--font-mono);
-    font-weight: 700;
-    letter-spacing: 0.06em;
+    font-weight: var(--font-weight-bold);
+    letter-spacing: var(--letter-spacing-wide);
   }
 
   .is-yes .contrast-pill {
@@ -249,21 +249,21 @@ import Button from '../../components/Button.astro';
   }
 
   .is-no .contrast-pill {
-    color: #F87171;
+    color: var(--state-error-text);
   }
 
   .contrast-list {
     list-style: none;
     display: flex;
     flex-direction: column;
-    gap: 4px;
-    font-size: 0.85rem;
-    color: var(--text-secondary);
+    gap: var(--space-1);
+    font-size: var(--font-size-sm);
+    color: var(--color-text-secondary);
   }
 
   .contrast-list li::before {
     content: '• ';
-    color: var(--text-muted);
+    color: var(--color-text-muted);
   }
 
   /* Principles */
@@ -277,13 +277,13 @@ import Button from '../../components/Button.astro';
   }
 
   .section-title {
-    font-size: clamp(1.8rem, 3.2vw, 2.5rem);
+    font-size: var(--font-size-5xl);
   }
 
   .section-lead {
     max-width: 680px;
-    font-size: 1.05rem;
-    color: var(--text-secondary);
+    font-size: var(--font-size-lg);
+    color: var(--color-text-secondary);
   }
 
   .values-grid {
@@ -306,13 +306,13 @@ import Button from '../../components/Button.astro';
   }
 
   .value-title {
-    font-size: 1.25rem;
+    font-size: var(--font-size-2xl);
   }
 
   .value-desc {
-    font-size: 0.925rem;
-    color: var(--text-secondary);
-    line-height: 1.6;
+    font-size: var(--font-size-md);
+    color: var(--color-text-secondary);
+    line-height: var(--line-height-relaxed);
   }
 
   /* Founder Profile */
@@ -339,32 +339,32 @@ import Button from '../../components/Button.astro';
   }
 
   .profile-avatar {
-    width: 64px;
-    height: 64px;
-    border-radius: 50%;
+    width: var(--space-9);
+    height: var(--space-9);
+    border-radius: var(--radius-full);
     background: var(--grad-studio-brand);
     display: flex;
     align-items: center;
     justify-content: center;
     font-family: var(--font-display);
-    font-weight: 800;
-    font-size: 1.35rem;
-    color: #FFFFFF;
+    font-weight: var(--font-weight-extrabold);
+    font-size: var(--font-size-2xl);
+    color: var(--color-text-primary);
     flex-shrink: 0;
   }
 
   .profile-name {
-    font-size: 1.35rem;
+    font-size: var(--font-size-2xl);
   }
 
   .profile-title {
-    font-size: 0.875rem;
-    color: var(--text-secondary);
+    font-size: var(--font-size-sm);
+    color: var(--color-text-secondary);
   }
 
   .profile-location {
-    font-size: 0.775rem;
-    color: var(--text-muted);
+    font-size: var(--font-size-xs);
+    color: var(--color-text-muted);
   }
 
   .profile-right {
@@ -375,10 +375,10 @@ import Button from '../../components/Button.astro';
   }
 
   .profile-text {
-    font-size: 0.95rem;
-    color: var(--text-secondary);
+    font-size: var(--font-size-md);
+    color: var(--color-text-secondary);
     font-style: italic;
-    line-height: 1.6;
+    line-height: var(--line-height-relaxed);
   }
 
   .profile-links {

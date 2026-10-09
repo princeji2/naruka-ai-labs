@@ -276,29 +276,35 @@ import Button from '../../../components/Button.astro';
   .kicker-row {
     display: flex;
     align-items: center;
-    gap: 8px;
+    gap: var(--space-xs);
     flex-wrap: wrap;
     margin-bottom: var(--space-xs);
   }
 
   .breadcrumb-link {
-    font-size: 0.85rem;
-    font-weight: 600;
-    color: var(--text-muted);
+    font-size: var(--font-size-sm);
+    font-weight: var(--font-weight-semibold);
+    color: var(--color-text-muted);
+    border-radius: var(--radius-xs);
   }
 
   .breadcrumb-link:hover {
-    color: var(--text-primary);
+    color: var(--color-text-primary);
+  }
+
+  .breadcrumb-link:focus-visible {
+    outline: var(--state-focus-outline);
+    outline-offset: var(--state-focus-ring-offset);
   }
 
   .sep {
-    color: var(--text-muted);
-    font-size: 0.85rem;
+    color: var(--color-text-muted);
+    font-size: var(--font-size-sm);
   }
 
   .detail-title {
-    font-size: clamp(2rem, 3.8vw, 3.25rem);
-    line-height: 1.12;
+    font-size: var(--font-size-6xl);
+    line-height: var(--line-height-tight);
   }
 
   .text-gradient-amber {
@@ -308,9 +314,9 @@ import Button from '../../../components/Button.astro';
   }
 
   .detail-lead {
-    font-size: 1.15rem;
-    color: var(--text-secondary);
-    line-height: 1.6;
+    font-size: var(--font-size-lg);
+    color: var(--color-text-secondary);
+    line-height: var(--line-height-relaxed);
   }
 
   /* Live Deployment Card */
