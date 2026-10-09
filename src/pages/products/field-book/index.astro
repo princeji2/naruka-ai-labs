@@ -2,6 +2,7 @@
 import BaseLayout from '../../../layouts/BaseLayout.astro';
 import Badge from '../../../components/Badge.astro';
 import Button from '../../../components/Button.astro';
+import Card from '../../../components/ui/Card.astro';
 ---
 
 <BaseLayout
@@ -30,20 +31,21 @@ import Button from '../../../components/Button.astro';
             Field Book provides universities, student clubs, and event organizers with a lightweight, multi-role ledger to track event attendance via QR scanning and issue verifiable PDF certificates without heavyweight LMS bloat.
           </p>
 
-          <div class="live-deployment-card glass-panel">
-            <div class="deployment-badge-wrap">
-              <span class="live-pulse"></span>
-              <span class="deployment-status">Functional Prototype Deployed</span>
-            </div>
-            <p class="deployment-text">
-              Field Book is currently accessible as a functional prototype with live authentication, role switching, and certificate generation.
-            </p>
-            <div class="deployment-actions">
-              <Button href="https://fieldbook.orgs.social" variant="primary" size="sm" external={true}>
-                Launch Live Prototype ↗
-              </Button>
-              <span class="url-hint">fieldbook.orgs.social</span>
-            </div>
+          <div class="live-deployment">
+            <Card
+              class="card-compact"
+              headingLevel={2}
+              title="Functional Prototype Deployed"
+              description="Field Book is currently accessible as a functional prototype with live authentication, role switching, and certificate generation."
+              gradient="accent"
+            >
+              <div class="deployment-actions">
+                <Button href="https://fieldbook.orgs.social" variant="primary" size="sm" external={true}>
+                  Launch Live Prototype ↗
+                </Button>
+                <span class="url-hint">fieldbook.orgs.social</span>
+              </div>
+            </Card>
           </div>
 
           <div class="detail-ctas">
@@ -58,12 +60,14 @@ import Button from '../../../components/Button.astro';
 
         <!-- Role Architecture Visual Preview -->
         <div class="hero-visual-col">
-          <div class="roles-preview-card glass-panel">
-            <div class="preview-header">
-              <span class="preview-tag">THREE-TIER ROLE ENGINE</span>
-              <span class="preview-status">Role-Based Access Control</span>
-            </div>
-
+          <Card
+            class="card-compact"
+            headingLevel={2}
+            title="THREE-TIER ROLE ENGINE"
+            status="Role-Based Access Control"
+            statusColor="primary"
+            gradient="neutral"
+          >
             <div class="roles-visual-stack">
               <!-- Student Role -->
               <div class="role-layer student-layer">
@@ -108,7 +112,7 @@ import Button from '../../../components/Button.astro';
             <div class="preview-footer">
               <span>Security enforced via 67 Postgres Row-Level Security policies.</span>
             </div>
-          </div>
+          </Card>
         </div>
       </div>
     </section>
@@ -126,40 +130,40 @@ import Button from '../../../components/Button.astro';
 
         <div class="workflow-grid">
           <!-- Feature 1: QR Attendance -->
-          <div class="workflow-card glass-panel">
-            <div class="workflow-num">01</div>
-            <h3 class="workflow-title">Event-Code QR Attendance</h3>
-            <p class="workflow-desc">
-              Organizers project an active attendance QR code containing the structured event identifier. Students scan via the built-in browser scanner.
-            </p>
+          <Card
+            title="Event-Code QR Attendance"
+            description="Organizers project an active attendance QR code containing the structured event identifier. Students scan via the built-in browser scanner."
+            status="01"
+            gradient="primary"
+          >
             <div class="workflow-callout">
               <strong>Duplicate Prevention:</strong> Enforced at the database layer via a compound unique constraint on <code>(student_id, event_id)</code>. Repeat scans are caught by Postgres (Error 23505) and rejected instantly.
             </div>
-          </div>
+          </Card>
 
           <!-- Feature 2: PDF Certificate Engine -->
-          <div class="workflow-card glass-panel">
-            <div class="workflow-num">02</div>
-            <h3 class="workflow-title">Automated PDF Certificate Generation</h3>
-            <p class="workflow-desc">
-              Once attendance is confirmed in the database, eligible students can trigger automated certificate compilation.
-            </p>
+          <Card
+            title="Automated PDF Certificate Generation"
+            description="Once attendance is confirmed in the database, eligible students can trigger automated certificate compilation."
+            status="02"
+            gradient="secondary"
+          >
             <div class="workflow-callout">
               <strong>Dedicated Microservice:</strong> Powered by a separate Java 17 / Spring Boot service utilizing Apache PDFBox 3 to dynamically composite student names, event metadata, and template background art into signed PDF documents.
             </div>
-          </div>
+          </Card>
 
           <!-- Feature 3: Approval Pipeline -->
-          <div class="workflow-card glass-panel">
-            <div class="workflow-num">03</div>
-            <h3 class="workflow-title">Two-Tier Event Approval Pipeline</h3>
-            <p class="workflow-desc">
-              Club organizers can draft and submit event proposals, but events do not enter public discovery until reviewed and approved by institution administrators.
-            </p>
+          <Card
+            title="Two-Tier Event Approval Pipeline"
+            description="Club organizers can draft and submit event proposals, but events do not enter public discovery until reviewed and approved by institution administrators."
+            status="03"
+            gradient="accent"
+          >
             <div class="workflow-callout">
               <strong>Permission Guards:</strong> Role changes are submitted through formal review requests, ensuring student users cannot self-escalate to organizer or administrator privileges.
             </div>
-          </div>
+          </Card>
         </div>
       </div>
     </section>
@@ -167,15 +171,14 @@ import Button from '../../../components/Button.astro';
     <!-- Security & Audit Section -->
     <section class="section security-section" id="security">
       <div class="container">
-        <div class="security-box glass-panel">
-          <div class="security-header">
-            <span class="security-badge">DATABASE-ENFORCED PERMISSIONS</span>
-            <h3 class="security-title">Technical Verification & Security Audit</h3>
-            <p class="security-lead">
-              Field Book delegates authorization entirely to the database tier rather than relying on frontend client-side validation alone.
-            </p>
-          </div>
-
+        <Card
+          class="card-wide"
+          title="Technical Verification & Security Audit"
+          description="Field Book delegates authorization entirely to the database tier rather than relying on frontend client-side validation alone."
+          status="DATABASE-ENFORCED PERMISSIONS"
+          statusColor="primary"
+          gradient="primary"
+        >
           <div class="security-stats-grid">
             <div class="sec-stat-item">
               <span class="sec-number">67</span>
@@ -201,15 +204,18 @@ import Button from '../../../components/Button.astro';
               <strong>Technical Disclosure:</strong> Attendance QR codes encode structured event tokens (<code>fieldbook:attendance:&lt;CODE&gt;</code>) rather than asymmetric cryptographic signatures; uniqueness and integrity are enforced by PostgreSQL relational constraints and authenticated session IDs. Audit logs are append-only at the application/RLS layer, preventing accidental or malicious modification through the web application.
             </p>
           </div>
-        </div>
+        </Card>
       </div>
     </section>
 
     <!-- Tech Stack Summary -->
     <section class="section tech-summary-section">
       <div class="container">
-        <div class="tech-table-wrap glass-panel">
-          <h3 class="table-title">Field Book Production Stack</h3>
+        <Card
+          class="card-wide"
+          title="Field Book Production Stack"
+          gradient="neutral"
+        >
           <div class="table-grid">
             <div class="table-row header-row">
               <span>Layer</span>
@@ -237,7 +243,7 @@ import Button from '../../../components/Button.astro';
               <span class="row-desc">High-availability static frontend and microservice host</span>
             </div>
           </div>
-        </div>
+        </Card>
       </div>
     </section>
   </article>
@@ -308,7 +314,7 @@ import Button from '../../../components/Button.astro';
   }
 
   .text-gradient-amber {
-    background: linear-gradient(100deg, #FCD34D 0%, var(--fieldbook-amber-light) 45%, var(--fieldbook-amber) 100%);
+    background: linear-gradient(100deg, color-mix(in srgb, var(--fieldbook-amber-light) 60%, var(--text)) 0%, var(--fieldbook-amber-light) 45%, var(--fieldbook-amber) 100%);
     -webkit-background-clip: text;
     background-clip: text;
     -webkit-text-fill-color: transparent;
@@ -322,52 +328,16 @@ import Button from '../../../components/Button.astro';
     line-height: var(--line-height-relaxed);
   }
 
-  /* Live Deployment Card */
-  .live-deployment-card {
-    padding: var(--space-lg);
-    background:
-      radial-gradient(ellipse 70% 60% at 0% 0%, rgba(245, 158, 11, 0.14), transparent 70%),
-      rgba(245, 158, 11, 0.04);
-    border: 1px solid var(--fieldbook-amber-border);
-    display: flex;
-    flex-direction: column;
-    gap: var(--space-xs);
+  /* Live Deployment (slot content) */
+  .live-deployment {
     margin-top: var(--space-xs);
-  }
-
-  .deployment-badge-wrap {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-  }
-
-  .live-pulse {
-    width: 8px;
-    height: 8px;
-    border-radius: 50%;
-    background: var(--setu-emerald);
-    box-shadow: 0 0 10px var(--setu-emerald);
-  }
-
-  .deployment-status {
-    font-size: var(--font-size-xs);
-    font-weight: 700;
-    text-transform: uppercase;
-    letter-spacing: 0.05em;
-    color: var(--fieldbook-amber-light);
-  }
-
-  .deployment-text {
-    font-size: var(--font-size-sm);
-    color: var(--text-secondary);
-    line-height: 1.5;
   }
 
   .deployment-actions {
     display: flex;
     align-items: center;
     gap: var(--space-md);
-    margin-top: 4px;
+    margin-top: var(--space-sm);
     flex-wrap: wrap;
   }
 
@@ -385,46 +355,18 @@ import Button from '../../../components/Button.astro';
     margin-top: var(--space-sm);
   }
 
-  /* Roles Preview Card */
-  .roles-preview-card {
-    padding: var(--space-lg);
-    display: flex;
-    flex-direction: column;
-    gap: var(--space-md);
-    background: var(--color-surface-deep);
-    border: 1px solid var(--border-glass-hover);
-  }
-
-  .preview-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    font-size: var(--font-size-xs);
-    padding-bottom: var(--space-xs);
-    border-bottom: 1px solid var(--border-subtle);
-  }
-
-  .preview-tag {
-    font-family: var(--font-mono);
-    color: var(--text-muted);
-    font-weight: 600;
-  }
-
-  .preview-status {
-    color: var(--accent-indigo-light);
-    font-weight: 600;
-  }
-
+  /* Roles Preview (slot content) */
   .roles-visual-stack {
     display: flex;
     flex-direction: column;
     gap: var(--space-sm);
+    margin-top: var(--space-sm);
   }
 
   .role-layer {
     padding: var(--space-md);
     border-radius: var(--radius-sm);
-    background: rgba(255, 255, 255, 0.02);
+    background: rgba(var(--white-rgb), 0.04);
     border: 1px solid var(--border-subtle);
     display: flex;
     flex-direction: column;
@@ -435,6 +377,8 @@ import Button from '../../../components/Button.astro';
     display: flex;
     align-items: center;
     justify-content: space-between;
+    gap: var(--space-sm);
+    flex-wrap: wrap;
   }
 
   .role-pill {
@@ -446,18 +390,18 @@ import Button from '../../../components/Button.astro';
   }
 
   .student-layer .role-pill {
-    background: rgba(99, 102, 241, 0.15);
+    background: rgba(var(--primary-rgb), 0.15);
     color: var(--accent-indigo-light);
   }
 
   .organizer-layer .role-pill {
-    background: rgba(245, 158, 11, 0.15);
+    background: rgba(var(--accent-rgb), 0.15);
     color: var(--fieldbook-amber-light);
   }
 
   .admin-layer .role-pill {
-    background: rgba(16, 185, 129, 0.15);
-    color: var(--setu-emerald-light);
+    background: rgba(var(--secondary-rgb), 0.2);
+    color: var(--color-text-primary);
   }
 
   .role-desc {
@@ -476,6 +420,7 @@ import Button from '../../../components/Button.astro';
   .preview-footer {
     font-size: var(--font-size-xs);
     color: var(--text-muted);
+    margin-top: var(--space-sm);
     padding-top: var(--space-xs);
     border-top: 1px solid var(--border-subtle);
   }
@@ -512,91 +457,34 @@ import Button from '../../../components/Button.astro';
     }
   }
 
-  .workflow-card {
-    padding: var(--space-xl);
-    display: flex;
-    flex-direction: column;
-    gap: var(--space-md);
-  }
-
-  .workflow-num {
-    font-family: var(--font-mono);
-    font-size: var(--font-size-4xl);
-    font-weight: 800;
-    color: rgba(255, 255, 255, 0.15);
-  }
-
-  .workflow-title {
-    font-size: var(--font-size-2xl);
-    font-weight: 700;
-  }
-
-  .workflow-desc {
-    font-size: var(--font-size-sm);
-    color: var(--text-secondary);
-    line-height: 1.55;
-  }
-
   .workflow-callout {
-    margin-top: auto;
+    margin-top: var(--space-sm);
     padding: var(--space-sm) var(--space-md);
-    background: rgba(0, 0, 0, 0.3);
+    background: rgba(var(--black-rgb), 0.3);
     border-left: 2px solid var(--fieldbook-amber);
     font-size: var(--font-size-xs);
-    color: var(--text-muted);
+    color: var(--color-text-secondary);
     border-radius: 0 var(--radius-xs) var(--radius-xs) 0;
     line-height: 1.5;
   }
 
   .workflow-callout strong {
-    color: var(--text-secondary);
+    color: var(--text-primary);
   }
 
   .workflow-callout code {
-    background: rgba(255, 255, 255, 0.05);
+    background: rgba(var(--white-rgb), 0.08);
     padding: 1px 4px;
     border-radius: var(--radius-xs);
     color: var(--fieldbook-amber-light);
   }
 
-  /* Security Box */
-  .security-box {
-    padding: clamp(var(--space-lg), 4vw, var(--space-2xl));
-    display: flex;
-    flex-direction: column;
-    gap: var(--space-xl);
-    background: rgba(14, 18, 27, 0.6);
-  }
-
-  .security-header {
-    display: flex;
-    flex-direction: column;
-    gap: var(--space-xs);
-  }
-
-  .security-badge {
-    font-size: var(--font-size-xs);
-    font-family: var(--font-mono);
-    color: var(--accent-indigo-light);
-    font-weight: 700;
-    letter-spacing: 0.05em;
-  }
-
-  .security-title {
-    font-size: var(--font-size-3xl);
-    font-weight: 700;
-  }
-
-  .security-lead {
-    font-size: var(--font-size-md);
-    color: var(--text-secondary);
-    max-width: 720px;
-  }
-
+  /* Security (slot content) */
   .security-stats-grid {
     display: grid;
     grid-template-columns: 1fr;
     gap: var(--space-md);
+    margin-top: var(--space-lg);
   }
 
   @media (min-width: 768px) {
@@ -607,7 +495,7 @@ import Button from '../../../components/Button.astro';
 
   .sec-stat-item {
     padding: var(--space-lg);
-    background: rgba(0, 0, 0, 0.3);
+    background: rgba(var(--black-rgb), 0.3);
     border: 1px solid var(--border-subtle);
     border-radius: var(--radius-sm);
     display: flex;
@@ -630,42 +518,39 @@ import Button from '../../../components/Button.astro';
 
   .sec-sub {
     font-size: var(--font-size-xs);
-    color: var(--text-muted);
+    color: var(--color-text-secondary);
     line-height: 1.45;
     margin-top: 4px;
   }
 
   .security-clarification {
+    margin-top: var(--space-lg);
     padding: var(--space-md);
-    background: rgba(255, 255, 255, 0.02);
+    background: rgba(var(--white-rgb), 0.04);
     border-left: 2px solid var(--accent-indigo);
     font-size: var(--font-size-sm);
-    color: var(--text-muted);
+    color: var(--color-text-secondary);
     line-height: 1.55;
   }
 
   .security-clarification strong {
-    color: var(--text-secondary);
+    color: var(--text-primary);
   }
 
-  /* Tech Table */
-  .tech-table-wrap {
-    padding: var(--space-xl);
-    display: flex;
-    flex-direction: column;
-    gap: var(--space-lg);
+  .security-clarification code {
+    background: rgba(var(--black-rgb), 0.35);
+    padding: 1px 4px;
+    border-radius: var(--radius-xs);
   }
 
-  .table-title {
-    font-size: var(--font-size-2xl);
-  }
-
+  /* Tech Table (slot content) */
   .table-grid {
     display: flex;
     flex-direction: column;
     border: 1px solid var(--border-subtle);
     border-radius: var(--radius-sm);
     overflow: hidden;
+    margin-top: var(--space-sm);
   }
 
   .table-row {
@@ -682,7 +567,7 @@ import Button from '../../../components/Button.astro';
   }
 
   .header-row {
-    background: rgba(255, 255, 255, 0.04);
+    background: rgba(var(--white-rgb), 0.06);
     font-weight: 700;
     text-transform: uppercase;
     font-size: var(--font-size-xs);

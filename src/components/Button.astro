@@ -2,14 +2,15 @@
 interface Props {
   href?: string;
   variant?: 'primary' | 'secondary' | 'ghost';
-  size?: 'sm' | 'md' | 'lg';
+  /** 'icon' renders a square icon-only button. Pass an aria-label for it. */
+  size?: 'sm' | 'md' | 'lg' | 'icon';
   external?: boolean;
   type?: 'button' | 'submit' | 'reset';
   disabled?: boolean;
   loading?: boolean;
   error?: boolean;
   class?: string;
-  [key: string]: any;
+  [key: string]: unknown;
 }
 
 const {
@@ -58,7 +59,7 @@ const stateClasses = [
 </Element>
 
 <style>
-  /* One button shape across the site: a pill. Sizes change padding and type only. */
+  /* One button shape across the site: 12px radius. Sizes change padding and type only. */
   .btn {
     display: inline-flex;
     align-items: center;
@@ -69,7 +70,7 @@ const stateClasses = [
     letter-spacing: -0.005em;
     text-decoration: none;
     text-align: center;
-    border-radius: var(--radius-full);
+    border-radius: var(--radius-md);
     cursor: pointer;
     border: 1px solid transparent;
     transition: background-color var(--transition-fast),
@@ -104,31 +105,39 @@ const stateClasses = [
     font-size: var(--font-size-md);
   }
 
+  /* Icon button: square, 44px minimum touch target */
+  .btn-icon {
+    width: var(--target-min-size);
+    padding: 0;
+    font-size: var(--font-size-md);
+  }
+
   /* Focus-Visible */
   .btn:focus-visible {
     outline: var(--state-focus-outline);
     outline-offset: var(--state-focus-ring-offset);
-    border-radius: var(--radius-full);
+    border-radius: var(--radius-md);
   }
 
-  /* Press feedback fires on pointer-down, not release */
+  /* Press feedback fires on pointer-down, not release.
+     This is also the touch-device replacement for hover. */
   .btn:active:not(:disabled):not(.is-disabled) {
     transform: scale(0.97);
   }
 
-  /* Primary: filled indigo with a lit top edge. White on #4F46E5 / #5850EC is >= 5.6:1 */
+  /* Primary: filled green. --on-brand text on --primary is 5.5:1 (white would be ~3:1) */
   .btn-primary {
-    background: linear-gradient(180deg, #5850EC 0%, var(--accent-indigo) 100%);
-    color: #FFFFFF;
-    border-color: rgba(255, 255, 255, 0.14);
-    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.22), 0 6px 20px -6px var(--accent-indigo-glow);
+    background: var(--primary);
+    color: var(--on-brand);
+    border-color: rgba(var(--white-rgb), 0.14);
+    box-shadow: inset 0 1px 0 rgba(var(--white-rgb), 0.22), 0 6px 20px -6px var(--accent-indigo-glow);
   }
 
-  /* Secondary: quiet glass */
+  /* Secondary: outline on a quiet glass fill */
   .btn-secondary {
     background: var(--grad-surface-glass);
     color: var(--color-text-primary);
-    border-color: var(--border-glass);
+    border-color: var(--border);
     backdrop-filter: blur(var(--glass-blur-sm));
     -webkit-backdrop-filter: blur(var(--glass-blur-sm));
   }
@@ -139,19 +148,19 @@ const stateClasses = [
     color: var(--color-text-secondary);
   }
 
-  /* Hover only where hover exists; touch fires false hovers on tap */
+  /* Touch devices: :active (above) is the feedback. Hover only where hover exists. */
   @media (hover: hover) and (pointer: fine) {
     .btn-primary:hover:not(:disabled):not(.is-disabled) {
-      background: linear-gradient(180deg, #6760F0 0%, #5047E8 100%);
-      box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.28), 0 10px 28px -6px var(--accent-indigo-glow);
+      background: var(--primary-hover);
+      box-shadow: inset 0 1px 0 rgba(var(--white-rgb), 0.28), 0 10px 28px -6px var(--accent-indigo-glow);
     }
     .btn-secondary:hover:not(:disabled):not(.is-disabled) {
-      background: rgba(255, 255, 255, 0.09);
-      border-color: var(--border-glass-hover);
+      background: rgba(var(--white-rgb), 0.08);
+      border-color: var(--primary);
     }
     .btn-ghost:hover:not(:disabled):not(.is-disabled) {
       color: var(--color-text-primary);
-      background: rgba(255, 255, 255, 0.06);
+      background: rgba(var(--white-rgb), 0.06);
     }
   }
 
@@ -175,7 +184,7 @@ const stateClasses = [
   .btn-spinner {
     width: 14px;
     height: 14px;
-    border: 2px solid rgba(255, 255, 255, 0.3);
+    border: 2px solid rgba(var(--white-rgb), 0.3);
     border-top-color: currentColor;
     border-radius: var(--radius-full);
     animation: btn-spin 0.6s linear infinite;
@@ -204,6 +213,15 @@ const stateClasses = [
       background: var(--color-surface-raised);
       backdrop-filter: none;
       -webkit-backdrop-filter: none;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .btn:active:not(:disabled):not(.is-disabled) {
+      transform: none;
+    }
+    .btn-spinner {
+      animation-duration: 1.5s;
     }
   }
 </style>

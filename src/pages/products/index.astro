@@ -2,6 +2,7 @@
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import Badge from '../../components/Badge.astro';
 import Button from '../../components/Button.astro';
+import Card from '../../components/ui/Card.astro';
 ---
 
 <BaseLayout
@@ -27,51 +28,47 @@ import Button from '../../components/Button.astro';
     <!-- Products Grid -->
     <section class="products-list-section">
       <div class="container products-grid">
-        
+
         <!-- Product Card 1: Setu -->
-        <article class="product-card glass-panel" id="setu-card">
-          <div class="card-top">
-            <div class="product-header">
-              <div class="product-icon setu-icon" aria-hidden="true">
-                <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                  <path d="M4 11a9 9 0 0 1 9 9"></path>
-                  <path d="M4 4a16 16 0 0 1 16 16"></path>
-                  <circle cx="5" cy="19" r="1"></circle>
-                </svg>
-              </div>
-              <div class="product-titles">
-                <div class="badge-row">
-                  <Badge variant="in-development" text="In Active Development" />
-                  <Badge variant="demo-data" text="Simulated Backends" />
-                </div>
-                <h2 class="product-name">Setu</h2>
-                <span class="product-category">Consent-Based Interoperability Gateway</span>
-              </div>
+        <Card
+          class="product-card"
+          headingLevel={2}
+          title="Setu"
+          tagline="Consent-Based Interoperability Gateway"
+          description="A unified citizen gateway that links public service portals behind a single citizen login, allowing verified records to be shared with consent instead of repeatedly re-uploaded."
+          status="In Active Development"
+          statusColor="primary"
+          gradient="primary"
+        >
+          <div class="product-meta">
+            <div class="product-icon setu-icon" aria-hidden="true">
+              <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M4 11a9 9 0 0 1 9 9"></path>
+                <path d="M4 4a16 16 0 0 1 16 16"></path>
+                <circle cx="5" cy="19" r="1"></circle>
+              </svg>
             </div>
-            
-            <p class="product-desc">
-              A unified citizen gateway that links public service portals behind a single citizen login, allowing verified records to be shared with consent instead of repeatedly re-uploaded.
-            </p>
+            <Badge variant="demo-data" text="Simulated Backends" />
+          </div>
 
-            <div class="product-specs">
-              <div class="spec-item">
-                <span class="spec-label">Origins</span>
-                <span class="spec-value">Smart India Hackathon (SIH 26129)</span>
-              </div>
-              <div class="spec-item">
-                <span class="spec-label">Core Paradigm</span>
-                <span class="spec-value">"Verified once, shared with consent — not copied"</span>
-              </div>
-              <div class="spec-item">
-                <span class="spec-label">Architecture</span>
-                <span class="spec-value">Node.js Express Gateway · PostgreSQL · Gemini Service Proxy</span>
-              </div>
+          <div class="product-specs">
+            <div class="spec-item">
+              <span class="spec-label">Origins</span>
+              <span class="spec-value">Smart India Hackathon (SIH 26129)</span>
             </div>
+            <div class="spec-item">
+              <span class="spec-label">Core Paradigm</span>
+              <span class="spec-value">"Verified once, shared with consent — not copied"</span>
+            </div>
+            <div class="spec-item">
+              <span class="spec-label">Architecture</span>
+              <span class="spec-value">Node.js Express Gateway · PostgreSQL · Gemini Service Proxy</span>
+            </div>
+          </div>
 
-            <!-- Simulation Notice -->
-            <div class="card-notice">
-              <strong>Heritage Note:</strong> Originated as an SIH hackathon prototype. Integrates with independently deployed mock microservices with synthetic demo data. Does not connect to live government infrastructure.
-            </div>
+          <!-- Simulation Notice -->
+          <div class="card-notice">
+            <strong>Heritage Note:</strong> Originated as an SIH hackathon prototype. Integrates with independently deployed mock microservices with synthetic demo data. Does not connect to live government infrastructure.
           </div>
 
           <div class="card-actions">
@@ -82,53 +79,49 @@ import Button from '../../components/Button.astro';
               Repository Info
             </Button>
           </div>
-        </article>
+        </Card>
 
         <!-- Product Card 2: Field Book -->
-        <article class="product-card glass-panel" id="fieldbook-card">
-          <div class="card-top">
-            <div class="product-header">
-              <div class="product-icon fieldbook-icon" aria-hidden="true">
-                <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                  <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
-                  <line x1="16" y1="2" x2="16" y2="6"></line>
-                  <line x1="8" y1="2" x2="8" y2="6"></line>
-                  <line x1="3" y1="10" x2="21" y2="10"></line>
-                </svg>
-              </div>
-              <div class="product-titles">
-                <div class="badge-row">
-                  <Badge variant="live-prototype" text="Live Prototype" />
-                  <Badge variant="in-development" text="Active Development" />
-                </div>
-                <h2 class="product-name">Field Book</h2>
-                <span class="product-category">Campus Attendance & Credentialing Ledger</span>
-              </div>
+        <Card
+          class="product-card"
+          headingLevel={2}
+          title="Field Book"
+          tagline="Campus Attendance & Credentialing Ledger"
+          description="A lightweight, multi-role event attendance and verified credentialing platform featuring QR attendance check-ins, automated server-rendered PDF certificates, and database-enforced security."
+          status="Live Prototype"
+          statusColor="primary"
+          gradient="accent"
+        >
+          <div class="product-meta">
+            <div class="product-icon fieldbook-icon" aria-hidden="true">
+              <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
+                <line x1="16" y1="2" x2="16" y2="6"></line>
+                <line x1="8" y1="2" x2="8" y2="6"></line>
+                <line x1="3" y1="10" x2="21" y2="10"></line>
+              </svg>
             </div>
-            
-            <p class="product-desc">
-              A lightweight, multi-role event attendance and verified credentialing platform featuring QR attendance check-ins, automated server-rendered PDF certificates, and database-enforced security.
-            </p>
+            <Badge variant="in-development" text="Active Development" />
+          </div>
 
-            <div class="product-specs">
-              <div class="spec-item">
-                <span class="spec-label">Roles Supported</span>
-                <span class="spec-value">Student, Organizer, Administrator (Dedicated Views)</span>
-              </div>
-              <div class="spec-item">
-                <span class="spec-label">Security Layer</span>
-                <span class="spec-value">67 Database Row-Level Security (RLS) Policies</span>
-              </div>
-              <div class="spec-item">
-                <span class="spec-label">Certificate Engine</span>
-                <span class="spec-value">Java 17 / Spring Boot 4 + Apache PDFBox 3</span>
-              </div>
+          <div class="product-specs">
+            <div class="spec-item">
+              <span class="spec-label">Roles Supported</span>
+              <span class="spec-value">Student, Organizer, Administrator (Dedicated Views)</span>
             </div>
+            <div class="spec-item">
+              <span class="spec-label">Security Layer</span>
+              <span class="spec-value">67 Database Row-Level Security (RLS) Policies</span>
+            </div>
+            <div class="spec-item">
+              <span class="spec-label">Certificate Engine</span>
+              <span class="spec-value">Java 17 / Spring Boot 4 + Apache PDFBox 3</span>
+            </div>
+          </div>
 
-            <!-- Functional Status Notice -->
-            <div class="card-notice">
-              <strong>Prototype Deployment:</strong> Built for institutional & club events. Available as a working functional prototype with real Supabase authentication and certificate generation.
-            </div>
+          <!-- Functional Status Notice -->
+          <div class="card-notice">
+            <strong>Prototype Deployment:</strong> Built for institutional & club events. Available as a working functional prototype with real Supabase authentication and certificate generation.
           </div>
 
           <div class="card-actions">
@@ -139,7 +132,7 @@ import Button from '../../components/Button.astro';
               Open Live Prototype ↗
             </Button>
           </div>
-        </article>
+        </Card>
 
       </div>
     </section>
@@ -147,20 +140,20 @@ import Button from '../../components/Button.astro';
     <!-- Studio Explorations Section -->
     <section class="section r-and-d-section">
       <div class="container">
-        <div class="r-and-d-box glass-panel">
-          <div class="r-and-d-content">
-            <Badge variant="planned" text="R&D Initiatives" />
-            <h3 class="r-and-d-title">Exploratory AI & Assistant Tooling</h3>
-            <p class="r-and-d-text">
-              In addition to our core products, Naruka AI Labs conducts early exploratory research on domain-grounded conversational assistants and contextual edge intelligence. These initiatives remain in the prototype and research phase, guided by developer experimentation and practical applicability.
-            </p>
-          </div>
+        <Card
+          class="card-wide"
+          title="Exploratory AI & Assistant Tooling"
+          description="In addition to our core products, Naruka AI Labs conducts early exploratory research on domain-grounded conversational assistants and contextual edge intelligence. These initiatives remain in the prototype and research phase, guided by developer experimentation and practical applicability."
+          status="R&D Initiatives"
+          statusColor="text-muted"
+          gradient="neutral"
+        >
           <div class="r-and-d-cta">
             <Button href="/about" variant="secondary" size="md">
               Our Studio Philosophy →
             </Button>
           </div>
-        </div>
+        </Card>
       </div>
     </section>
   </div>
@@ -212,45 +205,13 @@ import Button from '../../components/Button.astro';
     }
   }
 
-  .product-card {
-    --card-accent: 99, 102, 241;
-    padding: clamp(var(--space-lg), 4vw, var(--space-2xl));
+  /* Slot content inside the product cards */
+  .product-meta {
     display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    gap: var(--space-xl);
-    position: relative;
-    overflow: hidden;
-    /* Each product keeps its own identity: a soft corner glow and a top hairline in its accent */
-    background:
-      radial-gradient(ellipse 70% 40% at 0% 0%, rgba(var(--card-accent), 0.14), transparent 70%),
-      var(--grad-surface-card);
-  }
-
-  #setu-card { --card-accent: 16, 185, 129; }
-  #fieldbook-card { --card-accent: 245, 158, 11; }
-
-  .product-card::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: var(--space-xl);
-    right: var(--space-xl);
-    height: 1px;
-    background: linear-gradient(90deg, transparent, rgba(var(--card-accent), 0.7), transparent);
-    pointer-events: none;
-  }
-
-  .card-top {
-    display: flex;
-    flex-direction: column;
-    gap: var(--space-lg);
-  }
-
-  .product-header {
-    display: flex;
-    align-items: flex-start;
+    align-items: center;
     gap: var(--space-md);
+    flex-wrap: wrap;
+    margin-bottom: var(--space-md);
   }
 
   .product-icon {
@@ -264,46 +225,15 @@ import Button from '../../components/Button.astro';
   }
 
   .setu-icon {
-    background: rgba(16, 185, 129, 0.12);
+    background: rgba(var(--primary-rgb), 0.12);
     color: var(--setu-emerald-light);
     border: 1px solid var(--setu-emerald-border);
   }
 
   .fieldbook-icon {
-    background: rgba(245, 158, 11, 0.12);
+    background: rgba(var(--accent-rgb), 0.12);
     color: var(--fieldbook-amber-light);
     border: 1px solid var(--fieldbook-amber-border);
-  }
-
-  .product-titles {
-    display: flex;
-    flex-direction: column;
-    gap: 6px;
-  }
-
-  .badge-row {
-    display: flex;
-    align-items: center;
-    gap: var(--space-3);
-    flex-wrap: wrap;
-    margin-bottom: var(--space-2);
-  }
-
-  .product-name {
-    font-size: var(--font-size-4xl);
-    font-weight: var(--font-weight-bold);
-  }
-
-  .product-category {
-    font-size: var(--font-size-sm);
-    color: var(--text-muted);
-    font-weight: 500;
-  }
-
-  .product-desc {
-    font-size: var(--font-size-md);
-    color: var(--text-secondary);
-    line-height: 1.6;
   }
 
   .product-specs {
@@ -311,7 +241,7 @@ import Button from '../../components/Button.astro';
     flex-direction: column;
     gap: var(--space-xs);
     padding: var(--space-lg);
-    background: rgba(0, 0, 0, 0.28);
+    background: rgba(var(--black-rgb), 0.28);
     border: 1px solid var(--border-subtle);
     border-radius: var(--radius-md);
   }
@@ -348,8 +278,9 @@ import Button from '../../components/Button.astro';
   }
 
   .card-notice {
+    margin-top: var(--space-md);
     padding: var(--space-sm) var(--space-md);
-    background: rgba(255, 255, 255, 0.02);
+    background: rgba(var(--white-rgb), 0.02);
     border-left: 2px solid var(--border-glass-hover);
     font-size: var(--font-size-xs);
     line-height: 1.5;
@@ -366,6 +297,7 @@ import Button from '../../components/Button.astro';
     align-items: center;
     gap: var(--space-sm);
     flex-wrap: wrap;
+    margin-top: var(--space-lg);
     padding-top: var(--space-md);
     border-top: 1px solid var(--border-subtle);
   }
@@ -375,40 +307,7 @@ import Button from '../../components/Button.astro';
     padding-top: 0;
   }
 
-  .r-and-d-box {
-    padding: clamp(var(--space-lg), 4vw, var(--space-2xl));
-    display: flex;
-    flex-direction: column;
-    gap: var(--space-lg);
-    background: rgba(14, 18, 27, 0.5);
-  }
-
-  @media (min-width: 800px) {
-    .r-and-d-box {
-      flex-direction: row;
-      align-items: center;
-      justify-content: space-between;
-    }
-  }
-
-  .r-and-d-content {
-    display: flex;
-    flex-direction: column;
-    gap: var(--space-sm);
-    max-width: 760px;
-  }
-
-  .r-and-d-title {
-    font-size: var(--font-size-2xl);
-    margin-top: 4px;
-  }
-
-  .r-and-d-text {
-    font-size: var(--font-size-sm);
-    color: var(--text-secondary);
-  }
-
   .r-and-d-cta {
-    flex-shrink: 0;
+    margin-top: var(--space-sm);
   }
 </style>

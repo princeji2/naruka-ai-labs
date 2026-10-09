@@ -1,6 +1,7 @@
 ---
 import Navbar from '../components/Navbar.astro';
 import Footer from '../components/Footer.astro';
+import Background from '../components/ui/Background.astro';
 import '../styles/global.css';
 
 interface Props {
@@ -60,7 +61,7 @@ const schemaData = {
 ---
 
 <!doctype html>
-<html lang="en">
+<html lang="en" class="dark" data-theme="dark">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
@@ -74,7 +75,7 @@ const schemaData = {
     <title>{pageTitle}</title>
     <meta name="title" content={pageTitle} />
     <meta name="description" content={description} />
-    <meta name="theme-color" content="#07080B" />
+    <meta name="theme-color" content="#1A1D23" />
     <meta name="color-scheme" content="dark" />
 
     <!-- Open Graph / Facebook -->
@@ -112,6 +113,7 @@ const schemaData = {
     <script type="application/ld+json" set:html={JSON.stringify(schemaData)} />
   </head>
   <body>
+    <Background />
     <a href="#main-content" class="skip-link">Skip to main content</a>
     <Navbar />
     <main id="main-content">

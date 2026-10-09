@@ -83,13 +83,24 @@ import Logo from './Logo.astro';
 </footer>
 
 <style>
+  /* Glass footer: translucent fill + blur, same material as the header */
   .site-footer {
     position: relative;
-    background: linear-gradient(180deg, transparent 0%, rgba(11, 13, 19, 0.9) 40%, var(--color-surface-deep) 100%);
+    background: linear-gradient(180deg, rgba(var(--bg-rgb), 0.6) 0%, rgba(var(--bg-rgb), 0.88) 100%);
+    backdrop-filter: blur(var(--glass-blur-md)) saturate(140%);
+    -webkit-backdrop-filter: blur(var(--glass-blur-md)) saturate(140%);
     border-top: 1px solid var(--border-subtle);
     padding-top: var(--space-4xl);
     padding-bottom: var(--space-2xl);
     margin-top: auto;
+  }
+
+  @media (prefers-reduced-transparency: reduce) {
+    .site-footer {
+      background: var(--color-surface-deep);
+      backdrop-filter: none;
+      -webkit-backdrop-filter: none;
+    }
   }
 
   /* Hairline highlight, same device as the header */
@@ -100,7 +111,7 @@ import Logo from './Logo.astro';
     left: 0;
     right: 0;
     height: 1px;
-    background: linear-gradient(90deg, transparent 0%, rgba(165, 180, 252, 0.24) 50%, transparent 100%);
+    background: linear-gradient(90deg, transparent 0%, rgba(var(--primary-rgb), 0.24) 50%, transparent 100%);
     pointer-events: none;
   }
 
@@ -229,7 +240,7 @@ import Logo from './Logo.astro';
     display: inline-block;
     font-size: var(--font-size-xs);
     padding: var(--space-1) var(--space-3);
-    background: rgba(255, 255, 255, 0.04);
+    background: rgba(var(--white-rgb), 0.04);
     border: 1px solid var(--border-subtle);
     border-radius: var(--radius-xs);
     color: var(--color-text-muted);
@@ -238,7 +249,7 @@ import Logo from './Logo.astro';
   /* Disclosure */
   .footer-disclosure {
     padding: var(--space-md) var(--space-lg);
-    background: rgba(255, 255, 255, 0.02);
+    background: rgba(var(--white-rgb), 0.02);
     border: 1px solid var(--border-subtle);
     border-radius: var(--radius-md);
   }
@@ -288,8 +299,8 @@ import Logo from './Logo.astro';
     white-space: nowrap;
     font-size: var(--font-size-xs);
     color: var(--color-text-secondary);
-    background: rgba(99, 102, 241, 0.08);
-    border: 1px solid rgba(99, 102, 241, 0.2);
+    background: rgba(var(--primary-rgb), 0.08);
+    border: 1px solid rgba(var(--primary-rgb), 0.2);
     padding: var(--space-2) var(--space-4);
     border-radius: var(--radius-full);
   }

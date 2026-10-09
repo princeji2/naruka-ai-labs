@@ -1,6 +1,7 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import Badge from '../../components/Badge.astro';
+import Card from '../../components/ui/Card.astro';
 ---
 
 <BaseLayout
@@ -16,27 +17,29 @@ import Badge from '../../components/Badge.astro';
         <p class="legal-date">Last Updated: October 2026 · Plain Language Terms</p>
 
         <!-- Advisory Notice -->
-        <div class="legal-advisory glass-panel">
-          <strong>Review Advisory:</strong> These terms outline the conditions of using <code>https://orgs.social</code> and inspecting our technical research prototypes.
-        </div>
+        <Card class="card-compact" headingLevel={2} title="Review Advisory:" gradient="primary">
+          <p class="legal-advisory-text">These terms outline the conditions of using <code>https://orgs.social</code> and inspecting our technical research prototypes.</p>
+        </Card>
 
-        <div class="legal-body glass-panel">
-          <section class="legal-section">
-            <h2>1. Acceptance of Terms</h2>
+        <div class="legal-body">
+          <Card class="card-wide" headingLevel={2} title="1. Acceptance of Terms" gradient="neutral">
+            <div class="legal-copy">
             <p>
               By accessing and using this website (<code>https://orgs.social</code>), you agree to these Terms of Service. If you do not agree with these terms, please discontinue use of this site.
             </p>
-          </section>
+            </div>
+          </Card>
 
-          <section class="legal-section">
-            <h2>2. Purpose of the Website</h2>
+          <Card class="card-wide" headingLevel={2} title="2. Purpose of the Website" gradient="neutral">
+            <div class="legal-copy">
             <p>
               This website serves as the informational portfolio and technical presentation for <strong>Naruka AI Labs</strong>, an early-stage independent software studio operated by Prince Naruka. The site presents product architectures, development roadmaps, and contact channels.
             </p>
-          </section>
+            </div>
+          </Card>
 
-          <section class="legal-section">
-            <h2>3. Prototype Environments & Demonstrations</h2>
+          <Card class="card-wide" headingLevel={2} title="3. Prototype Environments & Demonstrations" gradient="neutral">
+            <div class="legal-copy">
             <p>
               Certain software mentioned on this website (such as Setu and Field Book) are research prototypes:
             </p>
@@ -44,27 +47,30 @@ import Badge from '../../components/Badge.astro';
               <li><strong>Setu:</strong> Provides architectural demonstrations using synthetic, simulated records. It is not an official government service and should not be relied upon for legal document filings.</li>
               <li><strong>Field Book:</strong> The live demonstration prototype is hosted on Vercel for testing event workflows and certificate compilation. It is provided "as is" without commercial service level agreements.</li>
             </ul>
-          </section>
+            </div>
+          </Card>
 
-          <section class="legal-section">
-            <h2>4. Intellectual Property & Open Source Licensing</h2>
+          <Card class="card-wide" headingLevel={2} title="4. Intellectual Property & Open Source Licensing" gradient="neutral">
+            <div class="legal-copy">
             <p>
               The code powering this website is open source under the <strong>MIT License</strong> and hosted publicly at <code>https://github.com/princeji2/naruka-ai-labs</code>.
             </p>
             <p>
               Separate product source codebases, system architectures, brand marks, and specialized algorithms developed by Naruka AI Labs remain the proprietary intellectual property of the founder unless explicitly open-sourced under their respective repositories.
             </p>
-          </section>
+            </div>
+          </Card>
 
-          <section class="legal-section">
-            <h2>5. Disclaimer of Warranties</h2>
+          <Card class="card-wide" headingLevel={2} title="5. Disclaimer of Warranties" gradient="neutral">
+            <div class="legal-copy">
             <p>
               This website and all demonstration materials are provided on an "AS IS" and "AS AVAILABLE" basis without warranties of any kind, whether express or implied.
             </p>
-          </section>
+            </div>
+          </Card>
 
-          <section class="legal-section">
-            <h2>6. Governing Law & Contact</h2>
+          <Card class="card-wide" headingLevel={2} title="6. Governing Law & Contact" gradient="neutral">
+            <div class="legal-copy">
             <p>
               These terms are governed by the laws of India. For any legal inquiries or questions regarding these terms, please contact:
             </p>
@@ -72,7 +78,8 @@ import Badge from '../../components/Badge.astro';
               <strong>Prince Naruka</strong><br />
               Email: <a href="mailto:naruka@orgs.social">naruka@orgs.social</a>
             </p>
-          </section>
+            </div>
+          </Card>
         </div>
       </div>
     </section>
@@ -100,50 +107,37 @@ import Badge from '../../components/Badge.astro';
     color: var(--text-muted);
   }
 
-  .legal-advisory {
-    padding: var(--space-md) var(--space-lg);
-    background: rgba(99, 102, 241, 0.08);
-    border: 1px solid rgba(99, 102, 241, 0.25);
+  /* Advisory notice (slot content) */
+  .legal-advisory-text {
     font-size: var(--font-size-sm);
     color: var(--text-secondary);
-    border-radius: var(--radius-md);
   }
 
-  .legal-advisory code {
+  .legal-advisory-text code {
     color: var(--accent-indigo-light);
   }
 
+  /* One card per clause */
   .legal-body {
-    padding: clamp(var(--space-lg), 5vw, var(--space-3xl));
     display: flex;
     flex-direction: column;
-    gap: var(--space-2xl);
+    gap: var(--space-xl);
   }
 
-  .legal-section {
+  /* Clause content (slot content) */
+  .legal-copy {
     display: flex;
     flex-direction: column;
     gap: var(--space-sm);
   }
 
-  /* Hairline between clauses so a long document scans in sections */
-  .legal-section + .legal-section {
-    padding-top: var(--space-2xl);
-    border-top: 1px solid var(--border-subtle);
-  }
-
-  .legal-section h2 {
-    font-size: var(--font-size-2xl);
-    color: var(--text-primary);
-  }
-
-  .legal-section p {
+  .legal-copy p {
     font-size: var(--font-size-sm);
     color: var(--text-secondary);
     line-height: 1.65;
   }
 
-  .legal-section ul {
+  .legal-copy ul {
     list-style: disc;
     padding-left: 24px;
     display: flex;
@@ -154,17 +148,17 @@ import Badge from '../../components/Badge.astro';
     line-height: 1.6;
   }
 
-  .legal-section strong {
+  .legal-copy strong {
     color: var(--text-primary);
   }
 
-  .legal-section a {
+  .legal-copy a {
     color: var(--accent-indigo-light);
     text-decoration: underline;
   }
 
-  .legal-section code {
-    background: rgba(0, 0, 0, 0.35);
+  .legal-copy code {
+    background: rgba(var(--black-rgb), 0.35);
     padding: 1px 4px;
     border-radius: var(--radius-xs);
     color: var(--color-text-secondary);

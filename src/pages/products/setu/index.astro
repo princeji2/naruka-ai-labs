@@ -2,6 +2,7 @@
 import BaseLayout from '../../../layouts/BaseLayout.astro';
 import Badge from '../../../components/Badge.astro';
 import Button from '../../../components/Button.astro';
+import Card from '../../../components/ui/Card.astro';
 ---
 
 <BaseLayout
@@ -31,14 +32,19 @@ import Button from '../../../components/Button.astro';
           </p>
 
           <!-- Mandatory Heritage Note -->
-          <div class="origins-callout glass-panel">
-            <div class="callout-badge-wrap">
-              <span class="origins-badge">Origins & Heritage</span>
-              <span class="sih-id">Problem Statement SIH 26129</span>
-            </div>
-            <p class="origins-body">
-              Setu originated as a project for the <strong>Smart India Hackathon</strong> addressing <em>"System Integration and Interoperability Among Government Digital Platforms"</em>. Prince Naruka is continuing its architectural and engineering development under Naruka AI Labs as an independent product research effort. It is not an official government service and is not affiliated with any public department.
-            </p>
+          <div class="origins-callout">
+            <Card
+              class="card-compact"
+              headingLevel={2}
+              title="Origins & Heritage"
+              status="Problem Statement SIH 26129"
+              statusColor="primary"
+              gradient="primary"
+            >
+              <p class="origins-body">
+                Setu originated as a project for the <strong>Smart India Hackathon</strong> addressing <em>"System Integration and Interoperability Among Government Digital Platforms"</em>. Prince Naruka is continuing its architectural and engineering development under Naruka AI Labs as an independent product research effort. It is not an official government service and is not affiliated with any public department.
+              </p>
+            </Card>
           </div>
 
           <div class="detail-ctas">
@@ -53,17 +59,19 @@ import Button from '../../../components/Button.astro';
 
         <!-- Visual Gateway Diagram -->
         <div class="hero-visual-col">
-          <div class="gateway-diagram-card glass-panel">
-            <div class="diagram-header">
-              <span class="diagram-tag">GATEWAY INTERACTION TOPOLOGY</span>
-              <span class="diagram-status">Synthetic Test Environment</span>
-            </div>
-
+          <Card
+            class="card-compact"
+            headingLevel={2}
+            title="GATEWAY INTERACTION TOPOLOGY"
+            status="Synthetic Test Environment"
+            statusColor="accent"
+            gradient="neutral"
+          >
             <svg viewBox="0 0 460 360" fill="none" xmlns="http://www.w3.org/2000/svg" class="gateway-svg" aria-label="Setu interoperability gateway architecture diagram">
               <!-- Grid background -->
               <defs>
                 <pattern id="diagGrid" width="20" height="20" patternUnits="userSpaceOnUse">
-                  <path d="M 20 0 L 0 0 0 20" fill="none" stroke="rgba(255,255,255,0.03)" stroke-width="1" />
+                  <path d="M 20 0 L 0 0 0 20" fill="none" stroke="rgba(var(--white-rgb), 0.03)" stroke-width="1" />
                 </pattern>
                 <radialGradient id="gatewayPulse" cx="230" cy="180" r="100" gradientUnits="userSpaceOnUse">
                   <stop offset="0%" stop-color="var(--setu-emerald)" stop-opacity="0.25" />
@@ -75,7 +83,7 @@ import Button from '../../../components/Button.astro';
               <circle cx="230" cy="180" r="90" fill="url(#gatewayPulse)" />
 
               <!-- Connecting Connection Lines -->
-              <g stroke="rgba(255, 255, 255, 0.15)" stroke-width="1.5" stroke-dasharray="4 4">
+              <g stroke="rgba(var(--white-rgb), 0.15)" stroke-width="1.5" stroke-dasharray="4 4">
                 <line x1="230" y1="180" x2="230" y2="60" />
                 <line x1="230" y1="180" x2="80" y2="280" />
                 <line x1="230" y1="180" x2="380" y2="280" />
@@ -124,7 +132,7 @@ import Button from '../../../components/Button.astro';
               <span class="dot-amber"></span>
               <span>All 3 connected departmental backends run on isolated mock ports with synthetic records.</span>
             </div>
-          </div>
+          </Card>
         </div>
       </div>
     </section>
@@ -132,31 +140,35 @@ import Button from '../../../components/Button.astro';
     <!-- Problem & Solution Analysis -->
     <section class="section narrative-section">
       <div class="container narrative-grid">
-        <div class="narrative-card glass-panel">
-          <span class="card-kicker text-gradient-silver">THE PROBLEM</span>
-          <h2 class="card-title">Fragmented Departmental Silos</h2>
-          <p class="card-p">
-            In modern administrative workflows, citizens interact with dozens of independent departmental portals. Each agency operates its own database, verification team, and identity storage.
-          </p>
+        <Card
+          headingLevel={2}
+          title="Fragmented Departmental Silos"
+          description="In modern administrative workflows, citizens interact with dozens of independent departmental portals. Each agency operates its own database, verification team, and identity storage."
+          status="THE PROBLEM"
+          statusColor="danger"
+          gradient="secondary"
+        >
           <ul class="bullet-list">
             <li><strong>Repetitive uploads:</strong> Citizens must download tax, identity, or registration proofs from one portal and re-upload them to another.</li>
             <li><strong>Security risks:</strong> PDF copies are stored across multiple third-party servers, increasing the risk of data leaks and outdated documentation.</li>
             <li><strong>Verification delays:</strong> Every department independently checks authenticity, causing redundant queues and weeks of friction.</li>
           </ul>
-        </div>
+        </Card>
 
-        <div class="narrative-card glass-panel">
-          <span class="card-kicker text-gradient-emerald">THE SOLUTION</span>
-          <h2 class="card-title">Consent-Driven Gateway Relay</h2>
-          <p class="card-p">
-            Setu replaces redundant document copying with an audited, tokenized gateway relay. Verified records are retrieved directly from the issuing authority only when explicit citizen consent is granted.
-          </p>
+        <Card
+          headingLevel={2}
+          title="Consent-Driven Gateway Relay"
+          description="Setu replaces redundant document copying with an audited, tokenized gateway relay. Verified records are retrieved directly from the issuing authority only when explicit citizen consent is granted."
+          status="THE SOLUTION"
+          statusColor="primary"
+          gradient="primary"
+        >
           <ul class="bullet-list">
             <li><strong>One citizen login:</strong> A single entry point allows the citizen to inspect which departments have verified their documents.</li>
             <li><strong>Direct department-to-department verification:</strong> The gateway requests data over authenticated HTTP contracts, logging every relay.</li>
             <li><strong>Zero duplicate file storage:</strong> Data is relayed on demand rather than permanently duplicated across multiple departmental silos.</li>
           </ul>
-        </div>
+        </Card>
       </div>
     </section>
 
@@ -173,11 +185,11 @@ import Button from '../../../components/Button.astro';
 
         <div class="tech-spec-grid">
           <!-- Gateway Layer -->
-          <div class="spec-card glass-panel">
-            <h3 class="spec-card-title">1. Gateway Orchestration Layer</h3>
-            <p class="spec-card-desc">
-              A Node.js Express service backed by PostgreSQL that manages citizen authentication, session tokens, and department dispatching.
-            </p>
+          <Card
+            title="1. Gateway Orchestration Layer"
+            description="A Node.js Express service backed by PostgreSQL that manages citizen authentication, session tokens, and department dispatching."
+            gradient="primary"
+          >
             <div class="tech-tags">
               <span class="tech-tag">Node.js Express</span>
               <span class="tech-tag">PostgreSQL</span>
@@ -189,14 +201,14 @@ import Button from '../../../components/Button.astro';
               <li>Graceful degradation: if a department service is unreachable, an explicit error is returned without hanging other lookups.</li>
               <li>Transaction logs record timestamp, status, and department response.</li>
             </ul>
-          </div>
+          </Card>
 
           <!-- Simulated Backends -->
-          <div class="spec-card glass-panel">
-            <h3 class="spec-card-title">2. Simulated Department Backends</h3>
-            <p class="spec-card-desc">
-              Three standalone mock microservices running in isolated environments to test real outbound HTTP integration without contacting government servers.
-            </p>
+          <Card
+            title="2. Simulated Department Backends"
+            description="Three standalone mock microservices running in isolated environments to test real outbound HTTP integration without contacting government servers."
+            gradient="secondary"
+          >
             <div class="tech-tags">
               <span class="tech-tag">FastAPI (Python)</span>
               <span class="tech-tag">SQLite</span>
@@ -208,11 +220,13 @@ import Button from '../../../components/Button.astro';
               <li><strong>Mock Identity Registry:</strong> Simulates identity verification lookups with test payloads.</li>
               <li><strong>Mock Driving Licence Portal:</strong> Validates simulated registration records.</li>
             </ul>
-          </div>
+          </Card>
 
           <!-- Service Assistant Proxy -->
-          <div class="spec-card glass-panel">
-            <h3 class="spec-card-title">3. Grounded Service Assistant</h3>
+          <Card
+            title="3. Grounded Service Assistant"
+            gradient="accent"
+          >
             <p class="spec-card-desc">
               A server-side AI proxy service implementing <code>POST /api/v1/chat</code> to assist visitors with understanding public service procedures.
             </p>
@@ -227,7 +241,7 @@ import Button from '../../../components/Button.astro';
               <li>Strict system prompts guard against hallucinating nonexistent public welfare policies.</li>
               <li>Handles upstream 429 rate limits, validation errors, and network timeouts safely.</li>
             </ul>
-          </div>
+          </Card>
         </div>
       </div>
     </section>
@@ -235,16 +249,14 @@ import Button from '../../../components/Button.astro';
     <!-- Status & Roadmap Callout -->
     <section class="section status-section">
       <div class="container">
-        <div class="status-box glass-panel">
-          <div class="status-content">
-            <div class="status-badge-row">
-              <Badge variant="in-development" text="Current Stage: Prototype Refinement" />
-            </div>
-            <h3 class="status-title">Current Development Status</h3>
-            <p class="status-desc">
-              Setu is currently undergoing refactoring into a modular architecture. Core gateway dispatch logic, schema migration tests, and mock client contracts are functional locally. Future exploratory work is planned around formalizing the consent token lifecycle and investigating verifiable audit logging.
-            </p>
-          </div>
+        <Card
+          class="card-wide"
+          title="Current Development Status"
+          description="Setu is currently undergoing refactoring into a modular architecture. Core gateway dispatch logic, schema migration tests, and mock client contracts are functional locally. Future exploratory work is planned around formalizing the consent token lifecycle and investigating verifiable audit logging."
+          status="Current Stage: Prototype Refinement"
+          statusColor="primary"
+          gradient="primary"
+        >
           <div class="status-actions">
             <Button href="mailto:naruka@orgs.social?subject=Setu%20Discussion" variant="primary" size="md">
               Contact Developer
@@ -253,7 +265,7 @@ import Button from '../../../components/Button.astro';
               Back to Products
             </Button>
           </div>
-        </div>
+        </Card>
       </div>
     </section>
   </article>
@@ -324,7 +336,7 @@ import Button from '../../../components/Button.astro';
   }
 
   .text-gradient-emerald {
-    background: linear-gradient(100deg, #6EE7B7 0%, var(--setu-emerald-light) 45%, var(--setu-emerald) 100%);
+    background: linear-gradient(100deg, color-mix(in srgb, var(--setu-emerald-light) 60%, var(--text)) 0%, var(--setu-emerald-light) 45%, var(--setu-emerald) 100%);
     -webkit-background-clip: text;
     background-clip: text;
     -webkit-text-fill-color: transparent;
@@ -338,41 +350,9 @@ import Button from '../../../components/Button.astro';
     line-height: var(--line-height-relaxed);
   }
 
-  /* Origins Callout */
+  /* Origins Callout (slot content) */
   .origins-callout {
-    padding: var(--space-lg);
-    background:
-      radial-gradient(ellipse 70% 60% at 0% 0%, rgba(16, 185, 129, 0.14), transparent 70%),
-      rgba(16, 185, 129, 0.04);
-    border: 1px solid var(--setu-emerald-border);
-    display: flex;
-    flex-direction: column;
-    gap: var(--space-xs);
     margin-top: var(--space-xs);
-  }
-
-  .callout-badge-wrap {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    flex-wrap: wrap;
-  }
-
-  .origins-badge {
-    font-size: var(--font-size-xs);
-    font-weight: 700;
-    text-transform: uppercase;
-    letter-spacing: 0.06em;
-    padding: var(--space-2) var(--space-3);
-    background: rgba(16, 185, 129, 0.2);
-    color: var(--setu-emerald-light);
-    border-radius: var(--radius-full);
-  }
-
-  .sih-id {
-    font-size: var(--font-size-xs);
-    font-family: var(--font-mono);
-    color: var(--setu-emerald-light);
   }
 
   .origins-body {
@@ -393,48 +373,21 @@ import Button from '../../../components/Button.astro';
     margin-top: var(--space-sm);
   }
 
-  /* Gateway Diagram Card */
-  .gateway-diagram-card {
-    padding: var(--space-lg);
-    display: flex;
-    flex-direction: column;
-    gap: var(--space-md);
-    background: var(--color-surface-deep);
-    border: 1px solid var(--border-glass-hover);
-  }
-
-  .diagram-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    font-size: var(--font-size-xs);
-    padding-bottom: var(--space-xs);
-    border-bottom: 1px solid var(--border-subtle);
-  }
-
-  .diagram-tag {
-    font-family: var(--font-mono);
-    color: var(--text-muted);
-    font-weight: 600;
-  }
-
-  .diagram-status {
-    color: var(--fieldbook-amber-light);
-    font-weight: 600;
-  }
-
+  /* Gateway Diagram (slot content) */
   .gateway-svg {
     width: 100%;
     height: auto;
     display: block;
+    margin-top: var(--space-sm);
   }
 
   .diagram-footer {
     display: flex;
     align-items: center;
-    gap: 8px;
+    gap: var(--space-sm);
     font-size: var(--font-size-xs);
     color: var(--text-muted);
+    margin-top: var(--space-sm);
     padding-top: var(--space-xs);
     border-top: 1px solid var(--border-subtle);
   }
@@ -462,29 +415,6 @@ import Button from '../../../components/Button.astro';
     .narrative-grid {
       grid-template-columns: 1fr 1fr;
     }
-  }
-
-  .narrative-card {
-    padding: clamp(var(--space-lg), 3.5vw, var(--space-2xl));
-    display: flex;
-    flex-direction: column;
-    gap: var(--space-md);
-  }
-
-  .card-kicker {
-    font-size: var(--font-size-xs);
-    font-weight: 700;
-    letter-spacing: 0.08em;
-  }
-
-  .card-title {
-    font-size: var(--font-size-3xl);
-    font-weight: 700;
-  }
-
-  .card-p {
-    font-size: var(--font-size-sm);
-    color: var(--text-secondary);
   }
 
   .bullet-list {
@@ -546,36 +476,31 @@ import Button from '../../../components/Button.astro';
     }
   }
 
-  .spec-card {
-    padding: var(--space-xl);
-    display: flex;
-    flex-direction: column;
-    gap: var(--space-md);
-  }
-
-  .spec-card-title {
-    font-size: var(--font-size-2xl);
-    font-weight: 700;
-  }
-
   .spec-card-desc {
     font-size: var(--font-size-sm);
-    color: var(--text-secondary);
-    line-height: 1.55;
+    color: color-mix(in srgb, var(--text) 78%, var(--text-muted));
+    line-height: 1.6;
+  }
+
+  .spec-card-desc code {
+    background: rgba(var(--black-rgb), 0.4);
+    padding: 2px 4px;
+    border-radius: var(--radius-xs);
+    color: var(--fieldbook-amber-light);
   }
 
   .tech-tags {
     display: flex;
     flex-wrap: wrap;
     gap: 6px;
-    margin: var(--space-xs) 0;
+    margin: var(--space-xs) 0 var(--space-sm);
   }
 
   .tech-tag {
     font-size: var(--font-size-xs);
     font-family: var(--font-mono);
     padding: var(--space-2) var(--space-4);
-    background: rgba(255, 255, 255, 0.04);
+    background: rgba(var(--white-rgb), 0.06);
     border: 1px solid var(--border-subtle);
     border-radius: var(--radius-full);
     color: var(--color-text-secondary);
@@ -593,49 +518,17 @@ import Button from '../../../components/Button.astro';
   }
 
   .spec-list code {
-    background: rgba(0, 0, 0, 0.4);
+    background: rgba(var(--black-rgb), 0.4);
     padding: 2px 4px;
     border-radius: var(--radius-xs);
     color: var(--fieldbook-amber-light);
   }
 
-  /* Status Box */
-  .status-box {
-    padding: clamp(var(--space-lg), 4vw, var(--space-2xl));
-    display: flex;
-    flex-direction: column;
-    gap: var(--space-lg);
-    background: rgba(14, 18, 27, 0.6);
-  }
-
-  @media (min-width: 800px) {
-    .status-box {
-      flex-direction: row;
-      align-items: center;
-      justify-content: space-between;
-    }
-  }
-
-  .status-content {
-    display: flex;
-    flex-direction: column;
-    gap: var(--space-sm);
-    max-width: 720px;
-  }
-
-  .status-title {
-    font-size: var(--font-size-2xl);
-  }
-
-  .status-desc {
-    font-size: var(--font-size-sm);
-    color: var(--text-secondary);
-  }
-
+  /* Status Box (slot content) */
   .status-actions {
     display: flex;
     gap: var(--space-sm);
-    flex-shrink: 0;
     flex-wrap: wrap;
+    margin-top: var(--space-sm);
   }
 </style>

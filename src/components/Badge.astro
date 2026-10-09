@@ -73,9 +73,9 @@ const lengthClass = isLongLabel ? 'badge-long' : 'badge-short';
 
   /* In Development */
   .badge-in-development {
-    background: rgba(99, 102, 241, 0.12);
+    background: rgba(var(--primary-rgb), 0.12);
     color: var(--accent-indigo-light);
-    border: 1px solid rgba(99, 102, 241, 0.28);
+    border: 1px solid rgba(var(--primary-rgb), 0.28);
   }
   .badge-in-development .badge-dot {
     background: var(--accent-indigo-light);
@@ -106,9 +106,9 @@ const lengthClass = isLongLabel ? 'badge-long' : 'badge-short';
 
   /* Planned / Concept */
   .badge-planned {
-    background: rgba(148, 163, 184, 0.10);
+    background: rgba(var(--white-rgb), 0.06);
     color: var(--color-text-secondary);
-    border: 1px solid rgba(148, 163, 184, 0.22);
+    border: 1px solid var(--border);
   }
   .badge-planned .badge-dot {
     background: var(--color-text-muted);
@@ -116,7 +116,7 @@ const lengthClass = isLongLabel ? 'badge-long' : 'badge-short';
 
   /* Neutral */
   .badge-neutral {
-    background: rgba(255, 255, 255, 0.06);
+    background: rgba(var(--white-rgb), 0.06);
     color: var(--color-text-secondary);
     border: 1px solid var(--border-glass);
   }

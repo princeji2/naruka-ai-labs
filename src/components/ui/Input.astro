@@ -1,0 +1,142 @@
+---
+/**
+ * Input.astro: labelled text field with hint and error states.
+ * Focus ring uses the Primary colour. Errors set aria-invalid and are linked with aria-describedby.
+ */
+interface Props {
+  id: string;
+  name?: string;
+  label: string;
+  type?: 'text' | 'email' | 'password' | 'search' | 'tel' | 'url';
+  placeholder?: string;
+  value?: string;
+  autocomplete?: string;
+  required?: boolean;
+  disabled?: boolean;
+  /** Helper text shown under the field. */
+  hint?: string;
+  /** Error message. Presence switches the field into the error state. */
+  error?: string;
+  class?: string;
+}
+
+const {
+  id,
+  name = id,
+  label,
+  type = 'text',
+  placeholder,
+  value,
+  autocomplete,
+  required = false,
+  disabled = false,
+  hint,
+  error,
+  class: className = '',
+} = Astro.props;
+
+const hintId = hint ? `${id}-hint` : undefined;
+const errorId = error ? `${id}-error` : undefined;
+const describedBy = [errorId, hintId].filter(Boolean).join(' ') || undefined;
+---
+
+<div class={`field ${error ? 'has-error' : ''} ${className}`}>
+  <label class="field-label" for={id}>
+    {label}
+    {required && <span class="field-required" aria-hidden="true"> *</span>}
+  </label>
+  <input
+    class="field-input"
+    id={id}
+    name={name}
+    type={type}
+    placeholder={placeholder}
+    value={value}
+    autocomplete={autocomplete}
+    required={required}
+    disabled={disabled}
+    aria-invalid={error ? 'true' : undefined}
+    aria-describedby={describedBy}
+  />
+  {hint && !error && <p class="field-hint" id={hintId}>{hint}</p>}
+  {error && <p class="field-error" id={errorId} role="alert">{error}</p>}
+</div>
+
+<style>
+  .field {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-2);
+    width: 100%;
+  }
+
+  .field-label {
+    font-size: var(--font-size-sm);
+    font-weight: var(--font-weight-medium);
+    color: var(--color-text-primary);
+  }
+
+  .field-required {
+    color: var(--state-error-text);
+  }
+
+  .field-input {
+    width: 100%;
+    min-height: var(--target-min-size);
+    padding: var(--space-3) var(--space-4);
+    font-family: var(--font-body);
+    /* 16px+ stops iOS Safari zooming the page on focus */
+    font-size: max(16px, var(--font-size-sm));
+    color: var(--color-text-primary);
+    background: var(--bg);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-md);
+    transition: border-color var(--transition-fast), box-shadow var(--transition-fast);
+  }
+
+  .field-input::placeholder {
+    color: var(--text-muted);
+    opacity: 0.8;
+  }
+
+  @media (hover: hover) and (pointer: fine) {
+    .field-input:hover:not(:disabled) {
+      border-color: var(--text-muted);
+    }
+  }
+
+  /* Focus ring in the Primary colour */
+  .field-input:focus-visible {
+    outline: none;
+    border-color: var(--primary);
+    box-shadow: 0 0 0 3px rgba(var(--primary-rgb), 0.4);
+  }
+
+  .field-input:disabled {
+    opacity: var(--state-disabled-opacity);
+    cursor: var(--state-disabled-cursor);
+    background: var(--state-disabled-bg);
+    border-color: var(--state-disabled-border);
+  }
+
+  .has-error .field-input {
+    border-color: var(--danger);
+  }
+
+  .has-error .field-input:focus-visible {
+    border-color: var(--danger);
+    box-shadow: 0 0 0 3px rgba(var(--danger-rgb), 0.4);
+  }
+
+  .field-hint {
+    font-size: var(--font-size-xs);
+    color: var(--text-muted);
+    line-height: var(--line-height-snug);
+  }
+
+  .field-error {
+    font-size: var(--font-size-xs);
+    color: var(--state-error-text);
+    line-height: var(--line-height-snug);
+  }
+</style>

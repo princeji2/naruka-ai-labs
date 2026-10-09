@@ -1,0 +1,501 @@
+---
+/**
+ * Card.astro: the one reusable card for the whole site.
+ *
+ * Visual base: refrence/cards (gradient glass card). Top to bottom:
+ *   status pill -> title -> muted description -> [default slot] -> CTA row (text + arrow).
+ * A soft illustration sits half-cropped in the bottom-right corner: the optional `image`
+ * (file under public/cards/) or, when none is given, a tinted gradient orb.
+ *
+ * Props follow the spec:
+ *   title, description, status, statusColor, gradient, ctaLabel, href, image
+ * Additions that do not change those props: `headingLevel` (keeps the page outline correct)
+ * and `class`. The default slot holds extra content (fact lists, extra buttons, diagrams).
+ *
+ * `gradient`      'primary' | 'secondary' | 'accent' | 'neutral' (palette presets from tokens.css),
+ *                 or any CSS gradient / var(--token) string.
+ * `statusColor`   palette name ('primary', 'secondary', 'accent', 'danger'), '--token', or a CSS colour.
+ *                 Defaults to the card tint.
+ * `image`         'shield.png' (resolved to /cards/shield.png) or an absolute path / URL.
+ * `ctaLabel`      needs `href`. With `href` and no `ctaLabel`, the title becomes the link.
+ *                 With both, the whole card is clickable through the CTA link.
+ * `class`         optional variants:
+ *                 card-wide    large containers and long text: gentler hover (1.005 / -3px),
+ *                              no corner illustration so text contrast is never affected.
+ *                 card-center  centred content (CTA blocks).
+ *                 card-compact short notices: small heading and padding, no illustration.
+ */
+type Tint = 'primary' | 'secondary' | 'accent' | 'neutral';
+
+interface Props {
+  title: string;
+  /** Muted body text. Optional: cards that carry rich content can leave it out and use the slot. */
+  description?: string;
+  /** Muted sub-line between the title and the description (for example a product category). */
+  tagline?: string;
+  status?: string;
+  statusColor?: string;
+  gradient?: string;
+  ctaLabel?: string;
+  href?: string;
+  image?: string;
+  headingLevel?: 2 | 3 | 4;
+  class?: string;
+}
+
+const {
+  title,
+  description,
+  tagline,
+  status,
+  statusColor,
+  gradient = 'primary',
+  ctaLabel,
+  href,
+  image,
+  headingLevel = 3,
+  class: className = '',
+} = Astro.props;
+
+const TINT_VARS: Record<Tint, { color: string; rgb: string }> = {
+  primary: { color: 'var(--primary)', rgb: 'var(--primary-rgb)' },
+  secondary: { color: 'var(--secondary)', rgb: 'var(--secondary-rgb)' },
+  accent: { color: 'var(--accent)', rgb: 'var(--accent-rgb)' },
+  neutral: { color: 'var(--text-muted)', rgb: 'var(--white-rgb)' },
+};
+const PALETTE_COLORS = ['primary', 'secondary', 'accent', 'danger', 'text-muted', 'text'];
+
+const isTint = (value: string): value is Tint => value in TINT_VARS;
+const tint: Tint = isTint(gradient) ? gradient : 'primary';
+const cardGradient = isTint(gradient) ? `var(--card-grad-${gradient})` : gradient;
+
+function resolveColor(value: string | undefined, fallback: string): string {
+  if (!value) return fallback;
+  if (PALETTE_COLORS.includes(value)) return `var(--${value})`;
+  if (value.startsWith('--')) return `var(${value})`;
+  return value;
+}
+
+const styleVars = [
+  `--card-gradient:${cardGradient}`,
+  `--tint:${TINT_VARS[tint].color}`,
+  `--tint-rgb:${TINT_VARS[tint].rgb}`,
+  `--status-color:${resolveColor(statusColor, TINT_VARS[tint].color)}`,
+].join(';');
+
+const imageSrc = image
+  ? image.startsWith('/') || /^https?:\/\//.test(image) ? image : `/cards/${image}`
+  : undefined;
+
+const Heading = `h${headingLevel}` as 'h2' | 'h3' | 'h4';
+const isExternal = href ? /^https?:\/\//.test(href) : false;
+const linkAttrs = {
+  href,
+  target: isExternal ? '_blank' : undefined,
+  rel: isExternal ? 'noopener noreferrer' : undefined,
+};
+const hasLink = Boolean(href);
+const hasSlot = Astro.slots.has('default');
+---
+
+<article class={`card ${hasLink ? 'card-linked' : ''} ${className}`} style={styleVars}>
+  <div class="card-bg" aria-hidden="true"></div>
+  <div class="card-glow" aria-hidden="true"></div>
+
+  <div class="card-art" aria-hidden="true">
+    {imageSrc
+      ? <img class="card-art-img" src={imageSrc} alt="" width="320" height="320" loading="lazy" decoding="async" />
+      : <span class="card-orb"></span>}
+  </div>
+
+  <div class="card-body">
+    {status && (
+      <span class="card-pill">
+        <span class="card-pill-dot" aria-hidden="true"></span>
+        <span>{status}</span>
+      </span>
+    )}
+
+    <Heading class="card-title">
+      {hasLink && !ctaLabel
+        ? <a class="card-link" {...linkAttrs}>{title}</a>
+        : title}
+    </Heading>
+
+    {tagline && <p class="card-tagline">{tagline}</p>}
+
+    {description && <p class="card-desc">{description}</p>}
+
+    {hasSlot && (
+      <div class="card-extra">
+        <slot />
+      </div>
+    )}
+
+    {hasLink && ctaLabel && (
+      <div class="card-cta">
+        <a class="card-link card-cta-link" {...linkAttrs}>
+          <span>{ctaLabel}<span class="sr-only">: {title}</span></span>
+          <svg class="card-arrow" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M5 12h14M13 6l6 6-6 6" />
+          </svg>
+        </a>
+      </div>
+    )}
+  </div>
+</article>
+
+<script>
+  // Optional cursor-following highlight. Fine pointers only, never under reduced motion.
+  const finePointer = window.matchMedia('(hover: hover) and (pointer: fine)');
+  const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
+
+  if (finePointer.matches && !reduceMotion.matches) {
+    document.addEventListener(
+      'pointermove',
+      (event) => {
+        if (!(event.target instanceof Element)) return;
+        const card = event.target.closest<HTMLElement>('.card');
+        if (!card) return;
+        const rect = card.getBoundingClientRect();
+        card.style.setProperty('--mx', `${event.clientX - rect.left}px`);
+        card.style.setProperty('--my', `${event.clientY - rect.top}px`);
+      },
+      { passive: true }
+    );
+  }
+</script>
+
+<style>
+  .card {
+    --card-hover-lift: -6px;
+    --card-hover-scale: 1.02;
+    position: relative;
+    isolation: isolate;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    min-height: 220px;
+    overflow: hidden;
+    border-radius: var(--radius-2xl);
+    border: 1px solid rgba(var(--white-rgb), 0.12);
+    box-shadow: var(--shadow-card);
+    color: var(--color-text-primary);
+    /* Glass: the gradient layer is slightly translucent, so this blurs the page background */
+    backdrop-filter: blur(var(--glass-blur-sm));
+    -webkit-backdrop-filter: blur(var(--glass-blur-sm));
+    transition: transform var(--transition-card), box-shadow var(--transition-card);
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  /* Layer 1: per-card diagonal gradient */
+  .card-bg {
+    position: absolute;
+    inset: 0;
+    z-index: -3;
+    background: var(--card-gradient);
+    opacity: 0.94;
+  }
+
+  /* Brightening on hover: a tint wash fades in over the gradient (opacity only) */
+  .card-bg::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(135deg, rgba(var(--tint-rgb), 0.12), transparent 70%);
+    opacity: 0;
+    transition: opacity var(--transition-card);
+  }
+
+  /* Glass overlay: faint white sheen on top, translucent dark at the bottom */
+  .card::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    z-index: -2;
+    background: linear-gradient(160deg, rgba(var(--white-rgb), 0.06) 0%, rgba(var(--bg-rgb), 0.18) 100%);
+    pointer-events: none;
+  }
+
+  /* Cursor-following radial highlight (position set by the script above) */
+  .card-glow {
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    background: radial-gradient(260px circle at var(--mx, 50%) var(--my, 0%), rgba(var(--white-rgb), 0.07), transparent 70%);
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity var(--transition-card);
+  }
+
+  /* Corner illustration: half-cropped, behind the text, low opacity */
+  .card-art {
+    position: absolute;
+    right: -10%;
+    bottom: -22%;
+    z-index: -1;
+    width: 46%;
+    max-width: 280px;
+    aspect-ratio: 1;
+    opacity: 0.5;
+    pointer-events: none;
+    transition: transform var(--transition-card);
+    transform-origin: 60% 60%;
+  }
+
+  .card-art-img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+  }
+
+  .card-orb {
+    position: absolute;
+    inset: 0;
+    border-radius: var(--radius-full);
+    /* closest-side: the gradient fades to transparent exactly at the circle edge (no hard rim) */
+    background:
+      radial-gradient(circle closest-side at 34% 32%, rgba(var(--white-rgb), 0.24) 0%, transparent 70%),
+      radial-gradient(circle closest-side at 50% 50%, rgba(var(--tint-rgb), 0.6) 0%, rgba(var(--tint-rgb), 0.22) 62%, transparent 100%);
+  }
+
+  .card-body {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: var(--space-3);
+    flex: 1;
+    padding: clamp(var(--space-5), 4vw, var(--space-7));
+  }
+
+  /* Status pill */
+  .card-pill {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-3);
+    max-width: 100%;
+    padding: var(--space-2) var(--space-4);
+    border-radius: var(--radius-full);
+    background: rgba(var(--bg-rgb), 0.55);
+    border: 1px solid rgba(var(--white-rgb), 0.08);
+    font-size: var(--font-size-xs);
+    font-weight: var(--font-weight-semibold);
+    line-height: 1.2;
+    color: var(--color-text-primary);
+  }
+
+  .card-pill-dot {
+    width: var(--space-3);
+    height: var(--space-3);
+    flex-shrink: 0;
+    border-radius: var(--radius-full);
+    background: var(--status-color);
+  }
+
+  .card-title {
+    overflow-wrap: anywhere;
+    font-size: var(--font-size-3xl);
+    line-height: var(--line-height-snug);
+    color: var(--color-text-primary);
+    margin-top: var(--space-2);
+  }
+
+  /* Muted description: text 78% / muted 22%, >= 4.9:1 on the tinted gradient even on hover */
+  .card-tagline {
+    font-size: var(--font-size-sm);
+    font-weight: var(--font-weight-semibold);
+    color: var(--text-muted);
+    margin-top: calc(var(--space-2) * -1);
+  }
+
+  .card-desc {
+    font-size: var(--font-size-sm);
+    line-height: 1.6;
+    color: color-mix(in srgb, var(--text) 78%, var(--text-muted));
+    max-width: 62ch;
+    overflow-wrap: anywhere;
+  }
+
+  /* Extra content from the default slot sits above the stretched link */
+  .card-extra {
+    position: relative;
+    z-index: 2;
+    width: 100%;
+    margin-top: var(--space-2);
+  }
+
+  .card-cta {
+    margin-top: auto;
+    padding-top: var(--space-4);
+  }
+
+  .card-link {
+    color: inherit;
+    text-decoration: none;
+    font-weight: var(--font-weight-bold);
+  }
+
+  /* Stretched link: the whole card is the click target */
+  .card-link::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    border-radius: inherit;
+  }
+
+  /* Keyboard focus ring drawn around the whole card */
+  .card-link:focus-visible {
+    outline: none;
+  }
+  .card-link:focus-visible::after {
+    outline: var(--state-focus-outline);
+    outline-offset: -2px;
+    border-radius: var(--radius-2xl);
+  }
+
+  .card-cta-link {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-3);
+    font-size: var(--font-size-sm);
+  }
+
+  .card-arrow {
+    flex-shrink: 0;
+    transition: transform var(--transition-card);
+  }
+
+  .sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    margin: -1px;
+    padding: 0;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
+  }
+
+  /* ---------------- Hover / keyboard focus ----------------
+     Lift -6px, scale 1.02, bigger shadow, brighter gradient, parallax illustration,
+     arrow slides right 4px. All 350ms on cubic-bezier(0.22, 1, 0.36, 1). */
+  @media (hover: hover) and (pointer: fine) {
+    .card:hover {
+      transform: translateY(var(--card-hover-lift)) scale(var(--card-hover-scale));
+      box-shadow: inset 0 1px 0 rgba(var(--white-rgb), 0.1), var(--shadow-card-lift);
+      will-change: transform;
+    }
+    .card:hover .card-bg::after,
+    .card:hover .card-glow {
+      opacity: 1;
+    }
+    .card:hover .card-art {
+      transform: translate(-6px, -6px) scale(1.08) rotate(3deg);
+    }
+    .card:hover .card-arrow {
+      transform: translateX(4px);
+    }
+  }
+
+  /* Keyboard focus mirrors hover (works on touch-sized screens with a keyboard too) */
+  .card:has(.card-link:focus-visible) {
+    transform: translateY(var(--card-hover-lift)) scale(var(--card-hover-scale));
+    box-shadow: inset 0 1px 0 rgba(var(--white-rgb), 0.1), var(--shadow-card-lift);
+  }
+  .card:has(.card-link:focus-visible) .card-bg::after {
+    opacity: 1;
+  }
+  .card:has(.card-link:focus-visible) .card-art {
+    transform: translate(-6px, -6px) scale(1.08) rotate(3deg);
+  }
+  .card:has(.card-link:focus-visible) .card-arrow {
+    transform: translateX(4px);
+  }
+
+  /* Active (click) feedback. On touch screens this replaces hover. */
+  .card-linked:active {
+    transform: scale(0.99);
+  }
+
+  @media (hover: none) {
+    .card:active {
+      transform: scale(0.985);
+    }
+  }
+
+  /* ---------------- Variants (via the `class` prop) ---------------- */
+  .card-wide {
+    --card-hover-lift: -3px;
+    --card-hover-scale: 1.005;
+  }
+
+  /* No corner illustration on large or text-heavy containers: it would sit behind body text */
+  .card-wide .card-art {
+    display: none;
+  }
+
+  /* Short notices: smaller heading and padding, no illustration */
+  .card-compact {
+    min-height: 0;
+    --card-hover-lift: -3px;
+    --card-hover-scale: 1.005;
+  }
+
+  .card-compact .card-art {
+    display: none;
+  }
+
+  .card-compact .card-body {
+    padding: var(--space-lg);
+    gap: var(--space-2);
+  }
+
+  .card-compact .card-title {
+    font-size: var(--font-size-lg);
+    margin-top: 0;
+  }
+
+  .card-center .card-body {
+    align-items: center;
+    text-align: center;
+  }
+
+  /* ---------------- Preferences ---------------- */
+  @media (prefers-reduced-motion: reduce) {
+    .card,
+    .card:hover,
+    .card:active,
+    .card-linked:active,
+    .card:has(.card-link:focus-visible) {
+      transform: none;
+    }
+    .card:hover .card-art,
+    .card:has(.card-link:focus-visible) .card-art,
+    .card:hover .card-arrow,
+    .card:has(.card-link:focus-visible) .card-arrow {
+      transform: none;
+    }
+    .card-glow {
+      display: none;
+    }
+  }
+
+  @media (prefers-reduced-transparency: reduce) {
+    .card {
+      backdrop-filter: none;
+      -webkit-backdrop-filter: none;
+    }
+    .card-bg {
+      opacity: 1;
+    }
+  }
+
+  @media (prefers-contrast: more) {
+    .card {
+      border-color: var(--border-glass-active);
+    }
+  }
+</style>

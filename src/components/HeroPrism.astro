@@ -35,7 +35,11 @@
     if (isMobile) return;
 
     // Environmental guards: saveData or extreme memory constraint (< 2GB)
-    const nav = navigator as any;
+    type ExtendedNavigator = Navigator & {
+      connection?: { saveData?: boolean };
+      deviceMemory?: number;
+    };
+    const nav = navigator as ExtendedNavigator;
     if (nav.connection && nav.connection.saveData) return;
     if (nav.deviceMemory && nav.deviceMemory < 2) return;
 
@@ -71,6 +75,10 @@
       uniform vec2 u_resolution;
       uniform float u_time;
       uniform vec2 u_mouse;
+      uniform vec3 u_bg;
+      uniform vec3 u_primary;
+      uniform vec3 u_secondary;
+      uniform vec3 u_accent;
       varying vec2 v_uv;
 
       void main() {
@@ -97,18 +105,16 @@
         // Aurora field coordinates
         float waveTime = u_time * 0.15;
         
-        // Red channel: Indigo accent influence (4F46E5)
-        float r1 = sin(uvR.x * 2.5 + waveTime) * cos(uvR.y * 2.0 - waveTime * 0.7);
+        // Each ray (R, G, B) lights one palette colour, so the dispersion stays visible.
+        // Primary glow, sampled with the red ray
         float rDist = length(uvR - vec2(0.65 + pOffset.x, 0.35 + pOffset.y));
         float rIntensity = exp(-rDist * 2.8) * 0.45;
 
-        // Green channel: Subtle neutral blend
-        float g1 = sin(uvG.x * 2.5 + waveTime * 1.1) * cos(uvG.y * 2.0 - waveTime * 0.8);
+        // Secondary glow, sampled with the green ray
         float gDist = length(uvG - vec2(0.55 + pOffset.x, 0.45 + pOffset.y));
         float gIntensity = exp(-gDist * 3.2) * 0.28;
 
-        // Blue channel: Violet accent influence (8B5CF6)
-        float b1 = cos(uvB.x * 2.2 - waveTime * 0.9) * sin(uvB.y * 2.3 + waveTime);
+        // Accent glow, sampled with the blue ray
         float bDist = length(uvB - vec2(0.40 + pOffset.x, 0.60 + pOffset.y));
         float bIntensity = exp(-bDist * 2.6) * 0.55;
 
@@ -116,11 +122,12 @@
         float crest = max(0.0, normalX);
         float specular = pow(crest, 6.0) * 0.14;
 
-        // Dark Studio base color mixing (#07080B background floor)
-        vec3 color = vec3(0.027, 0.031, 0.043); // #07080B
-        color.r += rIntensity * 0.31 + specular;
-        color.g += gIntensity * 0.22 + specular * 0.9;
-        color.b += bIntensity * 0.62 + specular * 1.1;
+        // Base floor and glows come from the CSS palette tokens (see uniform setup in the script)
+        vec3 color = u_bg;
+        color += u_primary * rIntensity * 0.55;
+        color += u_secondary * gIntensity * 0.45;
+        color += u_accent * bIntensity * 0.65;
+        color += vec3(specular);
 
         // Dark edge vignetting so text maintains contrast
         float edgeVignette = smoothstep(0.0, 0.7, 1.0 - length((uv - 0.5) * 1.2));
@@ -175,6 +182,26 @@
     const uResolutionLoc = gl.getUniformLocation(program, 'u_resolution');
     const uTimeLoc = gl.getUniformLocation(program, 'u_time');
     const uMouseLoc = gl.getUniformLocation(program, 'u_mouse');
+
+    // Palette: read the RGB triplet tokens from tokens.css ("52, 168, 90") so the shader
+    // never carries its own copy of the colours. If a token is missing, keep the CSS poster.
+    const rootStyle = getComputedStyle(document.documentElement);
+    function readRgbToken(name: string): [number, number, number] | null {
+      const parts = rootStyle.getPropertyValue(name).split(',').map((v) => Number(v.trim()) / 255);
+      if (parts.length !== 3 || parts.some((v) => !Number.isFinite(v))) return null;
+      return [parts[0], parts[1], parts[2]];
+    }
+    const bgRgb = readRgbToken('--bg-rgb');
+    const primaryRgb = readRgbToken('--primary-rgb');
+    const secondaryRgb = readRgbToken('--secondary-rgb');
+    const accentRgb = readRgbToken('--accent-rgb');
+    if (!bgRgb || !primaryRgb || !secondaryRgb || !accentRgb) return;
+
+    gl.useProgram(program);
+    gl.uniform3f(gl.getUniformLocation(program, 'u_bg'), ...bgRgb);
+    gl.uniform3f(gl.getUniformLocation(program, 'u_primary'), ...primaryRgb);
+    gl.uniform3f(gl.getUniformLocation(program, 'u_secondary'), ...secondaryRgb);
+    gl.uniform3f(gl.getUniformLocation(program, 'u_accent'), ...accentRgb);
 
     // 4. Parallax & Animation State
     let targetMouseX = 0.5;
@@ -331,8 +358,8 @@
     z-index: 0;
     contain: strict;
     /* Dissolve the backdrop into the page instead of ending on a hard edge at the section boundary */
-    -webkit-mask-image: linear-gradient(to bottom, #000 0%, #000 62%, transparent 100%);
-    mask-image: linear-gradient(to bottom, #000 0%, #000 62%, transparent 100%);
+    -webkit-mask-image: linear-gradient(to bottom, rgb(var(--black-rgb)) 0%, rgb(var(--black-rgb)) 62%, transparent 100%);
+    mask-image: linear-gradient(to bottom, rgb(var(--black-rgb)) 0%, rgb(var(--black-rgb)) 62%, transparent 100%);
   }
 
   /* Layer 1: Zero-JS CSS-only Poster & Fallback */
@@ -357,7 +384,7 @@
     right: 10%;
     width: clamp(280px, 45vw, 620px);
     height: clamp(280px, 45vw, 620px);
-    background: radial-gradient(circle, rgba(79, 70, 229, 0.24) 0%, rgba(139, 92, 246, 0.12) 50%, transparent 75%);
+    background: radial-gradient(circle, rgba(var(--primary-rgb), 0.24) 0%, rgba(var(--accent-rgb), 0.12) 50%, transparent 75%);
   }
 
   .aurora-secondary {
@@ -365,7 +392,7 @@
     left: 5%;
     width: clamp(240px, 40vw, 520px);
     height: clamp(240px, 40vw, 520px);
-    background: radial-gradient(circle, rgba(139, 92, 246, 0.18) 0%, rgba(99, 102, 241, 0.08) 55%, transparent 75%);
+    background: radial-gradient(circle, rgba(var(--accent-rgb), 0.18) 0%, rgba(var(--primary-rgb), 0.08) 55%, transparent 75%);
   }
 
   /* Fluted glass ribbed lines via repeating linear gradient */
@@ -376,10 +403,10 @@
     height: 100%;
     background-image: repeating-linear-gradient(
       90deg,
-      rgba(255, 255, 255, 0.025) 0px,
-      rgba(255, 255, 255, 0.01) 6px,
-      rgba(0, 0, 0, 0.35) 12px,
-      rgba(255, 255, 255, 0.035) 16px
+      rgba(var(--white-rgb), 0.025) 0px,
+      rgba(var(--white-rgb), 0.01) 6px,
+      rgba(var(--black-rgb), 0.35) 12px,
+      rgba(var(--white-rgb), 0.035) 16px
     );
     backdrop-filter: blur(10px);
     -webkit-backdrop-filter: blur(10px);
@@ -392,7 +419,7 @@
     left: 0;
     right: 0;
     height: 1px;
-    background: linear-gradient(90deg, transparent 0%, rgba(255, 255, 255, 0.12) 50%, transparent 100%);
+    background: linear-gradient(90deg, transparent 0%, rgba(var(--white-rgb), 0.12) 50%, transparent 100%);
   }
 
   /* Layer 2: WebGL Canvas */

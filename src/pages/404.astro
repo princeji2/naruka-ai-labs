@@ -2,6 +2,7 @@
 import BaseLayout from '../layouts/BaseLayout.astro';
 import Badge from '../components/Badge.astro';
 import Button from '../components/Button.astro';
+import Card from '../components/ui/Card.astro';
 ---
 
 <BaseLayout
@@ -25,11 +26,12 @@ import Button from '../components/Button.astro';
         </Button>
       </div>
 
-      <div class="error-hint-card glass-panel">
-        <span class="hint-title">Looking for the Field Book application?</span>
-        <p class="hint-text">
-          The interactive campus ledger prototype is accessible at <a href="https://fieldbook.orgs.social" target="_blank" rel="noopener noreferrer">fieldbook.orgs.social ↗</a>.
-        </p>
+      <div class="error-hint">
+        <Card class="card-compact" headingLevel={2} title="Looking for the Field Book application?" gradient="secondary">
+          <p class="hint-text">
+            The interactive campus ledger prototype is accessible at <a href="https://fieldbook.orgs.social" target="_blank" rel="noopener noreferrer">fieldbook.orgs.social ↗</a>.
+          </p>
+        </Card>
       </div>
     </div>
   </div>
@@ -75,23 +77,10 @@ import Button from '../components/Button.astro';
     margin-bottom: var(--space-2xl);
   }
 
-  .error-hint-card {
-    padding: var(--space-md) var(--space-lg);
-    background: rgba(14, 18, 27, 0.6);
-    border: 1px solid var(--border-glass);
-    border-radius: var(--radius-sm);
-    text-align: left;
-    display: flex;
-    flex-direction: column;
-    gap: var(--space-1);
+  .error-hint {
     width: 100%;
     max-width: 520px;
-  }
-
-  .hint-title {
-    font-size: var(--font-size-sm);
-    font-weight: var(--font-weight-semibold);
-    color: var(--color-text-primary);
+    text-align: left;
   }
 
   .hint-text {

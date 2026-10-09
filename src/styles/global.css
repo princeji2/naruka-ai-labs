@@ -28,32 +28,42 @@ body {
   flex-direction: column;
   position: relative;
   overflow-x: hidden;
-  background-color: var(--color-surface-base);
+  /* Transparent so the fixed <Background /> (z-index -3) shows through.
+     The html element above supplies the base colour. The old aurora and dot-texture
+     pseudo-layers were removed: <Background /> replaces them. */
+  background-color: transparent;
   color: var(--color-text-primary);
 }
 
-/* Background Atmosphere */
-body::before {
-  content: '';
-  position: fixed;
-  inset: 0;
-  background: var(--grad-aurora-top), var(--grad-aurora-accent);
-  pointer-events: none;
-  z-index: -2;
+/* Selection colour */
+::selection {
+  background: rgba(var(--primary-rgb), 0.35);
+  color: var(--color-text-primary);
 }
 
-/* Subtle texture overlay */
-body::after {
-  content: '';
-  position: fixed;
-  inset: 0;
-  background-image: radial-gradient(rgba(255, 255, 255, 0.04) 1px, transparent 1px);
-  background-size: var(--space-11) var(--space-11);
-  mask-image: radial-gradient(ellipse 60% 60% at 50% 50%, black 70%, transparent 100%);
-  -webkit-mask-image: radial-gradient(ellipse 60% 60% at 50% 50%, black 70%, transparent 100%);
-  pointer-events: none;
-  z-index: -1;
-  opacity: 0.6;
+/* Scrollbar styling (Firefox + WebKit/Blink) */
+html {
+  scrollbar-width: thin;
+  scrollbar-color: var(--border) var(--bg);
+}
+
+::-webkit-scrollbar {
+  width: 12px;
+  height: 12px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--bg);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--border);
+  border: 3px solid var(--bg);
+  border-radius: var(--radius-full);
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--text-muted);
 }
 
 /* Accessible Skip Link */
@@ -62,8 +72,8 @@ body::after {
   top: -100px;
   left: var(--space-md);
   padding: var(--space-sm) var(--space-lg);
-  background: var(--accent-indigo);
-  color: var(--color-text-primary);
+  background: var(--primary);
+  color: var(--on-brand);
   font-weight: var(--font-weight-semibold);
   font-size: var(--font-size-sm);
   border-radius: var(--radius-sm);
@@ -258,7 +268,8 @@ code, pre {
 
 @supports (animation-timeline: view()) {
   main .section-heading,
-  main .glass-panel {
+  main .glass-panel,
+  main .card {
     animation: reveal-in linear both;
     animation-timeline: view();
     animation-range: entry 0% entry 40%;
@@ -267,7 +278,8 @@ code, pre {
 
 @media (prefers-reduced-motion: reduce) {
   main .section-heading,
-  main .glass-panel {
+  main .glass-panel,
+  main .card {
     animation: none;
   }
 }

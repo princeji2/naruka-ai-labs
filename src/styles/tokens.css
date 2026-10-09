@@ -1,9 +1,10 @@
 :root {
   /* ==========================================================================
-     NARUKA AI LABS STUDIO DESIGN SYSTEM TOKENS (REVISED)
+     NARUKA AI LABS DESIGN SYSTEM TOKENS
+     - Palette sampled from refrence/colour theam.png ("Northern Lights remix")
      - Clean, non-redundant spacing scale (2, 4, 8, 12, 16, 24, 32, 48, 64, 96, 128)
      - Fluid clamp typography for display steps (5xl, 6xl, 7xl) preventing 320px overflow
-     - Certified WCAG 2.2 AA contrast ratios (>3:1 for focus rings, >4.5:1 for text)
+     - WCAG 2.2 AA contrast targets (>3:1 for focus rings, >4.5:1 for text)
      - Global prefers-reduced-motion token support
      - Mandatory 7 component states
      ========================================================================== */
@@ -62,7 +63,6 @@
 
   /* --------------------------------------------------------------------------
      2. CLEAN SPACING SCALE (Clean, non-redundant powers & multiples)
-     Replaces near-duplicate fractional steps (5.5, 10.5, 11.5, 12.5, 13.5)
      -------------------------------------------------------------------------- */
   --space-1: 2px;
   --space-2: 4px;
@@ -76,61 +76,103 @@
   --space-10: 96px;
   --space-11: 128px;
 
-  /* Semantic Aliases mapped to preserve original studio density with clean non-fractional steps */
-  --space-3xs: var(--space-1);  /* 2px - Micro-gap, badge separators (backward compat alias) */
-  --space-2xs: var(--space-1);  /* 2px - Minimum discrete element gap */
-  --space-xs: var(--space-2);   /* 4px - Tight element gap */
-  --space-sm: var(--space-3);   /* 8px - Icon/text & compact padding */
-  --space-md: var(--space-4);   /* 12px - Standard button/input rhythm */
-  --space-lg: var(--space-5);   /* 16px - Standard block gap (Original 16px density) */
-  --space-xl: var(--space-6);   /* 24px - Panel & card padding (Original 24px density) */
-  --space-2xl: var(--space-7);  /* 32px - Module separation (Original 32px density) */
-  --space-3xl: var(--space-8);  /* 48px - Section padding (Original 48px density) */
-  --space-4xl: var(--space-9);  /* 64px - Hero macro padding (Original 64px density) */
-  --space-5xl: var(--space-10); /* 96px - Major view boundary (Original 96px density) */
+  /* Semantic aliases */
+  --space-3xs: var(--space-1);  /* 2px */
+  --space-2xs: var(--space-1);  /* 2px */
+  --space-xs: var(--space-2);   /* 4px */
+  --space-sm: var(--space-3);   /* 8px */
+  --space-md: var(--space-4);   /* 12px */
+  --space-lg: var(--space-5);   /* 16px */
+  --space-xl: var(--space-6);   /* 24px */
+  --space-2xl: var(--space-7);  /* 32px */
+  --space-3xl: var(--space-8);  /* 48px */
+  --space-4xl: var(--space-9);  /* 64px */
+  --space-5xl: var(--space-10); /* 96px */
 
   /* --------------------------------------------------------------------------
      3. RADII SCALE
-     Architectural micro-radii + functional curvature
+     Buttons 12px, cards 20-24px, pills full.
      -------------------------------------------------------------------------- */
   --radius-xs: 4px;             /* Crisp architectural edge */
   --radius-sm: 8px;             /* Subtle rounding */
-  --radius-md: 12px;            /* Card & container corners */
-  --radius-lg: 20px;            /* Cards & panels */
+  --radius-md: 12px;            /* Buttons, inputs */
+  --radius-lg: 20px;            /* Panels */
+  --radius-2xl: 24px;           /* Cards */
   --radius-xl: 28px;            /* Hero surface */
-  --radius-full: 9999px;        /* Pills, badges & buttons */
+  --radius-full: 9999px;        /* Pills, badges */
 
   /* --------------------------------------------------------------------------
      4. MOTION DURATIONS & EASING
-     Hover/press feedback stays under 200ms; entrances sit at 220-320ms.
+     Hover/press feedback stays under 200ms; entrances sit at 220-320ms;
+     card hover sits at 350ms per the card spec (300-400ms).
      -------------------------------------------------------------------------- */
   --motion-duration-instant: 100ms;
   --motion-duration-fast: 160ms;
   --motion-duration-normal: 220ms;
   --motion-duration-slow: 320ms;
+  --motion-duration-card: 350ms;
   --motion-duration-slower: 600ms;
 
   --ease-out: cubic-bezier(0.23, 1, 0.32, 1);        /* strong ease-out for UI entrances and feedback */
   --ease-in-out: cubic-bezier(0.77, 0, 0.175, 1);    /* on-screen movement */
   --ease-drawer: cubic-bezier(0.32, 0.72, 0, 1);     /* sheet / drawer curve */
+  --ease-card: cubic-bezier(0.22, 1, 0.36, 1);       /* card hover curve from the card spec */
   --ease-spring: var(--ease-out);                    /* legacy alias, kept so existing rules stay valid */
 
   --transition-instant: var(--motion-duration-instant) var(--ease-spring);
   --transition-fast: var(--motion-duration-fast) var(--ease-spring);
   --transition-base: var(--motion-duration-normal) var(--ease-spring);
   --transition-slow: var(--motion-duration-slow) var(--ease-spring);
+  --transition-card: var(--motion-duration-card) var(--ease-card);
   --transition-deliberate: var(--motion-duration-slower) var(--ease-spring);
 
   /* --------------------------------------------------------------------------
-     5. STUDIO COLOR PALETTE (Naruka AI Labs Dark Studio Theme)
+     5. COLOUR PALETTE
+     Source of truth: refrence/colour theam.png. Hex values below are sampled
+     from the image. Everything else in the codebase must reference these tokens.
+     Shades that are not in the image are mixes of palette colours only.
      -------------------------------------------------------------------------- */
+  /* 5a. Palette (sampled) */
+  --bg: #1A1D23;              /* Background swatch */
+  --surface: #2F3436;         /* Card swatch / panel surface */
+  --border: #444444;          /* Border swatch (also the Muted swatch) */
+  --primary: #34A85A;         /* Primary swatch */
+  --secondary: #4682B4;       /* Secondary swatch */
+  --accent: #6495ED;          /* Accent swatch */
+  --danger: #EF4444;          /* Destructive swatch */
+  --text: #E5E5E5;            /* Heading text in the image */
+  --text-muted: #A3A3A3;      /* Subtitle / body text in the image */
+
+  /* 5b. Palette-derived roles (mixes of the colours above, no new hues) */
+  --surface-2: color-mix(in srgb, var(--surface) 50%, var(--border));
+  /* Hover brightens Primary: dark --on-brand text gains contrast (5.5:1 -> 6.5:1) instead of losing it */
+  --primary-hover: color-mix(in srgb, var(--primary) 85%, #fff);
+  --success: var(--primary);  /* not in the image: reuses Primary */
+  --warning: var(--accent);   /* not in the image: mapped to Accent by decision */
+
+  /* 5c. RGB triplets, for translucent fills: rgba(var(--primary-rgb), 0.12) */
+  --bg-rgb: 26, 29, 35;
+  --surface-rgb: 47, 52, 54;
+  --border-rgb: 68, 68, 68;
+  --primary-rgb: 52, 168, 90;
+  --secondary-rgb: 70, 130, 180;
+  --accent-rgb: 100, 149, 237;
+  --danger-rgb: 239, 68, 68;
+  --white-rgb: 255, 255, 255;
+  --black-rgb: 0, 0, 0;
+
+  /* 5d. Text on filled brand colours.
+     White on Primary is only ~3:1, so filled primary/secondary/accent surfaces use the
+     page background colour for text (5.5:1 on Primary, 5.7:1 on Accent). */
+  --on-brand: var(--bg);
+
   /* Surfaces */
-  --color-surface-base: #07080B;
-  --color-surface-deep: #0B0D13;
-  --color-surface-card: #11141D;
-  --color-surface-raised: #161A26;
-  --color-surface-hover: #1C2232;
-  --color-surface-active: #22293C;
+  --color-surface-base: var(--bg);
+  --color-surface-deep: color-mix(in srgb, var(--bg) 78%, #000);
+  --color-surface-card: var(--surface);
+  --color-surface-raised: var(--surface-2);
+  --color-surface-hover: color-mix(in srgb, var(--surface) 25%, var(--border));
+  --color-surface-active: var(--border);
 
   /* Backward compatibility aliases */
   --color-bg-base: var(--color-surface-base);
@@ -139,80 +181,94 @@
   --color-bg-surface-raised: var(--color-surface-raised);
   --color-bg-surface-hover: var(--color-surface-hover);
 
-  /* Text & Contrast Hierarchy (WCAG 2.2 AA verified) */
-  --color-text-primary: #F8FAFC;    /* 19.14:1 contrast on #07080B */
-  --color-text-secondary: #CBD5E1;  /* 13.49:1 contrast on #07080B */
-  --color-text-muted: #94A3B8;      /* 7.81:1 contrast on #07080B */
-  --color-text-inverse: #07080B;
-  --color-text-brand: #818CF8;
+  /* Text & contrast hierarchy.
+     On --bg:      text 13.4:1, secondary ~9:1, muted 6.7:1.
+     On --surface: muted 5.0:1. */
+  --color-text-primary: var(--text);
+  --color-text-secondary: color-mix(in srgb, var(--text) 60%, var(--text-muted));
+  --color-text-muted: var(--text-muted);
+  --color-text-inverse: var(--bg);
+  --color-text-brand: var(--accent-indigo-light);
 
   --text-primary: var(--color-text-primary);
   --text-secondary: var(--color-text-secondary);
-  --text-muted: var(--color-text-muted);
   --text-inverse: var(--color-text-inverse);
 
-  /* Brand Accents */
-  --accent-indigo: #4F46E5;
-  --accent-indigo-hover: #4338CA;
-  --accent-indigo-light: #818CF8;
-  --accent-indigo-glow: rgba(79, 70, 229, 0.25);
-  --accent-violet: #8B5CF6;
-  --accent-violet-glow: rgba(139, 92, 246, 0.20);
+  /* Brand accents.
+     Legacy token names are kept so existing pages do not break:
+       accent-indigo -> Primary (green)    accent-violet -> Accent (cornflower) */
+  --accent-indigo: var(--primary);
+  --accent-indigo-hover: var(--primary-hover);
+  --accent-indigo-light: color-mix(in srgb, var(--primary) 70%, #fff);
+  --accent-indigo-glow: rgba(var(--primary-rgb), 0.25);
+  --accent-violet: var(--accent);
+  --accent-violet-glow: rgba(var(--accent-rgb), 0.20);
 
-  /* Product Accents */
-  --setu-emerald: #10B981;
-  --setu-emerald-light: #34D399;
-  --setu-emerald-bg: rgba(16, 185, 129, 0.10);
-  --setu-emerald-border: rgba(16, 185, 129, 0.25);
+  /* Product accents.
+     --setu-emerald-*     -> Primary (green)
+     --fieldbook-amber-*  -> Accent (cornflower); the palette has no amber/orange */
+  --setu-emerald: var(--primary);
+  --setu-emerald-light: var(--accent-indigo-light);
+  --setu-emerald-bg: rgba(var(--primary-rgb), 0.10);
+  --setu-emerald-border: rgba(var(--primary-rgb), 0.25);
 
-  --fieldbook-amber: #F59E0B;
-  --fieldbook-amber-light: #FBBF24;
-  --fieldbook-amber-bg: rgba(245, 158, 11, 0.10);
-  --fieldbook-amber-border: rgba(245, 158, 11, 0.25);
+  --fieldbook-amber: var(--accent);
+  --fieldbook-amber-light: color-mix(in srgb, var(--accent) 75%, #fff);
+  --fieldbook-amber-bg: rgba(var(--accent-rgb), 0.10);
+  --fieldbook-amber-border: rgba(var(--accent-rgb), 0.25);
 
   /* --------------------------------------------------------------------------
      6. GLASSMORPHISM & OPTICAL REFRACTION TOKENS
      -------------------------------------------------------------------------- */
-  --border-subtle: rgba(255, 255, 255, 0.06);
-  --border-glass: rgba(255, 255, 255, 0.10);
-  --border-glass-hover: rgba(255, 255, 255, 0.20);
-  --border-glass-active: rgba(255, 255, 255, 0.30);
+  --border-subtle: rgba(var(--white-rgb), 0.06);
+  --border-glass: rgba(var(--white-rgb), 0.10);
+  --border-glass-hover: rgba(var(--white-rgb), 0.20);
+  --border-glass-active: rgba(var(--white-rgb), 0.30);
 
-  /* Focus Ring: Solid light-indigo #818CF8 guarantees 5.3:1 to 6.7:1 contrast on all surfaces (meets WCAG 3:1) */
-  --border-focus: #818CF8;
+  /* Focus ring: Accent (cornflower) is 5.7:1 on --bg and 4.2:1 on --surface (needs 3:1),
+     and stays distinct from the green primary fill. */
+  --border-focus: var(--accent);
 
   --glass-blur-sm: 8px;
   --glass-blur-md: 16px;
   --glass-blur-lg: 24px;
 
-  /* Fills (avatars, solid brand surfaces): white text stays >= 3:1 at large sizes */
-  --grad-studio-brand: linear-gradient(135deg, #6366F1 0%, #8B5CF6 100%);
-  /* Text gradient: tonal periwinkle to lavender, no rainbow. >= 8:1 on the base surface */
-  --grad-text-brand: linear-gradient(100deg, #A5B4FC 0%, #818CF8 42%, #C4B5FD 100%);
-  --grad-surface-card: linear-gradient(180deg, rgba(24, 28, 42, 0.72) 0%, rgba(15, 18, 27, 0.62) 100%);
-  --grad-surface-glass: linear-gradient(180deg, rgba(255, 255, 255, 0.06) 0%, rgba(255, 255, 255, 0.02) 100%);
-  --grad-aurora-top: radial-gradient(ellipse 80% 50% at 50% -20%, rgba(99, 102, 241, 0.20), transparent 70%);
-  --grad-aurora-accent: radial-gradient(circle 420px at 82% 18%, rgba(139, 92, 246, 0.12), transparent 80%);
+  /* Fills (avatars, solid brand surfaces): use --on-brand text */
+  --grad-studio-brand: linear-gradient(135deg, var(--primary) 0%, var(--accent) 100%);
+  /* Text gradient: light primary to accent, both >= 5:1 on --bg */
+  --grad-text-brand: linear-gradient(100deg, var(--accent-indigo-light) 0%, var(--accent) 100%);
+  --grad-surface-card: linear-gradient(180deg, rgba(var(--surface-rgb), 0.78) 0%, rgba(var(--surface-rgb), 0.62) 100%);
+  --grad-surface-glass: linear-gradient(180deg, rgba(var(--white-rgb), 0.06) 0%, rgba(var(--white-rgb), 0.02) 100%);
+  --grad-aurora-top: radial-gradient(ellipse 80% 50% at 50% -20%, rgba(var(--primary-rgb), 0.18), transparent 70%);
+  --grad-aurora-accent: radial-gradient(circle 420px at 82% 18%, rgba(var(--accent-rgb), 0.12), transparent 80%);
 
   /* Elevations */
-  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.4);
-  --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.45);
-  --shadow-lg: 0 12px 32px rgba(0, 0, 0, 0.55);
-  --shadow-glow: 0 0 32px rgba(99, 102, 241, 0.25);
-  --shadow-glass: inset 0 1px 0 0 rgba(255, 255, 255, 0.08), 0 8px 24px rgba(0, 0, 0, 0.4);
+  --shadow-sm: 0 1px 2px rgba(var(--black-rgb), 0.4);
+  --shadow-md: 0 4px 12px rgba(var(--black-rgb), 0.45);
+  --shadow-lg: 0 12px 32px rgba(var(--black-rgb), 0.55);
+  --shadow-glow: 0 0 32px rgba(var(--primary-rgb), 0.25);
+  --shadow-glass: inset 0 1px 0 0 rgba(var(--white-rgb), 0.08), 0 8px 24px rgba(var(--black-rgb), 0.4);
   /* Bigger surfaces read thicker: top-edge highlight + deeper, softer drop shadow */
-  --shadow-card: inset 0 1px 0 0 rgba(255, 255, 255, 0.07), 0 18px 48px -18px rgba(0, 0, 0, 0.7);
-  --shadow-card-hover: inset 0 1px 0 0 rgba(255, 255, 255, 0.10), 0 24px 56px -20px rgba(0, 0, 0, 0.8);
+  --shadow-card: inset 0 1px 0 0 rgba(var(--white-rgb), 0.07), 0 18px 48px -18px rgba(var(--black-rgb), 0.7);
+  --shadow-card-hover: inset 0 1px 0 0 rgba(var(--white-rgb), 0.10), 0 24px 56px -20px rgba(var(--black-rgb), 0.8);
+  /* Card lift (card spec: 0 20px 40px rgba(0,0,0,.35)) */
+  --shadow-card-lift: 0 20px 40px rgba(var(--black-rgb), 0.35);
+
+  /* Card gradients: diagonal, lighter top-left to deeper bottom-right, tinted from the palette.
+     Tint strength is capped (24% / 6%) so description text stays >= 4.5:1, including on hover. */
+  --card-grad-primary: linear-gradient(135deg, color-mix(in srgb, var(--primary) 24%, var(--surface)) 0%, color-mix(in srgb, var(--primary) 6%, var(--bg)) 100%);
+  --card-grad-secondary: linear-gradient(135deg, color-mix(in srgb, var(--secondary) 24%, var(--surface)) 0%, color-mix(in srgb, var(--secondary) 6%, var(--bg)) 100%);
+  --card-grad-accent: linear-gradient(135deg, color-mix(in srgb, var(--accent) 24%, var(--surface)) 0%, color-mix(in srgb, var(--accent) 6%, var(--bg)) 100%);
+  --card-grad-neutral: linear-gradient(135deg, var(--surface-2) 0%, var(--bg) 100%);
 
   /* Container */
   --container-max: 1200px;
   --container-pad: var(--space-6); /* 24px */
 
   /* --------------------------------------------------------------------------
-     7. MANDATORY COMPONENT STATES TOKENS (DESIGN.md / SKILL.md Standard)
+     7. MANDATORY COMPONENT STATES TOKENS
      States: default, hover, focus-visible, active, disabled, loading, error
      -------------------------------------------------------------------------- */
-  /* Focus-Visible State: Certified 6.7:1 on base, 6.17:1 on card, 5.82:1 on raised */
   --state-focus-ring-width: 2px;
   --state-focus-ring-offset: 2px;
   --state-focus-ring-color: var(--border-focus);
@@ -221,24 +277,24 @@
   /* Disabled State */
   --state-disabled-opacity: 0.45;
   --state-disabled-cursor: not-allowed;
-  --state-disabled-bg: rgba(255, 255, 255, 0.03);
-  --state-disabled-text: #64748B;
-  --state-disabled-border: rgba(255, 255, 255, 0.05);
+  --state-disabled-bg: rgba(var(--white-rgb), 0.03);
+  --state-disabled-text: color-mix(in srgb, var(--text-muted) 70%, var(--border));
+  --state-disabled-border: rgba(var(--white-rgb), 0.05);
 
   /* Loading State */
   --state-loading-opacity: 0.70;
   --state-loading-cursor: wait;
 
-  /* Error State */
-  --state-error-text: #F87171;
-  --state-error-bg: rgba(239, 68, 68, 0.10);
-  --state-error-border: rgba(239, 68, 68, 0.35);
-  --state-error-focus-ring: 2px solid rgba(239, 68, 68, 0.85);
+  /* Error State. Raw Destructive is 4.49:1 on --bg, so text uses a lightened mix (~5:1). */
+  --state-error-text: color-mix(in srgb, var(--danger) 80%, var(--text));
+  --state-error-bg: rgba(var(--danger-rgb), 0.10);
+  --state-error-border: rgba(var(--danger-rgb), 0.35);
+  --state-error-focus-ring: 2px solid rgba(var(--danger-rgb), 0.85);
 
   /* Success State */
-  --state-success-text: #34D399;
-  --state-success-bg: rgba(16, 185, 129, 0.10);
-  --state-success-border: rgba(16, 185, 129, 0.35);
+  --state-success-text: var(--accent-indigo-light);
+  --state-success-bg: rgba(var(--primary-rgb), 0.10);
+  --state-success-border: rgba(var(--primary-rgb), 0.35);
 
   /* Interactive Target Minimum (Accessibility standard >= 44px) */
   --target-min-size: 44px;
@@ -253,12 +309,14 @@
     --motion-duration-fast: 0.01ms;
     --motion-duration-normal: 0.01ms;
     --motion-duration-slow: 0.01ms;
+    --motion-duration-card: 0.01ms;
     --motion-duration-slower: 0.01ms;
 
     --transition-instant: 0.01ms linear;
     --transition-fast: 0.01ms linear;
     --transition-base: 0.01ms linear;
     --transition-slow: 0.01ms linear;
+    --transition-card: 0.01ms linear;
     --transition-deliberate: 0.01ms linear;
   }
 }

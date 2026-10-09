@@ -2,6 +2,7 @@
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import Badge from '../../components/Badge.astro';
 import Button from '../../components/Button.astro';
+import Card from '../../components/ui/Card.astro';
 ---
 
 <BaseLayout
@@ -24,82 +25,82 @@ import Button from '../../components/Button.astro';
         <!-- Direct Contact Cards -->
         <div class="channels-grid">
           <!-- Primary Email Card -->
-          <div class="channel-card glass-panel primary-card">
-            <div class="channel-icon" aria-hidden="true">
-              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path>
-                <polyline points="22,6 12,13 2,6"></polyline>
-              </svg>
+          <Card
+            class="card-wide"
+            headingLevel={2}
+            title="naruka@orgs.social"
+            href="mailto:naruka@orgs.social"
+            status="Primary Direct Email"
+            statusColor="primary"
+            gradient="primary"
+          >
+            <p class="channel-note">
+              Direct mailbox of founder Prince Naruka. Verified on domain <code>orgs.social</code>.
+            </p>
+            <div class="channel-footer">
+              <div class="channel-icon" aria-hidden="true">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path>
+                  <polyline points="22,6 12,13 2,6"></polyline>
+                </svg>
+              </div>
+              <div class="channel-action">
+                <Button href="mailto:naruka@orgs.social" variant="primary" size="md">
+                  Compose Email ↗
+                </Button>
+                <button
+                  type="button"
+                  class="copy-email-btn"
+                  id="copy-btn"
+                  aria-label="Copy Address: naruka@orgs.social"
+                >
+                  <span id="copy-text">Copy Address</span>
+                </button>
+              </div>
             </div>
-            <div class="channel-body">
-              <span class="channel-label">Primary Direct Email</span>
-              <a href="mailto:naruka@orgs.social" class="channel-main-link">
-                naruka@orgs.social
-              </a>
-              <p class="channel-note">
-                Direct mailbox of founder Prince Naruka. Verified on domain <code>orgs.social</code>.
-              </p>
-            </div>
-            <div class="channel-action">
-              <Button href="mailto:naruka@orgs.social" variant="primary" size="md">
-                Compose Email ↗
-              </Button>
-              <button
-                type="button"
-                class="copy-email-btn"
-                id="copy-btn"
-                aria-label="Copy Address: naruka@orgs.social"
-              >
-                <span id="copy-text">Copy Address</span>
-              </button>
-            </div>
-          </div>
+          </Card>
 
           <!-- Secondary Channels Grid -->
           <div class="secondary-channels">
             <!-- GitHub -->
-            <a
+            <Card
+              title="GitHub Repository"
+              description="github.com/princeji2/naruka-ai-labs ↗"
               href="https://github.com/princeji2/naruka-ai-labs"
-              target="_blank"
-              rel="noopener noreferrer"
-              class="sub-channel-card glass-panel"
+              gradient="secondary"
             >
-              <div class="sub-icon">
+              <div class="sub-icon" aria-hidden="true">
                 <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                   <path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path>
                 </svg>
               </div>
-              <div class="sub-info">
-                <span class="sub-title">GitHub Repository</span>
-                <span class="sub-desc">github.com/princeji2/naruka-ai-labs ↗</span>
-              </div>
-            </a>
+            </Card>
 
             <!-- LinkedIn -->
-            <a
+            <Card
+              title="Founder LinkedIn"
+              description="linkedin.com/in/prince-naruka-26581236b ↗"
               href="https://www.linkedin.com/in/prince-naruka-26581236b/"
-              target="_blank"
-              rel="noopener noreferrer"
-              class="sub-channel-card glass-panel"
+              gradient="accent"
             >
-              <div class="sub-icon">
+              <div class="sub-icon" aria-hidden="true">
                 <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                   <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"></path>
                   <rect x="2" y="9" width="4" height="12"></rect>
                   <circle cx="4" cy="4" r="2"></circle>
                 </svg>
               </div>
-              <div class="sub-info">
-                <span class="sub-title">Founder LinkedIn</span>
-                <span class="sub-desc">linkedin.com/in/prince-naruka-26581236b ↗</span>
-              </div>
-            </a>
+            </Card>
           </div>
         </div>
 
         <!-- Inquiries Advisory -->
-        <div class="inquiry-info-box glass-panel">
-          <h2 class="info-title">What to Expect</h2>
+        <Card
+          class="card-wide inquiry-info-box"
+          headingLevel={2}
+          title="What to Expect"
+          gradient="neutral"
+        >
           <div class="info-columns">
             <div class="info-col">
               <strong>Technical Inquiries:</strong> If you are interested in exploring our system architectures, testing product prototypes, or discussing engineering collaborations, please feel free to reach out.
@@ -108,7 +109,7 @@ import Button from '../../components/Button.astro';
               <strong>Response Timeline:</strong> As an active engineering studio, all incoming emails are monitored directly by Prince Naruka. You can typically expect a response within 24 to 48 hours.
             </div>
           </div>
-        </div>
+        </Card>
       </div>
     </section>
   </div>
@@ -194,83 +195,37 @@ import Button from '../../components/Button.astro';
     margin-bottom: var(--space-2xl);
   }
 
-  .primary-card {
-    padding: clamp(var(--space-lg), 4vw, var(--space-2xl));
-    display: flex;
-    flex-direction: column;
-    gap: var(--space-md);
-    background: radial-gradient(circle at 10% 20%, rgba(99, 102, 241, 0.12), rgba(14, 18, 27, 0.6) 80%);
-    border: 1px solid rgba(99, 102, 241, 0.3);
+  /* Primary card (slot content) */
+  .channel-note {
+    font-size: var(--font-size-sm);
+    color: var(--color-text-secondary);
   }
 
-  @media (min-width: 768px) {
-    .primary-card {
-      flex-direction: row;
-      align-items: center;
-      justify-content: space-between;
-    }
+  .channel-note code {
+    background: rgba(var(--black-rgb), 0.4);
+    padding: var(--space-1) var(--space-2);
+    border-radius: var(--radius-xs);
+    color: var(--color-text-secondary);
+  }
+
+  .channel-footer {
+    display: flex;
+    align-items: center;
+    gap: var(--space-md);
+    flex-wrap: wrap;
+    margin-top: var(--space-md);
   }
 
   .channel-icon {
     width: var(--space-8);
     height: var(--space-8);
     border-radius: var(--radius-md);
-    background: rgba(99, 102, 241, 0.15);
+    background: rgba(var(--primary-rgb), 0.15);
     color: var(--accent-indigo-light);
     display: flex;
     align-items: center;
     justify-content: center;
     flex-shrink: 0;
-  }
-
-  .channel-body {
-    display: flex;
-    flex-direction: column;
-    gap: var(--space-1);
-    flex: 1;
-  }
-
-  .channel-label {
-    font-size: var(--font-size-xs);
-    text-transform: uppercase;
-    letter-spacing: var(--letter-spacing-wide);
-    color: var(--color-text-muted);
-    font-weight: var(--font-weight-bold);
-  }
-
-  .channel-main-link {
-    font-family: var(--font-display);
-    font-size: var(--font-size-4xl);
-    font-weight: var(--font-weight-bold);
-    letter-spacing: var(--letter-spacing-snug);
-    color: var(--color-text-primary);
-    border-radius: var(--radius-xs);
-    display: inline-block;
-    overflow-wrap: anywhere;
-    transition: color var(--transition-fast);
-  }
-
-  @media (hover: hover) and (pointer: fine) {
-    .channel-main-link:hover {
-      color: var(--accent-indigo-light);
-    }
-  }
-
-  .channel-main-link:focus-visible {
-    outline: var(--state-focus-outline);
-    outline-offset: var(--state-focus-ring-offset);
-  }
-
-  .channel-note {
-    font-size: var(--font-size-sm);
-    color: var(--color-text-muted);
-  }
-
-  .channel-note code {
-    background: rgba(0, 0, 0, 0.4);
-    padding: var(--space-1) var(--space-2);
-    border-radius: var(--radius-xs);
-    color: var(--color-text-secondary);
   }
 
   .channel-action {
@@ -286,9 +241,9 @@ import Button from '../../components/Button.astro';
     font-family: var(--font-body);
     font-size: var(--font-size-sm);
     font-weight: var(--font-weight-semibold);
-    border-radius: var(--radius-full);
-    background: rgba(255, 255, 255, 0.05);
-    border: 1px solid var(--border-glass);
+    border-radius: var(--radius-md);
+    background: rgba(var(--white-rgb), 0.05);
+    border: 1px solid var(--border);
     color: var(--color-text-secondary);
     cursor: pointer;
     transition: background-color var(--transition-fast), border-color var(--transition-fast), color var(--transition-fast), transform var(--transition-instant);
@@ -296,7 +251,8 @@ import Button from '../../components/Button.astro';
 
   @media (hover: hover) and (pointer: fine) {
     .copy-email-btn:hover {
-      background: rgba(255, 255, 255, 0.1);
+      background: rgba(var(--white-rgb), 0.1);
+      border-color: var(--primary);
       color: var(--color-text-primary);
     }
   }
@@ -335,41 +291,11 @@ import Button from '../../components/Button.astro';
     }
   }
 
-  .sub-channel-card {
-    padding: var(--space-lg);
-    display: flex;
-    align-items: center;
-    gap: var(--space-md);
-    text-decoration: none;
-    border-radius: var(--radius-lg);
-    transition: transform var(--transition-fast), border-color var(--transition-fast), box-shadow var(--transition-base);
-  }
-
-  @media (hover: hover) and (pointer: fine) {
-    .sub-channel-card:hover {
-      transform: translateY(-2px);
-      border-color: var(--border-glass-hover);
-    }
-  }
-
-  .sub-info {
-    min-width: 0;
-  }
-
-  .sub-desc {
-    overflow-wrap: anywhere;
-  }
-
-  .sub-channel-card:focus-visible {
-    outline: var(--state-focus-outline);
-    outline-offset: var(--state-focus-ring-offset);
-  }
-
   .sub-icon {
     width: var(--target-min-size);
     height: var(--target-min-size);
     border-radius: var(--radius-sm);
-    background: rgba(255, 255, 255, 0.04);
+    background: rgba(var(--white-rgb), 0.06);
     display: flex;
     align-items: center;
     justify-content: center;
@@ -377,41 +303,17 @@ import Button from '../../components/Button.astro';
     flex-shrink: 0;
   }
 
-  .sub-info {
-    display: flex;
-    flex-direction: column;
-    gap: var(--space-1);
-  }
-
-  .sub-title {
-    font-size: var(--font-size-md);
-    font-weight: var(--font-weight-semibold);
-    color: var(--color-text-primary);
-  }
-
-  .sub-desc {
-    font-size: var(--font-size-xs);
-    color: var(--color-text-muted);
-  }
-
-  /* Inquiry Info Box */
+  /* Inquiry Info Box (slot content) */
   .inquiry-info-box {
     width: 100%;
-    padding: var(--space-xl);
     text-align: left;
-    display: flex;
-    flex-direction: column;
-    gap: var(--space-md);
-  }
-
-  .info-title {
-    font-size: var(--font-size-2xl);
   }
 
   .info-columns {
     display: grid;
     grid-template-columns: 1fr;
     gap: var(--space-lg);
+    margin-top: var(--space-sm);
   }
 
   @media (min-width: 768px) {

@@ -1,0 +1,404 @@
+{
+  "pbtResults": {},
+  "executionHistory": {
+    "1.1 Replace font sizes in `src/pages/index.astro`": [
+      {
+        "executionId": "9031ef9a-959f-4510-bd48-7f14499de9a9",
+        "chatSessionId": "sess_d4ea28dc-55c8-49f3-9dfa-fc56f05036e6",
+        "timestamp": 1791565353527
+      },
+      {
+        "executionId": "9031ef9a-959f-4510-bd48-7f14499de9a9",
+        "chatSessionId": "sess_d4ea28dc-55c8-49f3-9dfa-fc56f05036e6",
+        "timestamp": 1791565362898
+      },
+      {
+        "executionId": "9031ef9a-959f-4510-bd48-7f14499de9a9",
+        "chatSessionId": "sess_d4ea28dc-55c8-49f3-9dfa-fc56f05036e6",
+        "timestamp": 1791565495881
+      }
+    ],
+    "1.2 Replace font sizes in `about`, `privacy` and `terms` pages": [
+      {
+        "executionId": "9031ef9a-959f-4510-bd48-7f14499de9a9",
+        "chatSessionId": "sess_d4ea28dc-55c8-49f3-9dfa-fc56f05036e6",
+        "timestamp": 1791565353605
+      },
+      {
+        "executionId": "9031ef9a-959f-4510-bd48-7f14499de9a9",
+        "chatSessionId": "sess_d4ea28dc-55c8-49f3-9dfa-fc56f05036e6",
+        "timestamp": 1791565363104
+      },
+      {
+        "executionId": "9031ef9a-959f-4510-bd48-7f14499de9a9",
+        "chatSessionId": "sess_d4ea28dc-55c8-49f3-9dfa-fc56f05036e6",
+        "timestamp": 1791565495980
+      }
+    ],
+    "1.3 Replace font sizes in the products pages": [
+      {
+        "executionId": "9031ef9a-959f-4510-bd48-7f14499de9a9",
+        "chatSessionId": "sess_d4ea28dc-55c8-49f3-9dfa-fc56f05036e6",
+        "timestamp": 1791565353653
+      },
+      {
+        "executionId": "9031ef9a-959f-4510-bd48-7f14499de9a9",
+        "chatSessionId": "sess_d4ea28dc-55c8-49f3-9dfa-fc56f05036e6",
+        "timestamp": 1791565363863
+      },
+      {
+        "executionId": "9031ef9a-959f-4510-bd48-7f14499de9a9",
+        "chatSessionId": "sess_d4ea28dc-55c8-49f3-9dfa-fc56f05036e6",
+        "timestamp": 1791565496785
+      }
+    ],
+    "1.4 Drop the `--font-size-xl` references": [
+      {
+        "executionId": "9031ef9a-959f-4510-bd48-7f14499de9a9",
+        "chatSessionId": "sess_d4ea28dc-55c8-49f3-9dfa-fc56f05036e6",
+        "timestamp": 1791565353728
+      },
+      {
+        "executionId": "9031ef9a-959f-4510-bd48-7f14499de9a9",
+        "chatSessionId": "sess_d4ea28dc-55c8-49f3-9dfa-fc56f05036e6",
+        "timestamp": 1791565364651
+      },
+      {
+        "executionId": "9031ef9a-959f-4510-bd48-7f14499de9a9",
+        "chatSessionId": "sess_d4ea28dc-55c8-49f3-9dfa-fc56f05036e6",
+        "timestamp": 1791565497579
+      }
+    ],
+    "1.5 Scan font sizes for leftovers and undefined tokens (Property 1)": [
+      {
+        "executionId": "9031ef9a-959f-4510-bd48-7f14499de9a9",
+        "chatSessionId": "sess_d4ea28dc-55c8-49f3-9dfa-fc56f05036e6",
+        "timestamp": 1791565353784
+      },
+      {
+        "executionId": "9031ef9a-959f-4510-bd48-7f14499de9a9",
+        "chatSessionId": "sess_d4ea28dc-55c8-49f3-9dfa-fc56f05036e6",
+        "timestamp": 1791565502778
+      },
+      {
+        "executionId": "9031ef9a-959f-4510-bd48-7f14499de9a9",
+        "chatSessionId": "sess_d4ea28dc-55c8-49f3-9dfa-fc56f05036e6",
+        "timestamp": 1791565584982
+      }
+    ],
+    "1.6 Count distinct resolved font sizes (Property 2)": [
+      {
+        "executionId": "9031ef9a-959f-4510-bd48-7f14499de9a9",
+        "chatSessionId": "sess_d4ea28dc-55c8-49f3-9dfa-fc56f05036e6",
+        "timestamp": 1791565353830
+      },
+      {
+        "executionId": "9031ef9a-959f-4510-bd48-7f14499de9a9",
+        "chatSessionId": "sess_d4ea28dc-55c8-49f3-9dfa-fc56f05036e6",
+        "timestamp": 1791565503545
+      },
+      {
+        "executionId": "9031ef9a-959f-4510-bd48-7f14499de9a9",
+        "chatSessionId": "sess_d4ea28dc-55c8-49f3-9dfa-fc56f05036e6",
+        "timestamp": 1791565586141
+      }
+    ],
+    "2.1 Replace raw `2px` and `3px` radii with `var(--radius-xs)`": [
+      {
+        "executionId": "9031ef9a-959f-4510-bd48-7f14499de9a9",
+        "chatSessionId": "sess_d4ea28dc-55c8-49f3-9dfa-fc56f05036e6",
+        "timestamp": 1791565353875
+      },
+      {
+        "executionId": "9031ef9a-959f-4510-bd48-7f14499de9a9",
+        "chatSessionId": "sess_d4ea28dc-55c8-49f3-9dfa-fc56f05036e6",
+        "timestamp": 1791565504357
+      },
+      {
+        "executionId": "9031ef9a-959f-4510-bd48-7f14499de9a9",
+        "chatSessionId": "sess_d4ea28dc-55c8-49f3-9dfa-fc56f05036e6",
+        "timestamp": 1791565586740
+      }
+    ],
+    "2.2 Scan radius values (Property 3)": [
+      {
+        "executionId": "9031ef9a-959f-4510-bd48-7f14499de9a9",
+        "chatSessionId": "sess_d4ea28dc-55c8-49f3-9dfa-fc56f05036e6",
+        "timestamp": 1791565353932
+      },
+      {
+        "executionId": "9031ef9a-959f-4510-bd48-7f14499de9a9",
+        "chatSessionId": "sess_d4ea28dc-55c8-49f3-9dfa-fc56f05036e6",
+        "timestamp": 1791565592617
+      },
+      {
+        "executionId": "9031ef9a-959f-4510-bd48-7f14499de9a9",
+        "chatSessionId": "sess_d4ea28dc-55c8-49f3-9dfa-fc56f05036e6",
+        "timestamp": 1791565643316
+      }
+    ],
+    "2.3 Count distinct radii (Property 4)": [
+      {
+        "executionId": "9031ef9a-959f-4510-bd48-7f14499de9a9",
+        "chatSessionId": "sess_d4ea28dc-55c8-49f3-9dfa-fc56f05036e6",
+        "timestamp": 1791565353979
+      },
+      {
+        "executionId": "9031ef9a-959f-4510-bd48-7f14499de9a9",
+        "chatSessionId": "sess_d4ea28dc-55c8-49f3-9dfa-fc56f05036e6",
+        "timestamp": 1791565593411
+      },
+      {
+        "executionId": "9031ef9a-959f-4510-bd48-7f14499de9a9",
+        "chatSessionId": "sess_d4ea28dc-55c8-49f3-9dfa-fc56f05036e6",
+        "timestamp": 1791565643901
+      }
+    ],
+    "3.1 Add the label length classification to `src/components/Badge.astro` frontmatter": [
+      {
+        "executionId": "9031ef9a-959f-4510-bd48-7f14499de9a9",
+        "chatSessionId": "sess_d4ea28dc-55c8-49f3-9dfa-fc56f05036e6",
+        "timestamp": 1791565354038
+      },
+      {
+        "executionId": "9031ef9a-959f-4510-bd48-7f14499de9a9",
+        "chatSessionId": "sess_d4ea28dc-55c8-49f3-9dfa-fc56f05036e6",
+        "timestamp": 1791565365484
+      },
+      {
+        "executionId": "9031ef9a-959f-4510-bd48-7f14499de9a9",
+        "chatSessionId": "sess_d4ea28dc-55c8-49f3-9dfa-fc56f05036e6",
+        "timestamp": 1791565498134
+      }
+    ],
+    "3.2 Update the `Badge.astro` styles": [
+      {
+        "executionId": "9031ef9a-959f-4510-bd48-7f14499de9a9",
+        "chatSessionId": "sess_d4ea28dc-55c8-49f3-9dfa-fc56f05036e6",
+        "timestamp": 1791565354106
+      },
+      {
+        "executionId": "9031ef9a-959f-4510-bd48-7f14499de9a9",
+        "chatSessionId": "sess_d4ea28dc-55c8-49f3-9dfa-fc56f05036e6",
+        "timestamp": 1791565505152
+      },
+      {
+        "executionId": "9031ef9a-959f-4510-bd48-7f14499de9a9",
+        "chatSessionId": "sess_d4ea28dc-55c8-49f3-9dfa-fc56f05036e6",
+        "timestamp": 1791565587260
+      }
+    ],
+    "3.3 Scan the Badge source (Property 6, source part)": [
+      {
+        "executionId": "9031ef9a-959f-4510-bd48-7f14499de9a9",
+        "chatSessionId": "sess_d4ea28dc-55c8-49f3-9dfa-fc56f05036e6",
+        "timestamp": 1791565354180
+      },
+      {
+        "executionId": "9031ef9a-959f-4510-bd48-7f14499de9a9",
+        "chatSessionId": "sess_d4ea28dc-55c8-49f3-9dfa-fc56f05036e6",
+        "timestamp": 1791565594187
+      },
+      {
+        "executionId": "9031ef9a-959f-4510-bd48-7f14499de9a9",
+        "chatSessionId": "sess_d4ea28dc-55c8-49f3-9dfa-fc56f05036e6",
+        "timestamp": 1791565644724
+      }
+    ],
+    "4.1 Update `.card-tagline` and the two tagline strings in `src/pages/index.astro`": [
+      {
+        "executionId": "9031ef9a-959f-4510-bd48-7f14499de9a9",
+        "chatSessionId": "sess_d4ea28dc-55c8-49f3-9dfa-fc56f05036e6",
+        "timestamp": 1791565354230
+      },
+      {
+        "executionId": "9031ef9a-959f-4510-bd48-7f14499de9a9",
+        "chatSessionId": "sess_d4ea28dc-55c8-49f3-9dfa-fc56f05036e6",
+        "timestamp": 1791565595014
+      },
+      {
+        "executionId": "9031ef9a-959f-4510-bd48-7f14499de9a9",
+        "chatSessionId": "sess_d4ea28dc-55c8-49f3-9dfa-fc56f05036e6",
+        "timestamp": 1791565645628
+      }
+    ],
+    "4.2 Scan the tagline source": [
+      {
+        "executionId": "9031ef9a-959f-4510-bd48-7f14499de9a9",
+        "chatSessionId": "sess_d4ea28dc-55c8-49f3-9dfa-fc56f05036e6",
+        "timestamp": 1791565354280
+      },
+      {
+        "executionId": "9031ef9a-959f-4510-bd48-7f14499de9a9",
+        "chatSessionId": "sess_d4ea28dc-55c8-49f3-9dfa-fc56f05036e6",
+        "timestamp": 1791565651201
+      },
+      {
+        "executionId": "9031ef9a-959f-4510-bd48-7f14499de9a9",
+        "chatSessionId": "sess_d4ea28dc-55c8-49f3-9dfa-fc56f05036e6",
+        "timestamp": 1791565684236
+      }
+    ],
+    "5. Checkpoint - Source scans pass": [
+      {
+        "executionId": "9031ef9a-959f-4510-bd48-7f14499de9a9",
+        "chatSessionId": "sess_d4ea28dc-55c8-49f3-9dfa-fc56f05036e6",
+        "timestamp": 1791565354330
+      },
+      {
+        "executionId": "9031ef9a-959f-4510-bd48-7f14499de9a9",
+        "chatSessionId": "sess_d4ea28dc-55c8-49f3-9dfa-fc56f05036e6",
+        "timestamp": 1791565782663
+      },
+      {
+        "executionId": "9031ef9a-959f-4510-bd48-7f14499de9a9",
+        "chatSessionId": "sess_d4ea28dc-55c8-49f3-9dfa-fc56f05036e6",
+        "timestamp": 1791565844846
+      }
+    ],
+    "6.1 Run `npm run build`": [
+      {
+        "executionId": "9031ef9a-959f-4510-bd48-7f14499de9a9",
+        "chatSessionId": "sess_d4ea28dc-55c8-49f3-9dfa-fc56f05036e6",
+        "timestamp": 1791565354381
+      },
+      {
+        "executionId": "9031ef9a-959f-4510-bd48-7f14499de9a9",
+        "chatSessionId": "sess_d4ea28dc-55c8-49f3-9dfa-fc56f05036e6",
+        "timestamp": 1791565651085
+      },
+      {
+        "executionId": "9031ef9a-959f-4510-bd48-7f14499de9a9",
+        "chatSessionId": "sess_d4ea28dc-55c8-49f3-9dfa-fc56f05036e6",
+        "timestamp": 1791565684747
+      }
+    ],
+    "6.2 Run `npm run check`": [
+      {
+        "executionId": "9031ef9a-959f-4510-bd48-7f14499de9a9",
+        "chatSessionId": "sess_d4ea28dc-55c8-49f3-9dfa-fc56f05036e6",
+        "timestamp": 1791565354433
+      },
+      {
+        "executionId": "9031ef9a-959f-4510-bd48-7f14499de9a9",
+        "chatSessionId": "sess_d4ea28dc-55c8-49f3-9dfa-fc56f05036e6",
+        "timestamp": 1791565690136
+      },
+      {
+        "executionId": "9031ef9a-959f-4510-bd48-7f14499de9a9",
+        "chatSessionId": "sess_d4ea28dc-55c8-49f3-9dfa-fc56f05036e6",
+        "timestamp": 1791565776475
+      }
+    ],
+    "6.3 Confirm the token file is unchanged (Property 7)": [
+      {
+        "executionId": "9031ef9a-959f-4510-bd48-7f14499de9a9",
+        "chatSessionId": "sess_d4ea28dc-55c8-49f3-9dfa-fc56f05036e6",
+        "timestamp": 1791565354481
+      },
+      {
+        "executionId": "9031ef9a-959f-4510-bd48-7f14499de9a9",
+        "chatSessionId": "sess_d4ea28dc-55c8-49f3-9dfa-fc56f05036e6",
+        "timestamp": 1791565651788
+      },
+      {
+        "executionId": "9031ef9a-959f-4510-bd48-7f14499de9a9",
+        "chatSessionId": "sess_d4ea28dc-55c8-49f3-9dfa-fc56f05036e6",
+        "timestamp": 1791565685345
+      }
+    ],
+    "7.1 Run the dist badge scan (Properties 5 and 6)": [
+      {
+        "executionId": "9031ef9a-959f-4510-bd48-7f14499de9a9",
+        "chatSessionId": "sess_d4ea28dc-55c8-49f3-9dfa-fc56f05036e6",
+        "timestamp": 1791565354532
+      },
+      {
+        "executionId": "9031ef9a-959f-4510-bd48-7f14499de9a9",
+        "chatSessionId": "sess_d4ea28dc-55c8-49f3-9dfa-fc56f05036e6",
+        "timestamp": 1791565690936
+      },
+      {
+        "executionId": "9031ef9a-959f-4510-bd48-7f14499de9a9",
+        "chatSessionId": "sess_d4ea28dc-55c8-49f3-9dfa-fc56f05036e6",
+        "timestamp": 1791565775236
+      }
+    ],
+    "7.2 Check the hero badge and taglines in `dist/index.html`": [
+      {
+        "executionId": "9031ef9a-959f-4510-bd48-7f14499de9a9",
+        "chatSessionId": "sess_d4ea28dc-55c8-49f3-9dfa-fc56f05036e6",
+        "timestamp": 1791565354583
+      },
+      {
+        "executionId": "9031ef9a-959f-4510-bd48-7f14499de9a9",
+        "chatSessionId": "sess_d4ea28dc-55c8-49f3-9dfa-fc56f05036e6",
+        "timestamp": 1791565691537
+      },
+      {
+        "executionId": "9031ef9a-959f-4510-bd48-7f14499de9a9",
+        "chatSessionId": "sess_d4ea28dc-55c8-49f3-9dfa-fc56f05036e6",
+        "timestamp": 1791565776032
+      }
+    ],
+    "8. Final checkpoint - Ensure all tests pass": [
+      {
+        "executionId": "9031ef9a-959f-4510-bd48-7f14499de9a9",
+        "chatSessionId": "sess_d4ea28dc-55c8-49f3-9dfa-fc56f05036e6",
+        "timestamp": 1791565354636
+      },
+      {
+        "executionId": "9031ef9a-959f-4510-bd48-7f14499de9a9",
+        "chatSessionId": "sess_d4ea28dc-55c8-49f3-9dfa-fc56f05036e6",
+        "timestamp": 1791565845370
+      },
+      {
+        "executionId": "9031ef9a-959f-4510-bd48-7f14499de9a9",
+        "chatSessionId": "sess_d4ea28dc-55c8-49f3-9dfa-fc56f05036e6",
+        "timestamp": 1791565888613
+      }
+    ],
+    "1. Issue 1: Type scale": [
+      {
+        "executionId": "9031ef9a-959f-4510-bd48-7f14499de9a9",
+        "chatSessionId": "sess_d4ea28dc-55c8-49f3-9dfa-fc56f05036e6",
+        "timestamp": 1791565586859
+      }
+    ],
+    "2. Issue 2: Corner radii": [
+      {
+        "executionId": "9031ef9a-959f-4510-bd48-7f14499de9a9",
+        "chatSessionId": "sess_d4ea28dc-55c8-49f3-9dfa-fc56f05036e6",
+        "timestamp": 1791565643981
+      }
+    ],
+    "3. Issue 3: Badge casing by label length": [
+      {
+        "executionId": "9031ef9a-959f-4510-bd48-7f14499de9a9",
+        "chatSessionId": "sess_d4ea28dc-55c8-49f3-9dfa-fc56f05036e6",
+        "timestamp": 1791565644795
+      }
+    ],
+    "4. Issue 4: Product tagline casing": [
+      {
+        "executionId": "9031ef9a-959f-4510-bd48-7f14499de9a9",
+        "chatSessionId": "sess_d4ea28dc-55c8-49f3-9dfa-fc56f05036e6",
+        "timestamp": 1791565684347
+      }
+    ],
+    "7. Built output verification (`dist/`)": [
+      {
+        "executionId": "9031ef9a-959f-4510-bd48-7f14499de9a9",
+        "chatSessionId": "sess_d4ea28dc-55c8-49f3-9dfa-fc56f05036e6",
+        "timestamp": 1791565776134
+      }
+    ],
+    "6. Build and project checks": [
+      {
+        "executionId": "9031ef9a-959f-4510-bd48-7f14499de9a9",
+        "chatSessionId": "sess_d4ea28dc-55c8-49f3-9dfa-fc56f05036e6",
+        "timestamp": 1791565776537
+      }
+    ]
+  }
+}
