@@ -1,0 +1,168 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Badge from '../../components/Badge.astro';
+---
+
+<BaseLayout
+  title="Privacy Policy"
+  description="Privacy Policy for Naruka AI Labs (orgs.social). Plain-language disclosure regarding data collection, cookies, and prototype environments."
+  canonicalPath="/privacy"
+>
+  <div class="legal-page">
+    <section class="section">
+      <div class="container legal-container">
+        <Badge variant="neutral" text="Legal Information" />
+        <h1 class="legal-title">Privacy Policy</h1>
+        <p class="legal-date">Last Updated: October 2026 · Plain Language Disclosure</p>
+
+        <!-- Advisory Notice -->
+        <div class="legal-advisory glass-panel">
+          <strong>Review Notice:</strong> This policy is written in clear, plain language reflecting the true technical operation of <code>https://orgs.social</code>. Please review this document periodically for any updates.
+        </div>
+
+        <div class="legal-body glass-panel">
+          <section class="legal-section">
+            <h2>1. Overview</h2>
+            <p>
+              Naruka AI Labs ("we", "our", or "the studio") is an independent software studio operated by Prince Naruka. This Privacy Policy explains how information is handled when you visit our website at <code>https://orgs.social</code>.
+            </p>
+          </section>
+
+          <section class="legal-section">
+            <h2>2. Information We Do NOT Collect</h2>
+            <p>
+              We prioritize data minimization:
+            </p>
+            <ul>
+              <li><strong>No tracking cookies:</strong> This website does not utilize third-party advertising trackers, cross-site profiling scripts, or marketing cookies.</li>
+              <li><strong>No user accounts on this site:</strong> The marketing and information site does not require registration, passwords, or personal profiles.</li>
+            </ul>
+          </section>
+
+          <section class="legal-section">
+            <h2>3. Information You Voluntarily Provide</h2>
+            <p>
+              When you contact us directly via email (<code>naruka@orgs.social</code>), we receive your email address and any information you choose to include in your correspondence. We use this information solely to respond to your inquiry and never sell or rent your contact details.
+            </p>
+          </section>
+
+          <section class="legal-section">
+            <h2>4. Product Prototypes & Demonstrations</h2>
+            <p>
+              Naruka AI Labs maintains demonstration prototypes such as <strong>Setu</strong> and <strong>Field Book</strong>:
+            </p>
+            <ul>
+              <li><strong>Setu:</strong> Operates strictly with synthetic demonstration records (e.g., test taxpayer references). It does not request, store, or process real government identity numbers or citizen documents.</li>
+              <li><strong>Field Book:</strong> When accessing the functional prototype on Vercel/Supabase, account creation and event registration are handled through Supabase Auth according to standard session management.</li>
+            </ul>
+          </section>
+
+          <section class="legal-section">
+            <h2>5. Hosting & Infrastructure</h2>
+            <p>
+              This website is hosted on <strong>Vercel</strong>. Like all web hosts, server logs may record standard network metadata (such as IP address, user-agent, and request timestamp) for security monitoring, DDoS prevention, and uptime diagnostics.
+            </p>
+          </section>
+
+          <section class="legal-section">
+            <h2>6. Contact Regarding Privacy</h2>
+            <p>
+              For any questions regarding this Privacy Policy or your personal information, please reach out directly:
+            </p>
+            <p>
+              <strong>Prince Naruka</strong><br />
+              Founder, Naruka AI Labs<br />
+              Email: <a href="mailto:naruka@orgs.social">naruka@orgs.social</a>
+            </p>
+          </section>
+        </div>
+      </div>
+    </section>
+  </div>
+</BaseLayout>
+
+<style>
+  .legal-page {
+    padding-bottom: var(--space-4xl);
+  }
+
+  .legal-container {
+    max-width: 800px;
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-md);
+  }
+
+  .legal-title {
+    font-size: clamp(2.2rem, 3.5vw, 3rem);
+  }
+
+  .legal-date {
+    font-size: 0.85rem;
+    color: var(--text-muted);
+  }
+
+  .legal-advisory {
+    padding: var(--space-md) var(--space-lg);
+    background: rgba(99, 102, 241, 0.08);
+    border: 1px solid rgba(99, 102, 241, 0.25);
+    font-size: 0.875rem;
+    color: var(--text-secondary);
+    border-radius: var(--radius-sm);
+  }
+
+  .legal-advisory code {
+    color: var(--accent-indigo-light);
+  }
+
+  .legal-body {
+    padding: clamp(var(--space-lg), 5vw, var(--space-3xl));
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-2xl);
+  }
+
+  .legal-section {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-sm);
+  }
+
+  .legal-section h2 {
+    font-size: 1.35rem;
+    color: var(--text-primary);
+  }
+
+  .legal-section p {
+    font-size: 0.95rem;
+    color: var(--text-secondary);
+    line-height: 1.65;
+  }
+
+  .legal-section ul {
+    list-style: disc;
+    padding-left: 24px;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    font-size: 0.925rem;
+    color: var(--text-secondary);
+    line-height: 1.6;
+  }
+
+  .legal-section strong {
+    color: var(--text-primary);
+  }
+
+  .legal-section a {
+    color: var(--accent-indigo-light);
+    text-decoration: underline;
+  }
+
+  .legal-section code {
+    background: rgba(0, 0, 0, 0.35);
+    padding: 1px 4px;
+    border-radius: 3px;
+    color: #CBD5E1;
+  }
+</style>

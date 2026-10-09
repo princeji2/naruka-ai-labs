@@ -1,0 +1,630 @@
+---
+import BaseLayout from '../../../layouts/BaseLayout.astro';
+import Badge from '../../../components/Badge.astro';
+import Button from '../../../components/Button.astro';
+---
+
+<BaseLayout
+  title="Setu — Citizen Interoperability Gateway"
+  description="Setu links public service portals behind a single citizen login, allowing verified records to be shared with consent instead of repeatedly re-uploaded. Evolved from Smart India Hackathon PS-26129."
+  canonicalPath="/products/setu"
+>
+  <article class="product-detail-page">
+    <!-- Breadcrumbs / Kicker -->
+    <section class="section detail-hero-section">
+      <div class="container hero-layout">
+        <div class="hero-text-col">
+          <div class="kicker-row">
+            <a href="/products" class="breadcrumb-link">← All Products</a>
+            <span class="sep">/</span>
+            <Badge variant="in-development" text="In Active Development" />
+            <Badge variant="demo-data" text="Simulated Backends" />
+          </div>
+
+          <h1 class="detail-title">
+            One record for every citizen, <br />
+            <span class="text-gradient-emerald">shared with consent</span> — not copied.
+          </h1>
+
+          <p class="detail-lead">
+            Setu is a consent-based interoperability gateway designed to connect siloed digital platforms behind a single citizen login, eliminating the repetitive cycle of manual uploads and re-verification.
+          </p>
+
+          <!-- Mandatory Heritage Note -->
+          <div class="origins-callout glass-panel">
+            <div class="callout-badge-wrap">
+              <span class="origins-badge">Origins & Heritage</span>
+              <span class="sih-id">Problem Statement SIH 26129</span>
+            </div>
+            <p class="origins-body">
+              Setu originated as a project for the <strong>Smart India Hackathon</strong> addressing <em>"System Integration and Interoperability Among Government Digital Platforms"</em>. Prince Naruka is continuing its architectural and engineering development under Naruka AI Labs as an independent product research effort. It is not an official government service and is not affiliated with any public department.
+            </p>
+          </div>
+
+          <div class="detail-ctas">
+            <Button href="#architecture" variant="primary" size="md">
+              Explore Architecture ↓
+            </Button>
+            <Button href="mailto:naruka@orgs.social?subject=Setu%20Inquiry" variant="secondary" size="md">
+              Inquire About Setu
+            </Button>
+          </div>
+        </div>
+
+        <!-- Visual Gateway Diagram -->
+        <div class="hero-visual-col">
+          <div class="gateway-diagram-card glass-panel">
+            <div class="diagram-header">
+              <span class="diagram-tag">GATEWAY INTERACTION TOPOLOGY</span>
+              <span class="diagram-status">Synthetic Test Environment</span>
+            </div>
+
+            <svg viewBox="0 0 460 360" fill="none" xmlns="http://www.w3.org/2000/svg" class="gateway-svg" aria-label="Setu interoperability gateway architecture diagram">
+              <!-- Grid background -->
+              <defs>
+                <pattern id="diagGrid" width="20" height="20" patternUnits="userSpaceOnUse">
+                  <path d="M 20 0 L 0 0 0 20" fill="none" stroke="rgba(255,255,255,0.03)" stroke-width="1" />
+                </pattern>
+                <radialGradient id="gatewayPulse" cx="230" cy="180" r="100" gradientUnits="userSpaceOnUse">
+                  <stop offset="0%" stop-color="#10B981" stop-opacity="0.25" />
+                  <stop offset="100%" stop-color="#10B981" stop-opacity="0" />
+                </radialGradient>
+              </defs>
+
+              <rect width="460" height="360" fill="url(#diagGrid)" rx="12" />
+              <circle cx="230" cy="180" r="90" fill="url(#gatewayPulse)" />
+
+              <!-- Connecting Connection Lines -->
+              <g stroke="rgba(255, 255, 255, 0.15)" stroke-width="1.5" stroke-dasharray="4 4">
+                <line x1="230" y1="180" x2="230" y2="60" />
+                <line x1="230" y1="180" x2="80" y2="280" />
+                <line x1="230" y1="180" x2="380" y2="280" />
+                <line x1="230" y1="180" x2="70" y2="100" />
+              </g>
+
+              <!-- Citizen Node (Left Top) -->
+              <g transform="translate(40, 70)">
+                <rect x="0" y="0" width="100" height="56" rx="8" fill="#131722" stroke="#6366F1" stroke-width="1.5" />
+                <text x="50" y="24" fill="#F8FAFC" font-size="11" font-weight="700" text-anchor="middle" font-family="system-ui">CITIZEN</text>
+                <text x="50" y="42" fill="#94A3B8" font-size="9" text-anchor="middle" font-family="system-ui">Consent Login</text>
+              </g>
+
+              <!-- Central Gateway Node -->
+              <g transform="translate(170, 135)">
+                <rect x="0" y="0" width="120" height="90" rx="14" fill="#0D1F18" stroke="#10B981" stroke-width="2" />
+                <circle cx="60" cy="30" r="14" fill="#10B981" fill-opacity="0.2" />
+                <text x="60" y="34" fill="#34D399" font-size="12" font-weight="800" text-anchor="middle" font-family="system-ui">SETU</text>
+                <text x="60" y="58" fill="#F8FAFC" font-size="10" font-weight="600" text-anchor="middle" font-family="system-ui">INTEROP GATEWAY</text>
+                <text x="60" y="74" fill="#6EE7B7" font-size="8" text-anchor="middle" font-family="system-ui">Relay & Token Audit</text>
+              </g>
+
+              <!-- Mock Department 1: Digital Tax Records -->
+              <g transform="translate(160, 20)">
+                <rect x="0" y="0" width="140" height="52" rx="8" fill="#171A24" stroke="rgba(255,255,255,0.15)" stroke-width="1.2" />
+                <text x="70" y="22" fill="#F8FAFC" font-size="10" font-weight="700" text-anchor="middle" font-family="system-ui">MOCK TAX RECORDS</text>
+                <text x="70" y="38" fill="#F59E0B" font-size="8.5" text-anchor="middle" font-family="system-ui">Synthetic PAN Refs</text>
+              </g>
+
+              <!-- Mock Department 2: National Identity Registry -->
+              <g transform="translate(20, 250)">
+                <rect x="0" y="0" width="130" height="56" rx="8" fill="#171A24" stroke="rgba(255,255,255,0.15)" stroke-width="1.2" />
+                <text x="65" y="24" fill="#F8FAFC" font-size="10" font-weight="700" text-anchor="middle" font-family="system-ui">MOCK IDENTITY REG.</text>
+                <text x="65" y="42" fill="#F59E0B" font-size="8.5" text-anchor="middle" font-family="system-ui">Synthetic NIR Tokens</text>
+              </g>
+
+              <!-- Mock Department 3: Driving Licence & Jan Aadhaar -->
+              <g transform="translate(300, 250)">
+                <rect x="0" y="0" width="140" height="56" rx="8" fill="#171A24" stroke="rgba(255,255,255,0.15)" stroke-width="1.2" />
+                <text x="70" y="24" fill="#F8FAFC" font-size="10" font-weight="700" text-anchor="middle" font-family="system-ui">MOCK LICENCE PORTAL</text>
+                <text x="70" y="42" fill="#F59E0B" font-size="8.5" text-anchor="middle" font-family="system-ui">Synthetic Verification</text>
+              </g>
+            </svg>
+
+            <div class="diagram-footer">
+              <span class="dot-amber"></span>
+              <span>All 3 connected departmental backends run on isolated mock ports with synthetic records.</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Problem & Solution Analysis -->
+    <section class="section narrative-section">
+      <div class="container narrative-grid">
+        <div class="narrative-card glass-panel">
+          <span class="card-kicker text-gradient-silver">THE PROBLEM</span>
+          <h2 class="card-title">Fragmented Departmental Silos</h2>
+          <p class="card-p">
+            In modern administrative workflows, citizens interact with dozens of independent departmental portals. Each agency operates its own database, verification team, and identity storage.
+          </p>
+          <ul class="bullet-list">
+            <li><strong>Repetitive uploads:</strong> Citizens must download tax, identity, or registration proofs from one portal and re-upload them to another.</li>
+            <li><strong>Security risks:</strong> PDF copies are stored across multiple third-party servers, increasing the risk of data leaks and outdated documentation.</li>
+            <li><strong>Verification delays:</strong> Every department independently checks authenticity, causing redundant queues and weeks of friction.</li>
+          </ul>
+        </div>
+
+        <div class="narrative-card glass-panel">
+          <span class="card-kicker text-gradient-emerald">THE SOLUTION</span>
+          <h2 class="card-title">Consent-Driven Gateway Relay</h2>
+          <p class="card-p">
+            Setu replaces redundant document copying with an audited, tokenized gateway relay. Verified records are retrieved directly from the issuing authority only when explicit citizen consent is granted.
+          </p>
+          <ul class="bullet-list">
+            <li><strong>One citizen login:</strong> A single entry point allows the citizen to inspect which departments have verified their documents.</li>
+            <li><strong>Direct department-to-department verification:</strong> The gateway requests data over authenticated HTTP contracts, logging every relay.</li>
+            <li><strong>Zero duplicate file storage:</strong> Data is relayed on demand rather than permanently duplicated across multiple departmental silos.</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- Verified Architecture & Technical Specifications -->
+    <section class="section tech-section" id="architecture">
+      <div class="container">
+        <div class="section-heading">
+          <Badge variant="in-development" text="Technical Deep Dive" />
+          <h2 class="section-title">Verified Architecture & Engineering</h2>
+          <p class="section-lead">
+            The Setu codebase is structured around a central orchestration layer, isolated mock departmental microservices, and a grounded conversational assistant.
+          </p>
+        </div>
+
+        <div class="tech-spec-grid">
+          <!-- Gateway Layer -->
+          <div class="spec-card glass-panel">
+            <h3 class="spec-card-title">1. Gateway Orchestration Layer</h3>
+            <p class="spec-card-desc">
+              A Node.js Express service backed by PostgreSQL that manages citizen authentication, session tokens, and department dispatching.
+            </p>
+            <div class="tech-tags">
+              <span class="tech-tag">Node.js Express</span>
+              <span class="tech-tag">PostgreSQL</span>
+              <span class="tech-tag">Tokenized Relays</span>
+              <span class="tech-tag">Audit Trail</span>
+            </div>
+            <ul class="spec-list">
+              <li>Individual HTTP contracts per department client.</li>
+              <li>Graceful degradation: if a department service is unreachable, an explicit error is returned without hanging other lookups.</li>
+              <li>Transaction logs record timestamp, status, and department response.</li>
+            </ul>
+          </div>
+
+          <!-- Simulated Backends -->
+          <div class="spec-card glass-panel">
+            <h3 class="spec-card-title">2. Simulated Department Backends</h3>
+            <p class="spec-card-desc">
+              Three standalone mock microservices running in isolated environments to test real outbound HTTP integration without contacting government servers.
+            </p>
+            <div class="tech-tags">
+              <span class="tech-tag">FastAPI (Python)</span>
+              <span class="tech-tag">SQLite</span>
+              <span class="tech-tag">Synthetic Identifiers</span>
+              <span class="tech-tag">Header Auth (X-Gateway-Key)</span>
+            </div>
+            <ul class="spec-list">
+              <li><strong>Mock Tax Records:</strong> Accepts synthetic identifiers (e.g., <code>SYNPAN-000123</code>) and rejects real PAN formats.</li>
+              <li><strong>Mock Identity Registry:</strong> Simulates identity verification lookups with test payloads.</li>
+              <li><strong>Mock Driving Licence Portal:</strong> Validates simulated registration records.</li>
+            </ul>
+          </div>
+
+          <!-- Service Assistant Proxy -->
+          <div class="spec-card glass-panel">
+            <h3 class="spec-card-title">3. Grounded Service Assistant</h3>
+            <p class="spec-card-desc">
+              A server-side AI proxy service implementing <code>POST /api/v1/chat</code> to assist visitors with understanding public service procedures.
+            </p>
+            <div class="tech-tags">
+              <span class="tech-tag">Gemini API Integration</span>
+              <span class="tech-tag">Server-side Key Isolation</span>
+              <span class="tech-tag">Grounded System Prompts</span>
+              <span class="tech-tag">Typed Error Handling</span>
+            </div>
+            <ul class="spec-list">
+              <li>API keys are secured exclusively on the gateway server — never exposed in browser bundles.</li>
+              <li>Strict system prompts guard against hallucinating nonexistent public welfare policies.</li>
+              <li>Handles upstream 429 rate limits, validation errors, and network timeouts safely.</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Honest Status & Roadmap Callout -->
+    <section class="section status-section">
+      <div class="container">
+        <div class="status-box glass-panel">
+          <div class="status-content">
+            <div class="status-badge-row">
+              <Badge variant="in-development" text="Current Stage: Prototype Refinement" />
+            </div>
+            <h3 class="status-title">Current Development Status</h3>
+            <p class="status-desc">
+              Setu is currently undergoing refactoring into a modular architecture. Core gateway dispatch logic, schema migration tests, and mock client contracts are functional locally. The next phases focus on formalizing the consent token lifecycle and enhancing verifiable audit logging.
+            </p>
+          </div>
+          <div class="status-actions">
+            <Button href="mailto:naruka@orgs.social?subject=Setu%20Discussion" variant="primary" size="md">
+              Contact Developer
+            </Button>
+            <Button href="/products" variant="secondary" size="md">
+              Back to Products
+            </Button>
+          </div>
+        </div>
+      </div>
+    </section>
+  </article>
+</BaseLayout>
+
+<style>
+  .product-detail-page {
+    padding-bottom: var(--space-4xl);
+  }
+
+  .detail-hero-section {
+    padding-top: var(--space-3xl);
+    padding-bottom: var(--space-3xl);
+  }
+
+  .hero-layout {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: var(--space-2xl);
+    align-items: center;
+  }
+
+  @media (min-width: 960px) {
+    .hero-layout {
+      grid-template-columns: 1.15fr 0.85fr;
+      gap: var(--space-3xl);
+    }
+  }
+
+  .hero-text-col {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-md);
+  }
+
+  .kicker-row {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    flex-wrap: wrap;
+    margin-bottom: var(--space-xs);
+  }
+
+  .breadcrumb-link {
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: var(--text-muted);
+  }
+
+  .breadcrumb-link:hover {
+    color: var(--text-primary);
+  }
+
+  .sep {
+    color: var(--text-muted);
+    font-size: 0.85rem;
+  }
+
+  .detail-title {
+    font-size: clamp(2rem, 3.8vw, 3.25rem);
+    line-height: 1.12;
+  }
+
+  .text-gradient-emerald {
+    background: linear-gradient(135deg, #34D399 0%, #10B981 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+
+  .detail-lead {
+    font-size: 1.15rem;
+    color: var(--text-secondary);
+    line-height: 1.6;
+  }
+
+  /* Origins Callout */
+  .origins-callout {
+    padding: var(--space-md) var(--space-lg);
+    background: rgba(16, 185, 129, 0.05);
+    border: 1px solid var(--setu-emerald-border);
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-xs);
+    margin-top: var(--space-xs);
+  }
+
+  .callout-badge-wrap {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    flex-wrap: wrap;
+  }
+
+  .origins-badge {
+    font-size: 0.72rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    padding: 2px 8px;
+    background: rgba(16, 185, 129, 0.2);
+    color: var(--setu-emerald-light);
+    border-radius: var(--radius-xs);
+  }
+
+  .sih-id {
+    font-size: 0.75rem;
+    font-family: var(--font-mono);
+    color: #A7F3D0;
+  }
+
+  .origins-body {
+    font-size: 0.85rem;
+    color: var(--text-secondary);
+    line-height: 1.55;
+  }
+
+  .origins-body strong {
+    color: var(--text-primary);
+  }
+
+  .detail-ctas {
+    display: flex;
+    align-items: center;
+    gap: var(--space-md);
+    flex-wrap: wrap;
+    margin-top: var(--space-sm);
+  }
+
+  /* Gateway Diagram Card */
+  .gateway-diagram-card {
+    padding: var(--space-lg);
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-md);
+    background: #0B0E14;
+    border: 1px solid var(--border-glass-hover);
+  }
+
+  .diagram-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 0.75rem;
+    padding-bottom: var(--space-xs);
+    border-bottom: 1px solid var(--border-subtle);
+  }
+
+  .diagram-tag {
+    font-family: var(--font-mono);
+    color: var(--text-muted);
+    font-weight: 600;
+  }
+
+  .diagram-status {
+    color: var(--fieldbook-amber-light);
+    font-weight: 600;
+  }
+
+  .gateway-svg {
+    width: 100%;
+    height: auto;
+    display: block;
+  }
+
+  .diagram-footer {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 0.75rem;
+    color: var(--text-muted);
+    padding-top: var(--space-xs);
+    border-top: 1px solid var(--border-subtle);
+  }
+
+  .dot-amber {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: var(--fieldbook-amber);
+    flex-shrink: 0;
+  }
+
+  /* Narrative Grid */
+  .narrative-section {
+    padding-top: 0;
+  }
+
+  .narrative-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: var(--space-xl);
+  }
+
+  @media (min-width: 800px) {
+    .narrative-grid {
+      grid-template-columns: 1fr 1fr;
+    }
+  }
+
+  .narrative-card {
+    padding: clamp(var(--space-lg), 3.5vw, var(--space-2xl));
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-md);
+  }
+
+  .card-kicker {
+    font-size: 0.75rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+  }
+
+  .card-title {
+    font-size: 1.5rem;
+    font-weight: 700;
+  }
+
+  .card-p {
+    font-size: 0.95rem;
+    color: var(--text-secondary);
+  }
+
+  .bullet-list {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-sm);
+    margin-top: var(--space-xs);
+  }
+
+  .bullet-list li {
+    font-size: 0.9rem;
+    color: var(--text-secondary);
+    position: relative;
+    padding-left: 18px;
+    line-height: 1.5;
+  }
+
+  .bullet-list li::before {
+    content: '—';
+    position: absolute;
+    left: 0;
+    color: var(--accent-indigo);
+  }
+
+  .bullet-list li strong {
+    color: var(--text-primary);
+  }
+
+  /* Technical Specs Grid */
+  .section-heading {
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--space-sm);
+    margin-bottom: var(--space-2xl);
+  }
+
+  .section-title {
+    font-size: clamp(1.8rem, 3vw, 2.4rem);
+  }
+
+  .section-lead {
+    max-width: 680px;
+    font-size: 1.05rem;
+    color: var(--text-secondary);
+  }
+
+  .tech-spec-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: var(--space-xl);
+  }
+
+  @media (min-width: 900px) {
+    .tech-spec-grid {
+      grid-template-columns: repeat(3, 1fr);
+    }
+  }
+
+  .spec-card {
+    padding: var(--space-xl);
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-md);
+  }
+
+  .spec-card-title {
+    font-size: 1.25rem;
+    font-weight: 700;
+  }
+
+  .spec-card-desc {
+    font-size: 0.9rem;
+    color: var(--text-secondary);
+    line-height: 1.55;
+  }
+
+  .tech-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    margin: var(--space-xs) 0;
+  }
+
+  .tech-tag {
+    font-size: 0.72rem;
+    font-family: var(--font-mono);
+    padding: 3px 8px;
+    background: rgba(255, 255, 255, 0.04);
+    border: 1px solid var(--border-subtle);
+    border-radius: var(--radius-xs);
+    color: #CBD5E1;
+  }
+
+  .spec-list {
+    list-style: disc;
+    padding-left: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-xs);
+    font-size: 0.85rem;
+    color: var(--text-secondary);
+    line-height: 1.5;
+  }
+
+  .spec-list code {
+    background: rgba(0, 0, 0, 0.4);
+    padding: 2px 4px;
+    border-radius: 3px;
+    color: #FBBF24;
+  }
+
+  /* Status Box */
+  .status-box {
+    padding: clamp(var(--space-lg), 4vw, var(--space-2xl));
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-lg);
+    background: rgba(14, 18, 27, 0.6);
+  }
+
+  @media (min-width: 800px) {
+    .status-box {
+      flex-direction: row;
+      align-items: center;
+      justify-content: space-between;
+    }
+  }
+
+  .status-content {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-sm);
+    max-width: 720px;
+  }
+
+  .status-title {
+    font-size: 1.4rem;
+  }
+
+  .status-desc {
+    font-size: 0.95rem;
+    color: var(--text-secondary);
+  }
+
+  .status-actions {
+    display: flex;
+    gap: var(--space-sm);
+    flex-shrink: 0;
+    flex-wrap: wrap;
+  }
+</style>

@@ -1,0 +1,367 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Badge from '../../components/Badge.astro';
+import Button from '../../components/Button.astro';
+---
+
+<BaseLayout
+  title="Contact & Inquiries"
+  description="Contact Naruka AI Labs. Reach founder Prince Naruka directly at naruka@orgs.social for program evaluations, engineering collaborations, or inquiries."
+  canonicalPath="/contact"
+>
+  <div class="contact-page">
+    <section class="section contact-hero-section">
+      <div class="container contact-container">
+        <Badge variant="in-development" text="Direct Studio Channel" />
+        <h1 class="contact-title">
+          Get in touch with <br />
+          <span class="text-gradient-brand">Naruka AI Labs</span>.
+        </h1>
+        <p class="contact-lead">
+          We welcome direct conversations regarding our products, architectural reviews, and application to Anthropic's Claude Startups Program.
+        </p>
+
+        <!-- Direct Contact Cards -->
+        <div class="channels-grid">
+          <!-- Primary Email Card -->
+          <div class="channel-card glass-panel primary-card">
+            <div class="channel-icon" aria-hidden="true">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path>
+                <polyline points="22,6 12,13 2,6"></polyline>
+              </svg>
+            </div>
+            <div class="channel-body">
+              <span class="channel-label">Primary Direct Email</span>
+              <a href="mailto:naruka@orgs.social" class="channel-main-link">
+                naruka@orgs.social
+              </a>
+              <p class="channel-note">
+                Direct mailbox of founder Prince Naruka. Verified on domain <code>orgs.social</code>.
+              </p>
+            </div>
+            <div class="channel-action">
+              <Button href="mailto:naruka@orgs.social" variant="primary" size="md">
+                Compose Email ↗
+              </Button>
+              <button type="button" class="copy-email-btn" id="copy-btn">
+                <span id="copy-text">Copy Address</span>
+              </button>
+            </div>
+          </div>
+
+          <!-- Secondary Channels Grid -->
+          <div class="secondary-channels">
+            <!-- GitHub -->
+            <a
+              href="https://github.com/princeji2/naruka-ai-labs"
+              target="_blank"
+              rel="noopener noreferrer"
+              class="sub-channel-card glass-panel"
+            >
+              <div class="sub-icon">
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path>
+                </svg>
+              </div>
+              <div class="sub-info">
+                <span class="sub-title">GitHub Repository</span>
+                <span class="sub-desc">github.com/princeji2/naruka-ai-labs ↗</span>
+              </div>
+            </a>
+
+            <!-- LinkedIn -->
+            <a
+              href="https://www.linkedin.com/in/prince-naruka-26581236b/"
+              target="_blank"
+              rel="noopener noreferrer"
+              class="sub-channel-card glass-panel"
+            >
+              <div class="sub-icon">
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"></path>
+                  <rect x="2" y="9" width="4" height="12"></rect>
+                  <circle cx="4" cy="4" r="2"></circle>
+                </svg>
+              </div>
+              <div class="sub-info">
+                <span class="sub-title">Founder LinkedIn</span>
+                <span class="sub-desc">linkedin.com/in/prince-naruka-26581236b ↗</span>
+              </div>
+            </a>
+          </div>
+        </div>
+
+        <!-- Inquiries Advisory -->
+        <div class="inquiry-info-box glass-panel">
+          <h3 class="info-title">What to Expect</h3>
+          <div class="info-columns">
+            <div class="info-col">
+              <strong>Evaluation Inquiries:</strong> If you are reviewing our submission for the Claude Startups Program, please feel free to request architectural walkthroughs or code repository access.
+            </div>
+            <div class="info-col">
+              <strong>Response Timeline:</strong> As an active engineering studio, all incoming emails are monitored directly by Prince Naruka. You can typically expect a response within 24 to 48 hours.
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </div>
+</BaseLayout>
+
+<script>
+  function setupCopyButton() {
+    const copyBtn = document.getElementById('copy-btn');
+    const copyText = document.getElementById('copy-text');
+    if (!copyBtn || !copyText) return;
+
+    copyBtn.addEventListener('click', async () => {
+      try {
+        await navigator.clipboard.writeText('naruka@orgs.social');
+        copyText.textContent = 'Copied to Clipboard!';
+        copyBtn.classList.add('copied');
+        setTimeout(() => {
+          copyText.textContent = 'Copy Address';
+          copyBtn.classList.remove('copied');
+        }, 2200);
+      } catch (err) {
+        copyText.textContent = 'naruka@orgs.social';
+      }
+    });
+  }
+
+  setupCopyButton();
+  document.addEventListener('astro:after-swap', setupCopyButton);
+</script>
+
+<style>
+  .contact-page {
+    padding-bottom: var(--space-4xl);
+  }
+
+  .contact-hero-section {
+    padding-top: var(--space-3xl);
+    padding-bottom: var(--space-3xl);
+  }
+
+  .contact-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    gap: var(--space-md);
+    max-width: 860px;
+  }
+
+  .contact-title {
+    font-size: clamp(2.2rem, 4vw, 3.25rem);
+    line-height: 1.15;
+  }
+
+  .contact-lead {
+    font-size: 1.15rem;
+    color: var(--text-secondary);
+    max-width: 680px;
+    margin-bottom: var(--space-xl);
+  }
+
+  /* Channels Grid */
+  .channels-grid {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-lg);
+    text-align: left;
+    margin-bottom: var(--space-2xl);
+  }
+
+  .primary-card {
+    padding: clamp(var(--space-lg), 4vw, var(--space-2xl));
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-md);
+    background: radial-gradient(circle at 10% 20%, rgba(99, 102, 241, 0.12), rgba(14, 18, 27, 0.6) 80%);
+    border: 1px solid rgba(99, 102, 241, 0.3);
+  }
+
+  @media (min-width: 768px) {
+    .primary-card {
+      flex-direction: row;
+      align-items: center;
+      justify-content: space-between;
+    }
+  }
+
+  .channel-icon {
+    width: 48px;
+    height: 48px;
+    border-radius: var(--radius-md);
+    background: rgba(99, 102, 241, 0.15);
+    color: var(--accent-indigo-light);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+  }
+
+  .channel-body {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    flex: 1;
+  }
+
+  .channel-label {
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: var(--text-muted);
+    font-weight: 700;
+  }
+
+  .channel-main-link {
+    font-family: var(--font-display);
+    font-size: clamp(1.3rem, 2.5vw, 1.75rem);
+    font-weight: 700;
+    color: var(--text-primary);
+  }
+
+  .channel-main-link:hover {
+    color: var(--accent-indigo-light);
+  }
+
+  .channel-note {
+    font-size: 0.85rem;
+    color: var(--text-muted);
+  }
+
+  .channel-note code {
+    background: rgba(0, 0, 0, 0.4);
+    padding: 1px 4px;
+    border-radius: 3px;
+    color: #CBD5E1;
+  }
+
+  .channel-action {
+    display: flex;
+    align-items: center;
+    gap: var(--space-xs);
+    flex-wrap: wrap;
+  }
+
+  .copy-email-btn {
+    min-height: 44px;
+    padding: 9px 16px;
+    font-size: 0.85rem;
+    font-weight: 600;
+    border-radius: var(--radius-sm);
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid var(--border-glass);
+    color: var(--text-secondary);
+    cursor: pointer;
+    transition: all var(--transition-fast);
+  }
+
+  .copy-email-btn:hover {
+    background: rgba(255, 255, 255, 0.1);
+    color: var(--text-primary);
+  }
+
+  .copy-email-btn.copied {
+    background: rgba(16, 185, 129, 0.15);
+    border-color: var(--setu-emerald-border);
+    color: var(--setu-emerald-light);
+  }
+
+  /* Secondary Channels */
+  .secondary-channels {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: var(--space-md);
+  }
+
+  @media (min-width: 640px) {
+    .secondary-channels {
+      grid-template-columns: 1fr 1fr;
+    }
+  }
+
+  .sub-channel-card {
+    padding: var(--space-lg);
+    display: flex;
+    align-items: center;
+    gap: var(--space-md);
+    text-decoration: none;
+    transition: transform var(--transition-fast), border-color var(--transition-fast);
+  }
+
+  .sub-channel-card:hover {
+    transform: translateY(-2px);
+    border-color: var(--border-glass-hover);
+  }
+
+  .sub-icon {
+    width: 42px;
+    height: 42px;
+    border-radius: var(--radius-sm);
+    background: rgba(255, 255, 255, 0.04);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--text-secondary);
+    flex-shrink: 0;
+  }
+
+  .sub-info {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+  }
+
+  .sub-title {
+    font-size: 0.95rem;
+    font-weight: 600;
+    color: var(--text-primary);
+  }
+
+  .sub-desc {
+    font-size: 0.775rem;
+    color: var(--text-muted);
+  }
+
+  /* Inquiry Info Box */
+  .inquiry-info-box {
+    width: 100%;
+    padding: var(--space-xl);
+    text-align: left;
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-md);
+  }
+
+  .info-title {
+    font-size: 1.15rem;
+  }
+
+  .info-columns {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: var(--space-lg);
+  }
+
+  @media (min-width: 768px) {
+    .info-columns {
+      grid-template-columns: 1fr 1fr;
+    }
+  }
+
+  .info-col {
+    font-size: 0.875rem;
+    color: var(--text-secondary);
+    line-height: 1.6;
+  }
+
+  .info-col strong {
+    color: var(--text-primary);
+  }
+</style>
