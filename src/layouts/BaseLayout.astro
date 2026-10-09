@@ -92,21 +92,21 @@ const schemaData = {
     <meta property="twitter:description" content={description} />
     <meta property="twitter:image" content={new URL(ogImage, siteUrl).toString()} />
 
-    <!-- Optimized Typography Loading (Non-blocking with zero TS errors) -->
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <script is:inline>
-      const fontLink = document.createElement('link');
-      fontLink.rel = 'stylesheet';
-      fontLink.href = 'https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Plus+Jakarta+Sans:wght@600;700;800&family=JetBrains+Mono:wght@400;500&display=swap';
-      document.head.appendChild(fontLink);
-    </script>
-    <noscript>
-      <link
-        rel="stylesheet"
-        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Plus+Jakarta+Sans:wght@600;700;800&family=JetBrains+Mono:wght@400;500&display=swap"
-      />
-    </noscript>
+    <!-- Critical Font Preloading (Self-Hosted) -->
+    <link
+      rel="preload"
+      href="/fonts/inter-400.woff2"
+      as="font"
+      type="font/woff2"
+      crossorigin
+    />
+    <link
+      rel="preload"
+      href="/fonts/plus-jakarta-sans-700.woff2"
+      as="font"
+      type="font/woff2"
+      crossorigin
+    />
 
     <!-- JSON-LD Structured Data -->
     <script type="application/ld+json" set:html={JSON.stringify(schemaData)} />
