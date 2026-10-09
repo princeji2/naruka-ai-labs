@@ -76,18 +76,18 @@
   --space-10: 96px;
   --space-11: 128px;
 
-  /* Semantic Aliases mapped to the clean scale */
-  --space-3xs: var(--space-1);  /* 2px */
-  --space-2xs: var(--space-2);  /* 4px */
-  --space-xs: var(--space-3);   /* 8px */
-  --space-sm: var(--space-4);   /* 12px */
-  --space-md: var(--space-5);   /* 16px */
-  --space-lg: var(--space-6);   /* 24px */
-  --space-xl: var(--space-7);   /* 32px */
-  --space-2xl: var(--space-8);  /* 48px */
-  --space-3xl: var(--space-9);  /* 64px */
-  --space-4xl: var(--space-10); /* 96px */
-  --space-5xl: var(--space-11); /* 128px */
+  /* Semantic Aliases mapped to preserve original studio density with clean non-fractional steps */
+  --space-3xs: var(--space-1);  /* 2px - Micro-gap, badge separators (backward compat alias) */
+  --space-2xs: var(--space-1);  /* 2px - Minimum discrete element gap */
+  --space-xs: var(--space-2);   /* 4px - Tight element gap */
+  --space-sm: var(--space-3);   /* 8px - Icon/text & compact padding */
+  --space-md: var(--space-4);   /* 12px - Standard button/input rhythm */
+  --space-lg: var(--space-5);   /* 16px - Standard block gap (Original 16px density) */
+  --space-xl: var(--space-6);   /* 24px - Panel & card padding (Original 24px density) */
+  --space-2xl: var(--space-7);  /* 32px - Module separation (Original 32px density) */
+  --space-3xl: var(--space-8);  /* 48px - Section padding (Original 48px density) */
+  --space-4xl: var(--space-9);  /* 64px - Hero macro padding (Original 64px density) */
+  --space-5xl: var(--space-10); /* 96px - Major view boundary (Original 96px density) */
 
   /* --------------------------------------------------------------------------
      3. RADII SCALE

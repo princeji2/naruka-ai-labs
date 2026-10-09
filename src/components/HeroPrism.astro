@@ -30,14 +30,14 @@
     const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
     if (prefersReducedMotion) return; // Keep Layer 1
 
-    // Mobile / Low power checks
+    // Viewport gating: CSS fallback alone is optimized for mobile screens (< 768px)
     const isMobile = window.innerWidth < 768;
-    if (isMobile) return; // Keep Layer 1 for battery & mobile GPU efficiency
+    if (isMobile) return;
 
+    // Environmental guards: saveData or extreme memory constraint (< 2GB)
     const nav = navigator as any;
     if (nav.connection && nav.connection.saveData) return;
-    if (nav.hardwareConcurrency && nav.hardwareConcurrency <= 4) return;
-    if (nav.deviceMemory && nav.deviceMemory < 4) return;
+    if (nav.deviceMemory && nav.deviceMemory < 2) return;
 
     // 2. WebGL Context Initialization
     let gl: WebGLRenderingContext | null = null;
@@ -216,11 +216,33 @@
     // Fade in canvas smoothly once ready
     heroCanvas.style.opacity = '1';
 
-    // 5. Render Loop with Viewport Visibility Throttling
+    // 5. Render Loop with Viewport Visibility & Performance Guard
+    let slowFrameAccumulator = 0;
+    let lastFrameTimestamp = performance.now();
+
     function render(now: number) {
       if (!isVisible || document.hidden) {
         animFrameId = requestAnimationFrame(render);
+        lastFrameTimestamp = now;
         return;
+      }
+
+      const frameDuration = now - lastFrameTimestamp;
+      lastFrameTimestamp = now;
+
+      // On-page performance guard:
+      // If frame time stays above ~25ms for 2 seconds (2000ms),
+      // gracefully stop the animation and fall back to the static CSS layer.
+      if (frameDuration > 25) {
+        slowFrameAccumulator += frameDuration;
+        if (slowFrameAccumulator > 2000) {
+          cancelAnimationFrame(animFrameId);
+          observer.disconnect();
+          heroCanvas.style.opacity = '0';
+          return;
+        }
+      } else {
+        slowFrameAccumulator = Math.max(0, slowFrameAccumulator - frameDuration);
       }
 
       if (now - lastRenderTime < frameInterval) {
