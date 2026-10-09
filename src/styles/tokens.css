@@ -30,16 +30,16 @@
   /* Fluid Typography Steps (5xl, 6xl, 7xl) built with clamp() from tokens */
   /* Prevents any horizontal overflow at 320px viewport */
   --font-size-5xl-min: var(--font-size-2xl); /* Min: 21px */
-  --font-size-5xl-max: 36px;                 /* Max: 36px */
-  --font-size-5xl: clamp(var(--font-size-5xl-min), 2.5vw + 14px, var(--font-size-5xl-max));
+  --font-size-5xl-max: 40px;                 /* Max: 40px (section titles) */
+  --font-size-5xl: clamp(var(--font-size-5xl-min), 2.6vw + 14px, var(--font-size-5xl-max));
 
   --font-size-6xl-min: var(--font-size-3xl); /* Min: 25.5px */
-  --font-size-6xl-max: 48px;                 /* Max: 48px */
-  --font-size-6xl: clamp(var(--font-size-6xl-min), 4vw + 14px, var(--font-size-6xl-max));
+  --font-size-6xl-max: 52px;                 /* Max: 52px (page titles) */
+  --font-size-6xl: clamp(var(--font-size-6xl-min), 4.2vw + 12px, var(--font-size-6xl-max));
 
   --font-size-7xl-min: var(--font-size-4xl); /* Min: 28px */
-  --font-size-7xl-max: 60px;                 /* Max: 60px */
-  --font-size-7xl: clamp(var(--font-size-7xl-min), 5vw + 16px, var(--font-size-7xl-max));
+  --font-size-7xl-max: 68px;                 /* Max: 68px (hero display) */
+  --font-size-7xl: clamp(var(--font-size-7xl-min), 5.4vw + 9px, var(--font-size-7xl-max));
 
   /* Font Weights */
   --font-weight-regular: 400;
@@ -49,13 +49,13 @@
   --font-weight-extrabold: 800;
 
   /* Line Heights */
-  --line-height-tight: 1.1;
-  --line-height-snug: 1.25;
+  --line-height-tight: 1.06;   /* Display headings: tight leading at large sizes */
+  --line-height-snug: 1.2;
   --line-height-base: 1.4705;  /* 25px line-height on 17px base per Apple spec */
   --line-height-relaxed: 1.65;
 
-  /* Letter Spacing */
-  --letter-spacing-tight: -0.035em;
+  /* Letter Spacing (tighten as size grows, body stays near 0) */
+  --letter-spacing-tight: -0.03em;
   --letter-spacing-snug: -0.02em;
   --letter-spacing-normal: 0em;
   --letter-spacing-wide: 0.05em;
@@ -96,22 +96,24 @@
   --radius-xs: 4px;             /* Crisp architectural edge */
   --radius-sm: 8px;             /* Subtle rounding */
   --radius-md: 12px;            /* Card & container corners */
-  --radius-lg: 18px;            /* Large panels */
-  --radius-xl: 24px;            /* Hero surface */
-  --radius-full: 9999px;        /* Pills & badges */
+  --radius-lg: 20px;            /* Cards & panels */
+  --radius-xl: 28px;            /* Hero surface */
+  --radius-full: 9999px;        /* Pills, badges & buttons */
 
   /* --------------------------------------------------------------------------
-     4. MOTION DURATIONS & EASING (Apple deliberate motion scale)
+     4. MOTION DURATIONS & EASING
+     Hover/press feedback stays under 200ms; entrances sit at 220-320ms.
      -------------------------------------------------------------------------- */
   --motion-duration-instant: 100ms;
-  --motion-duration-fast: 240ms;
-  --motion-duration-normal: 250ms;
+  --motion-duration-fast: 160ms;
+  --motion-duration-normal: 220ms;
   --motion-duration-slow: 320ms;
-  --motion-duration-slower: 1000ms;
+  --motion-duration-slower: 600ms;
 
-  --ease-spring: cubic-bezier(0.16, 1, 0.3, 1);
-  --ease-out: cubic-bezier(0, 0, 0.2, 1);
-  --ease-in-out: cubic-bezier(0.4, 0, 0.2, 1);
+  --ease-out: cubic-bezier(0.23, 1, 0.32, 1);        /* strong ease-out for UI entrances and feedback */
+  --ease-in-out: cubic-bezier(0.77, 0, 0.175, 1);    /* on-screen movement */
+  --ease-drawer: cubic-bezier(0.32, 0.72, 0, 1);     /* sheet / drawer curve */
+  --ease-spring: var(--ease-out);                    /* legacy alias, kept so existing rules stay valid */
 
   --transition-instant: var(--motion-duration-instant) var(--ease-spring);
   --transition-fast: var(--motion-duration-fast) var(--ease-spring);
@@ -183,11 +185,14 @@
   --glass-blur-md: 16px;
   --glass-blur-lg: 24px;
 
-  --grad-studio-brand: linear-gradient(135deg, #6366F1 0%, #A855F7 60%, #EC4899 100%);
-  --grad-surface-card: linear-gradient(180deg, rgba(22, 26, 38, 0.75) 0%, rgba(17, 20, 29, 0.60) 100%);
-  --grad-surface-glass: linear-gradient(180deg, rgba(255, 255, 255, 0.05) 0%, rgba(255, 255, 255, 0.02) 100%);
-  --grad-aurora-top: radial-gradient(ellipse 80% 50% at 50% -20%, rgba(99, 102, 241, 0.18), transparent 70%);
-  --grad-aurora-accent: radial-gradient(circle 400px at 80% 20%, rgba(139, 92, 246, 0.12), transparent 80%);
+  /* Fills (avatars, solid brand surfaces): white text stays >= 3:1 at large sizes */
+  --grad-studio-brand: linear-gradient(135deg, #6366F1 0%, #8B5CF6 100%);
+  /* Text gradient: tonal periwinkle to lavender, no rainbow. >= 8:1 on the base surface */
+  --grad-text-brand: linear-gradient(100deg, #A5B4FC 0%, #818CF8 42%, #C4B5FD 100%);
+  --grad-surface-card: linear-gradient(180deg, rgba(24, 28, 42, 0.72) 0%, rgba(15, 18, 27, 0.62) 100%);
+  --grad-surface-glass: linear-gradient(180deg, rgba(255, 255, 255, 0.06) 0%, rgba(255, 255, 255, 0.02) 100%);
+  --grad-aurora-top: radial-gradient(ellipse 80% 50% at 50% -20%, rgba(99, 102, 241, 0.20), transparent 70%);
+  --grad-aurora-accent: radial-gradient(circle 420px at 82% 18%, rgba(139, 92, 246, 0.12), transparent 80%);
 
   /* Elevations */
   --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.4);
@@ -195,6 +200,9 @@
   --shadow-lg: 0 12px 32px rgba(0, 0, 0, 0.55);
   --shadow-glow: 0 0 32px rgba(99, 102, 241, 0.25);
   --shadow-glass: inset 0 1px 0 0 rgba(255, 255, 255, 0.08), 0 8px 24px rgba(0, 0, 0, 0.4);
+  /* Bigger surfaces read thicker: top-edge highlight + deeper, softer drop shadow */
+  --shadow-card: inset 0 1px 0 0 rgba(255, 255, 255, 0.07), 0 18px 48px -18px rgba(0, 0, 0, 0.7);
+  --shadow-card-hover: inset 0 1px 0 0 rgba(255, 255, 255, 0.10), 0 24px 56px -20px rgba(0, 0, 0, 0.8);
 
   /* Container */
   --container-max: 1200px;

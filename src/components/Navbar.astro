@@ -71,8 +71,11 @@ function isActive(href: string) {
       </button>
     </div>
   </div>
+</header>
 
-  <!-- Mobile Drawer Overlay & Panel -->
+  <!-- Mobile Drawer Overlay & Panel.
+       Lives outside <header>: the header's backdrop-filter would otherwise become the
+       containing block for this fixed layer and clip it to the 72px bar. -->
   <div class="mobile-drawer" id="mobile-nav-drawer" aria-hidden="true">
     <div class="mobile-drawer-backdrop" id="mobile-drawer-backdrop"></div>
     <div class="mobile-drawer-content" role="dialog" aria-modal="true" aria-label="Mobile Navigation">
@@ -137,7 +140,6 @@ function isActive(href: string) {
       </div>
     </div>
   </div>
-</header>
 
 <script>
   function setupMobileMenu() {
@@ -235,11 +237,30 @@ function isActive(href: string) {
     position: sticky;
     top: 0;
     z-index: 100;
-    background: rgba(7, 8, 11, 0.85);
-    backdrop-filter: blur(var(--glass-blur-md));
-    -webkit-backdrop-filter: blur(var(--glass-blur-md));
-    border-bottom: 1px solid var(--border-glass);
-    transition: background var(--transition-base), border-color var(--transition-base);
+    background: rgba(7, 8, 11, 0.72);
+    backdrop-filter: blur(var(--glass-blur-lg)) saturate(160%);
+    -webkit-backdrop-filter: blur(var(--glass-blur-lg)) saturate(160%);
+    border-bottom: 1px solid var(--border-subtle);
+  }
+
+  /* Hairline highlight under the bar instead of a hard divider */
+  .site-header::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: -1px;
+    height: 1px;
+    background: linear-gradient(90deg, transparent 0%, rgba(165, 180, 252, 0.28) 50%, transparent 100%);
+    pointer-events: none;
+  }
+
+  @media (prefers-reduced-transparency: reduce) {
+    .site-header {
+      background: var(--color-surface-base);
+      backdrop-filter: none;
+      -webkit-backdrop-filter: none;
+    }
   }
 
   .header-container {
@@ -281,22 +302,25 @@ function isActive(href: string) {
     display: inline-flex;
     align-items: center;
     padding: var(--space-2) var(--space-4);
-    font-size: var(--font-size-md);
+    font-size: var(--font-size-sm);
     font-weight: var(--font-weight-medium);
     color: var(--color-text-secondary);
-    border-radius: var(--radius-sm);
+    border-radius: var(--radius-full);
     transition: color var(--transition-fast), background-color var(--transition-fast);
   }
 
-  .nav-link:hover {
-    color: var(--color-text-primary);
-    background: rgba(255, 255, 255, 0.05);
+  @media (hover: hover) and (pointer: fine) {
+    .nav-link:hover {
+      color: var(--color-text-primary);
+      background: rgba(255, 255, 255, 0.06);
+    }
   }
 
+  /* Weight stays constant between states so the label never shifts width */
   .nav-link.active {
     color: var(--color-text-primary);
-    font-weight: var(--font-weight-semibold);
-    background: rgba(255, 255, 255, 0.08);
+    background: rgba(255, 255, 255, 0.09);
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.08);
   }
 
   .nav-link:focus-visible {
@@ -317,17 +341,19 @@ function isActive(href: string) {
     justify-content: center;
     width: var(--target-min-size);
     height: var(--target-min-size);
-    border-radius: var(--radius-sm);
+    border-radius: var(--radius-full);
     color: var(--color-text-secondary);
     border: 1px solid var(--border-subtle);
     background: rgba(255, 255, 255, 0.02);
-    transition: all var(--transition-fast);
+    transition: color var(--transition-fast), border-color var(--transition-fast), background-color var(--transition-fast);
   }
 
-  .github-icon-link:hover {
-    color: var(--color-text-primary);
-    border-color: var(--border-glass-hover);
-    background: rgba(255, 255, 255, 0.06);
+  @media (hover: hover) and (pointer: fine) {
+    .github-icon-link:hover {
+      color: var(--color-text-primary);
+      border-color: var(--border-glass-hover);
+      background: rgba(255, 255, 255, 0.06);
+    }
   }
 
   .github-icon-link:focus-visible {
@@ -354,10 +380,14 @@ function isActive(href: string) {
     height: var(--target-min-size);
     background: rgba(255, 255, 255, 0.04);
     border: 1px solid var(--border-glass);
-    border-radius: var(--radius-sm);
+    border-radius: var(--radius-full);
     color: var(--color-text-primary);
     cursor: pointer;
-    transition: border-color var(--transition-fast);
+    transition: border-color var(--transition-fast), background-color var(--transition-fast);
+  }
+
+  .mobile-toggle:active {
+    background: rgba(255, 255, 255, 0.1);
   }
 
   .mobile-toggle:focus-visible {
@@ -386,6 +416,7 @@ function isActive(href: string) {
     background-color: var(--color-text-primary);
     border-radius: var(--radius-xs);
     position: absolute;
+    left: 0;
     transition: transform var(--transition-fast);
   }
 
@@ -411,7 +442,7 @@ function isActive(href: string) {
     z-index: 200;
     visibility: hidden;
     pointer-events: none;
-    transition: visibility 0.25s ease;
+    transition: visibility 0.28s linear;
   }
 
   .mobile-drawer.is-open {
@@ -426,7 +457,7 @@ function isActive(href: string) {
     backdrop-filter: blur(var(--glass-blur-sm));
     -webkit-backdrop-filter: blur(var(--glass-blur-sm));
     opacity: 0;
-    transition: opacity 0.25s ease;
+    transition: opacity 0.28s var(--ease-out);
   }
 
   .mobile-drawer.is-open .mobile-drawer-backdrop {
@@ -445,7 +476,7 @@ function isActive(href: string) {
     display: flex;
     flex-direction: column;
     transform: translateX(100%);
-    transition: transform 0.25s var(--ease-spring);
+    transition: transform 0.28s var(--ease-drawer);
     box-shadow: -10px 0 30px rgba(0, 0, 0, 0.7);
   }
 
@@ -468,7 +499,7 @@ function isActive(href: string) {
     justify-content: center;
     background: rgba(255, 255, 255, 0.05);
     border: 1px solid var(--border-glass);
-    border-radius: var(--radius-sm);
+    border-radius: var(--radius-full);
     color: var(--color-text-primary);
     cursor: pointer;
   }

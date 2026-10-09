@@ -324,9 +324,12 @@ import Button from '../../../components/Button.astro';
   }
 
   .text-gradient-emerald {
-    background: linear-gradient(135deg, var(--setu-emerald-light) 0%, var(--setu-emerald) 100%);
+    background: linear-gradient(100deg, #6EE7B7 0%, var(--setu-emerald-light) 45%, var(--setu-emerald) 100%);
     -webkit-background-clip: text;
+    background-clip: text;
     -webkit-text-fill-color: transparent;
+    -webkit-box-decoration-break: clone;
+    box-decoration-break: clone;
   }
 
   .detail-lead {
@@ -337,8 +340,10 @@ import Button from '../../../components/Button.astro';
 
   /* Origins Callout */
   .origins-callout {
-    padding: var(--space-md) var(--space-lg);
-    background: rgba(16, 185, 129, 0.05);
+    padding: var(--space-lg);
+    background:
+      radial-gradient(ellipse 70% 60% at 0% 0%, rgba(16, 185, 129, 0.14), transparent 70%),
+      rgba(16, 185, 129, 0.04);
     border: 1px solid var(--setu-emerald-border);
     display: flex;
     flex-direction: column;
@@ -358,10 +363,10 @@ import Button from '../../../components/Button.astro';
     font-weight: 700;
     text-transform: uppercase;
     letter-spacing: 0.06em;
-    padding: 2px 8px;
+    padding: var(--space-2) var(--space-3);
     background: rgba(16, 185, 129, 0.2);
     color: var(--setu-emerald-light);
-    border-radius: var(--radius-xs);
+    border-radius: var(--radius-full);
   }
 
   .sih-id {
@@ -569,10 +574,10 @@ import Button from '../../../components/Button.astro';
   .tech-tag {
     font-size: var(--font-size-xs);
     font-family: var(--font-mono);
-    padding: 3px 8px;
+    padding: var(--space-2) var(--space-4);
     background: rgba(255, 255, 255, 0.04);
     border: 1px solid var(--border-subtle);
-    border-radius: var(--radius-xs);
+    border-radius: var(--radius-full);
     color: var(--color-text-secondary);
   }
 

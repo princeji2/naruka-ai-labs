@@ -99,12 +99,29 @@ h1 {
   font-weight: var(--font-weight-extrabold);
   letter-spacing: var(--letter-spacing-tight);
   line-height: var(--line-height-tight);
+  text-wrap: balance;
 }
 
 h2 {
   font-size: var(--font-size-6xl);
   letter-spacing: var(--letter-spacing-snug);
   line-height: var(--line-height-snug);
+  text-wrap: balance;
+}
+
+h3 {
+  text-wrap: balance;
+}
+
+p {
+  text-wrap: pretty;
+}
+
+/* Forced line breaks in display headings only help wide screens; let balance handle small ones */
+@media (max-width: 640px) {
+  h1 br {
+    display: none;
+  }
 }
 
 h3 {
@@ -161,34 +178,98 @@ code, pre {
   position: relative;
 }
 
-/* Glassmorphism Surface Classes */
+/* Glassmorphism Surface Classes
+   One restrained material: a faint top-edge highlight and a soft deep shadow.
+   Never stack one glass-panel on another; nested boxes use flat rgba fills. */
 .glass-panel {
   background: var(--grad-surface-card);
-  backdrop-filter: blur(var(--glass-blur-md));
-  -webkit-backdrop-filter: blur(var(--glass-blur-md));
+  backdrop-filter: blur(var(--glass-blur-md)) saturate(140%);
+  -webkit-backdrop-filter: blur(var(--glass-blur-md)) saturate(140%);
   border: 1px solid var(--border-glass);
   border-radius: var(--radius-lg);
-  box-shadow: var(--shadow-md);
-  transition: border-color var(--transition-base), box-shadow var(--transition-base), transform var(--transition-base);
+  box-shadow: var(--shadow-card);
+  transition: border-color var(--transition-base), box-shadow var(--transition-base);
 }
 
-.glass-panel:hover {
-  border-color: var(--border-glass-hover);
+@media (hover: hover) and (pointer: fine) {
+  .glass-panel:hover {
+    border-color: var(--border-glass-hover);
+    box-shadow: var(--shadow-card-hover);
+  }
 }
 
-/* Text Gradients */
+@media (prefers-reduced-transparency: reduce) {
+  .glass-panel {
+    background: var(--color-surface-card);
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
+  }
+}
+
+@media (prefers-contrast: more) {
+  .glass-panel {
+    border-color: var(--border-glass-active);
+  }
+}
+
+/* Text Gradients
+   Inline (not inline-block) with box-decoration-break so a wrapped phrase keeps one continuous fill. */
 .text-gradient-brand {
-  background: var(--grad-studio-brand);
+  background: var(--grad-text-brand);
   -webkit-background-clip: text;
+  background-clip: text;
   -webkit-text-fill-color: transparent;
-  display: inline-block;
+  -webkit-box-decoration-break: clone;
+  box-decoration-break: clone;
 }
 
 .text-gradient-silver {
   background: linear-gradient(180deg, var(--color-text-primary) 0%, var(--color-text-muted) 100%);
   -webkit-background-clip: text;
+  background-clip: text;
   -webkit-text-fill-color: transparent;
   display: inline-block;
+}
+
+/* Eyebrow: small uppercase label used above section titles and inside cards */
+.eyebrow {
+  font-family: var(--font-mono);
+  font-size: var(--font-size-xs);
+  font-weight: var(--font-weight-medium);
+  letter-spacing: var(--letter-spacing-wide);
+  text-transform: uppercase;
+  color: var(--color-text-muted);
+}
+
+/* Scroll reveal (progressive enhancement).
+   Browsers with scroll-driven animations ease surfaces in as they enter the viewport.
+   Everything else renders in its final state, so there is never hidden content or a flash.
+   Uses opacity + the independent `translate` property, so it never fights hover transforms. */
+@keyframes reveal-in {
+  from {
+    opacity: 0;
+    translate: 0 20px;
+  }
+  to {
+    opacity: 1;
+    translate: 0 0;
+  }
+}
+
+@supports (animation-timeline: view()) {
+  main .section-heading,
+  main .glass-panel {
+    animation: reveal-in linear both;
+    animation-timeline: view();
+    animation-range: entry 0% entry 40%;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  main .section-heading,
+  main .glass-panel {
+    animation: none;
+  }
 }
 
 /* Touch Targets >= 44px (WCAG Success Criterion 2.5.5 / 2.5.8) */

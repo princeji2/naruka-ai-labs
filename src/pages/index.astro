@@ -20,8 +20,7 @@ import HeroPrism from '../components/HeroPrism.astro';
       </div>
 
       <h1 class="hero-title">
-        Naruka AI Labs builds <br />
-        <span class="text-gradient-brand">practical AI-powered software</span> products.
+        Naruka AI Labs builds{' '}<span class="text-gradient-brand">practical AI-powered software</span> products.
       </h1>
 
       <p class="hero-lead">
@@ -36,6 +35,24 @@ import HeroPrism from '../components/HeroPrism.astro';
           Our Story & Principles
         </Button>
       </div>
+
+      <!-- Product status strip: restates facts already stated below, nothing new is claimed -->
+      <ul class="hero-products" aria-label="Current products">
+        <li>
+          <a href="/products/setu" class="hero-product hero-product-setu">
+            <span class="hero-product-dot" aria-hidden="true"></span>
+            <span class="hero-product-name">Setu</span>
+            <span class="hero-product-meta">Interoperability gateway · In active development</span>
+          </a>
+        </li>
+        <li>
+          <a href="/products/field-book" class="hero-product hero-product-fieldbook">
+            <span class="hero-product-dot" aria-hidden="true"></span>
+            <span class="hero-product-name">Field Book</span>
+            <span class="hero-product-meta">Campus attendance ledger · Live prototype</span>
+          </a>
+        </li>
+      </ul>
     </div>
   </section>
 
@@ -340,7 +357,7 @@ import HeroPrism from '../components/HeroPrism.astro';
   /* Hero */
   .hero-section {
     position: relative;
-    min-height: calc(85vh - 72px);
+    min-height: min(calc(88svh - 72px), 820px);
     display: flex;
     align-items: center;
     padding-top: var(--space-4xl);
@@ -355,7 +372,39 @@ import HeroPrism from '../components/HeroPrism.astro';
     flex-direction: column;
     align-items: center;
     text-align: center;
-    max-width: 960px;
+    max-width: 1040px;
+  }
+
+  /* Staged entrance on load: a one-time sequence, so it can afford a little length.
+     Opacity + translate only; reduced motion drops the movement and keeps a fade. */
+  @keyframes hero-rise {
+    from {
+      opacity: 0;
+      translate: 0 16px;
+    }
+    to {
+      opacity: 1;
+      translate: 0 0;
+    }
+  }
+
+  @keyframes hero-fade {
+    from { opacity: 0; }
+    to { opacity: 1; }
+  }
+
+  .hero-container > * {
+    animation: hero-rise 700ms var(--ease-out) both;
+  }
+  .hero-container > :nth-child(2) { animation-delay: 60ms; }
+  .hero-container > :nth-child(3) { animation-delay: 120ms; }
+  .hero-container > :nth-child(4) { animation-delay: 180ms; }
+  .hero-container > :nth-child(5) { animation-delay: 260ms; }
+
+  @media (prefers-reduced-motion: reduce) {
+    .hero-container > * {
+      animation: hero-fade 200ms ease both;
+    }
   }
 
   .hero-badge-wrap {
@@ -374,15 +423,15 @@ import HeroPrism from '../components/HeroPrism.astro';
   }
 
   .hero-title {
-    margin-bottom: var(--space-lg);
+    margin-bottom: var(--space-xl);
   }
 
   .hero-lead {
-    font-size: var(--font-size-2xl);
+    font-size: var(--font-size-xl);
     color: var(--text-secondary);
-    max-width: 760px;
+    max-width: 640px;
     margin-bottom: var(--space-2xl);
-    line-height: 1.6;
+    line-height: var(--line-height-relaxed);
   }
 
   .hero-actions {
@@ -394,26 +443,73 @@ import HeroPrism from '../components/HeroPrism.astro';
     margin-bottom: var(--space-3xl);
   }
 
-  .hero-truth-banner {
+  /* Product status strip */
+  .hero-products {
+    list-style: none;
     display: flex;
-    align-items: flex-start;
+    flex-wrap: wrap;
+    justify-content: center;
     gap: var(--space-md);
-    padding: var(--space-md) var(--space-lg);
-    max-width: 820px;
-    text-align: left;
+    width: 100%;
+  }
+
+  .hero-product {
+    --product-accent: var(--accent-indigo-light);
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-sm);
+    padding: var(--space-3) var(--space-5) var(--space-3) var(--space-4);
+    min-height: var(--target-min-size);
+    border-radius: var(--radius-full);
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid var(--border-subtle);
     font-size: var(--font-size-sm);
-    color: var(--text-secondary);
-    background: rgba(14, 18, 27, 0.7);
+    text-align: left;
+    transition: border-color var(--transition-fast), background-color var(--transition-fast);
   }
 
-  .banner-icon {
-    color: var(--accent-indigo-light);
+  .hero-product-setu { --product-accent: var(--setu-emerald-light); }
+  .hero-product-fieldbook { --product-accent: var(--fieldbook-amber-light); }
+
+  .hero-product-dot {
+    width: var(--space-3);
+    height: var(--space-3);
+    border-radius: var(--radius-full);
+    background: var(--product-accent);
+    box-shadow: 0 0 var(--space-4) var(--product-accent);
     flex-shrink: 0;
-    margin-top: 2px;
   }
 
-  .banner-content strong {
+  .hero-product-name {
+    font-weight: var(--font-weight-semibold);
     color: var(--text-primary);
+  }
+
+  .hero-product-meta {
+    color: var(--text-muted);
+  }
+
+  @media (hover: hover) and (pointer: fine) {
+    .hero-product:hover {
+      border-color: var(--border-glass-hover);
+      background: rgba(255, 255, 255, 0.06);
+    }
+  }
+
+  .hero-product:focus-visible {
+    outline: var(--state-focus-outline);
+    outline-offset: var(--state-focus-ring-offset);
+  }
+
+  @media (max-width: 640px) {
+    .hero-product {
+      flex-wrap: wrap;
+      border-radius: var(--radius-lg);
+    }
+    .hero-product-meta {
+      flex-basis: 100%;
+      padding-left: calc(var(--space-3) + var(--space-sm));
+    }
   }
 
   /* Section Heading */
@@ -450,7 +546,27 @@ import HeroPrism from '../components/HeroPrism.astro';
   }
 
   .showcase-card {
+    --card-accent: 99, 102, 241;
+    position: relative;
     padding: clamp(var(--space-lg), 4vw, var(--space-2xl));
+    /* Each product keeps its own identity: a soft glow from the top-left corner in its accent */
+    background:
+      radial-gradient(ellipse 70% 45% at 0% 0%, rgba(var(--card-accent), 0.14), transparent 70%),
+      var(--grad-surface-card);
+  }
+
+  .setu-spotlight { --card-accent: 16, 185, 129; }
+  .fieldbook-spotlight { --card-accent: 245, 158, 11; }
+
+  .showcase-card::before {
+    content: '';
+    position: absolute;
+    top: -1px;
+    left: var(--space-xl);
+    right: var(--space-xl);
+    height: 1px;
+    background: linear-gradient(90deg, transparent, rgba(var(--card-accent), 0.7), transparent);
+    pointer-events: none;
   }
 
   .showcase-card-inner {
@@ -463,13 +579,14 @@ import HeroPrism from '../components/HeroPrism.astro';
   .card-badge-row {
     display: flex;
     align-items: center;
-    gap: 6px;
+    gap: var(--space-3);
     flex-wrap: wrap;
   }
 
   .card-product-title {
     font-size: var(--font-size-4xl);
-    font-weight: 700;
+    font-weight: var(--font-weight-bold);
+    margin-top: var(--space-2);
   }
 
   .card-tagline {
@@ -487,11 +604,11 @@ import HeroPrism from '../components/HeroPrism.astro';
   .card-facts-list {
     display: flex;
     flex-direction: column;
-    gap: 6px;
-    padding: var(--space-md);
-    background: rgba(0, 0, 0, 0.25);
+    gap: var(--space-3);
+    padding: var(--space-lg);
+    background: rgba(0, 0, 0, 0.28);
     border: 1px solid var(--border-subtle);
-    border-radius: var(--radius-sm);
+    border-radius: var(--radius-md);
     margin-top: auto;
   }
 
@@ -687,19 +804,29 @@ import HeroPrism from '../components/HeroPrism.astro';
   .founder-link-item {
     display: inline-flex;
     align-items: center;
-    gap: 8px;
+    gap: var(--space-3);
+    min-height: var(--target-min-size);
     font-size: var(--font-size-sm);
     color: var(--text-secondary);
-    font-weight: 500;
-    padding: 6px 12px;
-    border-radius: var(--radius-xs);
+    font-weight: var(--font-weight-medium);
+    padding: var(--space-3) var(--space-5);
+    border-radius: var(--radius-full);
     background: rgba(255, 255, 255, 0.03);
     border: 1px solid var(--border-subtle);
+    transition: color var(--transition-fast), border-color var(--transition-fast), background-color var(--transition-fast);
   }
 
-  .founder-link-item:hover {
-    color: var(--text-primary);
-    border-color: var(--border-glass-hover);
+  @media (hover: hover) and (pointer: fine) {
+    .founder-link-item:hover {
+      color: var(--text-primary);
+      border-color: var(--border-glass-hover);
+      background: rgba(255, 255, 255, 0.06);
+    }
+  }
+
+  .founder-link-item:focus-visible {
+    outline: var(--state-focus-outline);
+    outline-offset: var(--state-focus-ring-offset);
   }
 
   .email-highlight {

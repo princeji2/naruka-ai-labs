@@ -173,8 +173,12 @@ import Button from '../../components/Button.astro';
 
   .page-header {
     text-align: center;
-    padding-top: var(--space-3xl);
+    padding-top: var(--space-4xl);
     padding-bottom: var(--space-2xl);
+  }
+
+  .page-title {
+    margin-bottom: var(--space-xs);
   }
 
   .header-content {
@@ -209,6 +213,7 @@ import Button from '../../components/Button.astro';
   }
 
   .product-card {
+    --card-accent: 99, 102, 241;
     padding: clamp(var(--space-lg), 4vw, var(--space-2xl));
     display: flex;
     flex-direction: column;
@@ -216,6 +221,24 @@ import Button from '../../components/Button.astro';
     gap: var(--space-xl);
     position: relative;
     overflow: hidden;
+    /* Each product keeps its own identity: a soft corner glow and a top hairline in its accent */
+    background:
+      radial-gradient(ellipse 70% 40% at 0% 0%, rgba(var(--card-accent), 0.14), transparent 70%),
+      var(--grad-surface-card);
+  }
+
+  #setu-card { --card-accent: 16, 185, 129; }
+  #fieldbook-card { --card-accent: 245, 158, 11; }
+
+  .product-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: var(--space-xl);
+    right: var(--space-xl);
+    height: 1px;
+    background: linear-gradient(90deg, transparent, rgba(var(--card-accent), 0.7), transparent);
+    pointer-events: none;
   }
 
   .card-top {
@@ -261,14 +284,14 @@ import Button from '../../components/Button.astro';
   .badge-row {
     display: flex;
     align-items: center;
-    gap: 6px;
+    gap: var(--space-3);
     flex-wrap: wrap;
-    margin-bottom: 2px;
+    margin-bottom: var(--space-2);
   }
 
   .product-name {
     font-size: var(--font-size-4xl);
-    font-weight: 700;
+    font-weight: var(--font-weight-bold);
   }
 
   .product-category {
@@ -287,10 +310,10 @@ import Button from '../../components/Button.astro';
     display: flex;
     flex-direction: column;
     gap: var(--space-xs);
-    padding: var(--space-md);
-    background: rgba(0, 0, 0, 0.25);
+    padding: var(--space-lg);
+    background: rgba(0, 0, 0, 0.28);
     border: 1px solid var(--border-subtle);
-    border-radius: var(--radius-sm);
+    border-radius: var(--radius-md);
   }
 
   .spec-item {
@@ -308,11 +331,13 @@ import Button from '../../components/Button.astro';
   }
 
   .spec-label {
+    font-family: var(--font-mono);
     font-size: var(--font-size-xs);
     text-transform: uppercase;
-    letter-spacing: 0.05em;
+    letter-spacing: var(--letter-spacing-wide);
     color: var(--text-muted);
-    font-weight: 600;
+    font-weight: var(--font-weight-medium);
+    flex-shrink: 0;
   }
 
   .spec-value {

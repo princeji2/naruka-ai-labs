@@ -330,6 +330,9 @@
     pointer-events: none;
     z-index: 0;
     contain: strict;
+    /* Dissolve the backdrop into the page instead of ending on a hard edge at the section boundary */
+    -webkit-mask-image: linear-gradient(to bottom, #000 0%, #000 62%, transparent 100%);
+    mask-image: linear-gradient(to bottom, #000 0%, #000 62%, transparent 100%);
   }
 
   /* Layer 1: Zero-JS CSS-only Poster & Fallback */
@@ -338,7 +341,7 @@
     inset: 0;
     width: 100%;
     height: 100%;
-    background-color: var(--color-surface-base);
+    background-color: transparent;
   }
 
   .aurora-glow {
@@ -380,7 +383,7 @@
     );
     backdrop-filter: blur(10px);
     -webkit-backdrop-filter: blur(10px);
-    opacity: 0.85;
+    opacity: 0.6;
   }
 
   .specular-highlight {

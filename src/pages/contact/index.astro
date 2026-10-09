@@ -159,7 +159,7 @@ import Button from '../../components/Button.astro';
   }
 
   .contact-hero-section {
-    padding-top: var(--space-3xl);
+    padding-top: var(--space-4xl);
     padding-bottom: var(--space-3xl);
   }
 
@@ -242,13 +242,18 @@ import Button from '../../components/Button.astro';
     font-family: var(--font-display);
     font-size: var(--font-size-4xl);
     font-weight: var(--font-weight-bold);
+    letter-spacing: var(--letter-spacing-snug);
     color: var(--color-text-primary);
     border-radius: var(--radius-xs);
     display: inline-block;
+    overflow-wrap: anywhere;
+    transition: color var(--transition-fast);
   }
 
-  .channel-main-link:hover {
-    color: var(--accent-indigo-light);
+  @media (hover: hover) and (pointer: fine) {
+    .channel-main-link:hover {
+      color: var(--accent-indigo-light);
+    }
   }
 
   .channel-main-link:focus-visible {
@@ -281,17 +286,19 @@ import Button from '../../components/Button.astro';
     font-family: var(--font-body);
     font-size: var(--font-size-sm);
     font-weight: var(--font-weight-semibold);
-    border-radius: var(--radius-sm);
+    border-radius: var(--radius-full);
     background: rgba(255, 255, 255, 0.05);
     border: 1px solid var(--border-glass);
     color: var(--color-text-secondary);
     cursor: pointer;
-    transition: all var(--transition-fast);
+    transition: background-color var(--transition-fast), border-color var(--transition-fast), color var(--transition-fast), transform var(--transition-instant);
   }
 
-  .copy-email-btn:hover {
-    background: rgba(255, 255, 255, 0.1);
-    color: var(--color-text-primary);
+  @media (hover: hover) and (pointer: fine) {
+    .copy-email-btn:hover {
+      background: rgba(255, 255, 255, 0.1);
+      color: var(--color-text-primary);
+    }
   }
 
   .copy-email-btn:focus-visible {
@@ -300,7 +307,7 @@ import Button from '../../components/Button.astro';
   }
 
   .copy-email-btn:active {
-    transform: translateY(0);
+    transform: scale(0.97);
   }
 
   .copy-email-btn.copied {
@@ -335,12 +342,22 @@ import Button from '../../components/Button.astro';
     gap: var(--space-md);
     text-decoration: none;
     border-radius: var(--radius-lg);
-    transition: transform var(--transition-fast), border-color var(--transition-fast);
+    transition: transform var(--transition-fast), border-color var(--transition-fast), box-shadow var(--transition-base);
   }
 
-  .sub-channel-card:hover {
-    transform: translateY(-2px);
-    border-color: var(--border-glass-hover);
+  @media (hover: hover) and (pointer: fine) {
+    .sub-channel-card:hover {
+      transform: translateY(-2px);
+      border-color: var(--border-glass-hover);
+    }
+  }
+
+  .sub-info {
+    min-width: 0;
+  }
+
+  .sub-desc {
+    overflow-wrap: anywhere;
   }
 
   .sub-channel-card:focus-visible {

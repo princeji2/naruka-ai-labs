@@ -106,7 +106,7 @@ import Badge from '../../components/Badge.astro';
     border: 1px solid rgba(99, 102, 241, 0.25);
     font-size: var(--font-size-sm);
     color: var(--text-secondary);
-    border-radius: var(--radius-sm);
+    border-radius: var(--radius-md);
   }
 
   .legal-advisory code {
@@ -124,6 +124,12 @@ import Badge from '../../components/Badge.astro';
     display: flex;
     flex-direction: column;
     gap: var(--space-sm);
+  }
+
+  /* Hairline between clauses so a long document scans in sections */
+  .legal-section + .legal-section {
+    padding-top: var(--space-2xl);
+    border-top: 1px solid var(--border-subtle);
   }
 
   .legal-section h2 {
