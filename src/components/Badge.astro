@@ -33,8 +33,9 @@ const displayText = text || defaultTexts[variant];
     font-family: var(--font-mono);
     font-size: var(--font-size-xs);
     font-weight: var(--font-weight-semibold);
-    letter-spacing: var(--letter-spacing-wide);
-    text-transform: uppercase;
+    /* Sentence/title case reads faster than all-caps; wide tracking is only for caps */
+    letter-spacing: 0.02em;
+    text-transform: none;
     width: fit-content;
     max-width: 100%;
     white-space: nowrap;
