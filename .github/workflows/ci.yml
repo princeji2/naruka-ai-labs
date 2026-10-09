@@ -28,6 +28,9 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
+      - name: Scan for unmasked secrets and credentials
+        run: node scripts/check-secrets.js --all
+
       - name: Type-check Astro & TypeScript
         run: npm run check
 

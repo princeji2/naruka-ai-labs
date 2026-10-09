@@ -216,40 +216,56 @@
     // Fade in canvas smoothly once ready
     heroCanvas.style.opacity = '1';
 
-    // 5. Render Loop with Viewport Visibility & Performance Guard
-    let slowFrameAccumulator = 0;
-    let lastFrameTimestamp = performance.now();
+    // 5. Render Loop with Viewport Visibility & Rolling Performance Guard
+    // Measures a rolling window of recent frame intervals (60 frames).
+    // Target capped frame interval is ~22.2ms (45 FPS cap).
+    // If the sustained rolling average frame time exceeds 40ms (<25 FPS) across the 60 frames,
+    // gracefully stops the animation and falls back to the static CSS layer.
+    const deltaHistory: number[] = [];
+    const ROLLING_WINDOW_SIZE = 60;
+    const SUSTAINED_DEGRADATION_THRESHOLD_MS = 40;
+    let renderFrameCount = 0;
 
     function render(now: number) {
       if (!isVisible || document.hidden) {
         animFrameId = requestAnimationFrame(render);
-        lastFrameTimestamp = now;
         return;
       }
 
-      const frameDuration = now - lastFrameTimestamp;
-      lastFrameTimestamp = now;
+      // 45 FPS throttle: skip until target frame interval (~22.2ms) has elapsed
+      if (lastRenderTime > 0 && (now - lastRenderTime) < frameInterval) {
+        animFrameId = requestAnimationFrame(render);
+        return;
+      }
 
-      // On-page performance guard:
-      // If frame time stays above ~25ms for 2 seconds (2000ms),
-      // gracefully stop the animation and fall back to the static CSS layer.
-      if (frameDuration > 25) {
-        slowFrameAccumulator += frameDuration;
-        if (slowFrameAccumulator > 2000) {
+      const frameDelta = lastRenderTime > 0 ? (now - lastRenderTime) : frameInterval;
+      lastRenderTime = now;
+
+      deltaHistory.push(frameDelta);
+      if (deltaHistory.length > ROLLING_WINDOW_SIZE) {
+        deltaHistory.shift();
+      }
+
+      if (deltaHistory.length === ROLLING_WINDOW_SIZE) {
+        let sum = 0;
+        for (let i = 0; i < ROLLING_WINDOW_SIZE; i++) sum += deltaHistory[i];
+        const avgFrameDelta = sum / ROLLING_WINDOW_SIZE;
+
+        // Dev-only diagnostic log (stripped in production build via import.meta.env.DEV)
+        if (import.meta.env.DEV && renderFrameCount % 60 === 0) {
+          console.debug(`[HeroPrism] Rolling avg frame time: ${avgFrameDelta.toFixed(1)}ms (${(1000 / avgFrameDelta).toFixed(1)} FPS)`);
+        }
+
+        // On-page performance guard: stop animation if sustained frame time exceeds 40ms
+        if (avgFrameDelta > SUSTAINED_DEGRADATION_THRESHOLD_MS) {
           cancelAnimationFrame(animFrameId);
           observer.disconnect();
           heroCanvas.style.opacity = '0';
           return;
         }
-      } else {
-        slowFrameAccumulator = Math.max(0, slowFrameAccumulator - frameDuration);
       }
 
-      if (now - lastRenderTime < frameInterval) {
-        animFrameId = requestAnimationFrame(render);
-        return;
-      }
-      lastRenderTime = now;
+      renderFrameCount++;
 
       // Pointer lerp smoothing
       currentMouseX += (targetMouseX - currentMouseX) * 0.05;
