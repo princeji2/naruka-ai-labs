@@ -14,7 +14,7 @@ Official website for **Naruka AI Labs** ([https://orgs.social](https://orgs.soci
 ### 2. Field Book
 - **Positioning:** A multi-role campus event attendance and verified credentialing platform with QR check-in and server-generated PDF certification.
 - **Stack:** React 18, TypeScript, Tailwind CSS, Supabase (Postgres with 67 Row-Level Security policies), Java 17 Spring Boot PDFBox certificate service.
-- **Status:** Functional prototype in active development (previously demonstrated at `field-book-delta.vercel.app`).
+- **Status:** Functional prototype in active development (accessible at [https://fieldbook.orgs.social](https://fieldbook.orgs.social)).
 
 ---
 
