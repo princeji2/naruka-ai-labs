@@ -459,7 +459,7 @@ Rules that apply to every task:
     - **STOP. Do not start Phase 4 until the user replies "go".**
     - _Requirements: 1.1, 1.2, 1.6, 3.6, 12.5, 12.8, 12.9, 9.4_
 
-- [ ] 4. Phase 4: About, products, contact, sign-in, 404, privacy, terms
+- [x] 4. Phase 4: About, products, contact, sign-in, 404, privacy, terms
   - [x] 4.1 Contact reference gate: verify the new export (ask only if it is missing or unreadable)
     - Decision (2026-10-10): the user puts a new, legible Contact_Replacement in `refrence/` before Phase 4. List `refrence/` and pick the newest image whose name contains `contact` (the previous file is `contact_page.png`, 131 KB, downscaled and very tall, structure readable but body text not legible; the requirements originally named `CONTACT_PAGE.jpg`). Record the file name chosen.
     - Verify: the file opens, its size is under 2 MB, and the text in it is legible when the image is viewed. This is a check, **not a question**: if the file is present, readable, under 2 MB and legible, continue without asking the user (Req 14.1, 14.3).
@@ -511,7 +511,7 @@ Rules that apply to every task:
     - **STOP. Do not start Phase 5 until the user replies "go".**
     - _Requirements: 1.1, 1.2, 1.6, 3.6, 13.5, 14.2_
 
-- [ ] 5. Phase 5: QA at 360, 768, 1024 and 1440 px, reduced motion, and performance
+- [x] 5. Phase 5: QA at 360, 768, 1024 and 1440 px, reduced motion, and performance
   - [x] 5.1 Burn the baseline down to zero and switch CI to strict
     - Resolve any remaining entries in `scripts/verify-baseline.json` (it must end empty), fixing the source, not the baseline. The one exception is the Contact `console.warn` entry when the Contact_Page stayed unmodified under Req 14.2: ask the user whether the one-line DEV-only move may be made; if not, report it under "what could not be done" and run strict mode with that single entry documented.
     - Change CI to run `npm run verify:source -- --strict`.
@@ -522,30 +522,30 @@ Rules that apply to every task:
     - Confirm the protected-area and reference-hash checks pass.
     - _Requirements: 15.6, 15.7, 9.7, 9.8, 2.3, 2.4_
 
-  - [~] 5.3 QA: Test_Widths and Reduced_Motion_Mode on every route
+  - [x] 5.3 QA: Test_Widths and Reduced_Motion_Mode on every route
     - For each route in the Page_Set (`/`, `/about`, `/products`, `/contact`, `/signin`, `/privacy`, `/terms`, 404) at 360, 768, 1024 and 1440 px: `document.documentElement.scrollWidth <= clientWidth`, no overlapping content.
     - With `prefers-reduced-motion: reduce` emulated: no canvas motion, no Lenis class on `<html>`, no pinned or scrubbed ScrollTrigger, fade-only animation; toggle the setting live and confirm the switch without reload.
     - Use available browser tooling against a preview server the user runs (`npm run preview`). Record each result, or "could not measure" with the reason.
     - _Requirements: 15.1, 15.2, 15.3, 7.1, 7.2, 7.3, 7.4, 7.5_
 
-  - [~] 5.4 QA: lifecycle, leaks, console and failure modes
+  - [x] 5.4 QA: lifecycle, leaks, console and failure modes
     - Navigate between routes through the ClientRouter (link clicks), then use back/forward and bfcache restores, 10 times each: the DEV stats hook shows at most one Lenis, at most one ticker callback, a bounded ScrollTrigger count; no WebGL context growth after the island unmounts. Strict mode: one Lenis and one canvas.
     - Console is clean (no errors or warnings) while loading, scrolling, navigating, resizing on every route.
     - WebGL disabled: poster shows and no `three` chunk is requested. `ConstellationScene` blocked: page content stays visible and usable. Scene paused offscreen and in a hidden tab.
     - Record each result, or "could not measure" with the reason.
     - _Requirements: 15.4, 6.5, 6.7, 8.4, 8.5, 8.6, 8.9, 8.10, 9.2_
 
-  - [~] 5.5 QA: keyboard, focus and contrast
+  - [x] 5.5 QA: keyboard, focus and contrast
     - Tab through every route and the open mobile drawer: every interactive element reachable, visible focus ring, Escape closes the drawer and returns focus to the toggle, `aria-expanded` accurate. Spot-check text contrast over the animated background and hero at 360 and 1440 px against the 4.5:1 requirement.
     - State plainly that full accessibility validation needs assistive-technology testing beyond this check.
     - _Requirements: 15.5, 9.3, 9.4, 4.6, 11.6_
 
-  - [~] 5.6 QA: performance measurements for the home page
+  - [x] 5.6 QA: performance measurements for the home page
     - Measure median and 1% low frame rate over 10 s of scroll, total layout shift (expected 0 from the Upgrade), and the eager JavaScript payload (from the `verify:dist` table, and confirm `three` is requested only after the hero nears the viewport).
     - Report each figure, or state "could not measure" with the reason (for example no mid-range reference device available).
     - _Requirements: 15.8, 8.2, 8.7, 9.1_
 
-  - [~] 5.7 Final checkpoint: Phase 5 Phase_Summary and HARD STOP
+  - [x] 5.7 Final checkpoint: Phase 5 Phase_Summary and HARD STOP
     - Deliver the **Phase_Summary**: files changed; what was adapted; what could not be done and why; the per-route, per-width and reduced-motion results; measured frame rate, layout shift and JavaScript payload for the home page, with any measurement that could not be taken stated explicitly (Req 15.8). Offer to write `.kiro/specs/frontend-3d-upgrade/qa-report.md` only if the user asks.
     - Include the final status of every Open_Decision with dates.
     - **STOP. The Upgrade is complete once the user accepts this summary.**

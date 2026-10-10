@@ -27,9 +27,20 @@ const trimmed = displayText.trim();
 const isLongLabel = Array.from(trimmed).length > LONG_LABEL_THRESHOLD;
 const isMultiWord = /\s/.test(trimmed);
 const lengthClass = isLongLabel || isMultiWord ? 'badge-long' : 'badge-short';
+
+/**
+ * Casing is applied inline rather than via the length class alone. Astro's scoped-CSS tree-shaking
+ * prunes `.badge-short` / `.badge-long` rules because the class is set through a computed expression,
+ * never a literal in markup. Inlining the two properties keeps the casing deterministic in the build
+ * while the class stays on the element for anyone targeting it.
+ */
+const casingStyle =
+  isLongLabel || isMultiWord
+    ? 'text-transform: none; letter-spacing: 0.02em;'
+    : 'text-transform: uppercase; letter-spacing: var(--letter-spacing-wide);';
 ---
 
-<span class={`badge badge-${variant} ${lengthClass} ${className}`}>
+<span class={`badge badge-${variant} ${lengthClass} ${className}`} style={casingStyle}>
   <span class="badge-dot" aria-hidden="true"></span>
   <span class="badge-label">{displayText}</span>
 </span>
