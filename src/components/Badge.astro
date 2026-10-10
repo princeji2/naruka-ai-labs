@@ -15,12 +15,18 @@ const defaultTexts: Record<string, string> = {
   'neutral': 'Studio Project'
 };
 
-/** Labels longer than this read slowly in wide-tracked all-caps, so they keep their original case. */
+/**
+ * All-caps is reserved for genuinely short tags. A label reads slowly in wide-tracked caps when it is
+ * either long (more than this many characters) or a multi-word phrase ("Active Portfolio" scans as
+ * content, not as a status chip), so those keep their original case.
+ */
 const LONG_LABEL_THRESHOLD = 20;
 
 const displayText = text || defaultTexts[variant];
-const isLongLabel = Array.from(displayText.trim()).length > LONG_LABEL_THRESHOLD;
-const lengthClass = isLongLabel ? 'badge-long' : 'badge-short';
+const trimmed = displayText.trim();
+const isLongLabel = Array.from(trimmed).length > LONG_LABEL_THRESHOLD;
+const isMultiWord = /\s/.test(trimmed);
+const lengthClass = isLongLabel || isMultiWord ? 'badge-long' : 'badge-short';
 ---
 
 <span class={`badge badge-${variant} ${lengthClass} ${className}`}>

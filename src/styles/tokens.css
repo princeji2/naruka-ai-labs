@@ -47,7 +47,7 @@
      Fluid between 360px and 1440px viewports; defaults from the GSAP type scale
      (224px hero shown there, capped lower here because the Naruka copy is longer).
      Each size has a matching --line-height-display-N and --letter-spacing-display-N below. */
-  --font-size-display-1: clamp(44px, 9.26vw + 10.67px, 144px);   /* Hero headline */
+  --font-size-display-1: clamp(40px, 6.6vw + 12px, 108px);       /* Hero headline (capped so hero CTAs stay above the fold) */
   --font-size-display-2: clamp(36px, 6.02vw + 14.33px, 101px);   /* Page and large section headlines */
   --font-size-display-3: clamp(28px, 3.52vw + 15.33px, 66px);    /* Section headlines */
 

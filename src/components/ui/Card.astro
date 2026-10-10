@@ -303,12 +303,19 @@ const hasSlot = Astro.slots.has('default');
     overflow-wrap: anywhere;
   }
 
-  /* Extra content from the default slot sits above the stretched link */
+  /* Extra content from the default slot sits above the stretched link.
+     A flex column that grows to fill the card body, so slotted content can pin a trailing
+     element (e.g. a product card's action bar) to the bottom with `margin-top: auto`. */
   .card-extra {
     position: relative;
     z-index: 2;
     width: 100%;
     margin-top: var(--space-2);
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: var(--space-3);
   }
 
   .card-cta {

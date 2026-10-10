@@ -35,7 +35,7 @@ import ConstellationIsland from '../components/scene/ConstellationIsland.tsx';
             Explore Products →
           </Button>
           <Button href="/about" variant="secondary" size="lg">
-            Our Story & Principles
+            Our Story & Principles<span class="btn-arrow" aria-hidden="true">→</span>
           </Button>
         </div>
 
@@ -90,8 +90,6 @@ import ConstellationIsland from '../components/scene/ConstellationIsland.tsx';
           status="In Active Development"
           statusColor="primary"
           gradient="primary"
-          ctaLabel="Setu Architecture & Details"
-          href="/products/setu"
         >
           <div class="card-badge-row">
             <Badge variant="demo-data" text="Simulated Backends" />
@@ -110,6 +108,12 @@ import ConstellationIsland from '../components/scene/ConstellationIsland.tsx';
               <span class="fact-k">Environment:</span>
               <span class="fact-v">Relays to 3 isolated mock microservices with synthetic records</span>
             </div>
+          </div>
+
+          <div class="card-action-bar">
+            <Button href="/products/setu" variant="primary" size="md">
+              Setu Architecture &amp; Details<span class="sr-only">: Setu</span><span class="btn-arrow" aria-hidden="true">→</span>
+            </Button>
           </div>
         </Card>
 
@@ -657,12 +661,15 @@ import ConstellationIsland from '../components/scene/ConstellationIsland.tsx';
     color: var(--text-primary);
   }
 
+  /* Pin the action bar to the bottom of the card so both product cards align their
+     buttons on a shared baseline even when the body copy above differs in length.
+     The slot wrapper (.card-extra) is a flex column that grows to fill the card body. */
   .card-action-bar {
     display: flex;
     align-items: center;
     gap: var(--space-sm);
     flex-wrap: wrap;
-    margin-top: var(--space-md);
+    margin-top: auto;
     padding-top: var(--space-md);
     border-top: 1px solid var(--border-subtle);
   }
