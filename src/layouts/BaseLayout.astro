@@ -3,6 +3,9 @@ import Navbar from '../components/Navbar.astro';
 import Footer from '../components/Footer.astro';
 import Background from '../components/ui/Background.astro';
 import '../styles/global.css';
+import tokensCss from '../styles/tokens.css?raw';
+import { readTokenDeclaration } from '../lib/theme/token-file.ts';
+import { ClientRouter } from 'astro:transitions';
 
 interface Props {
   title?: string;
@@ -29,6 +32,10 @@ const canonicalURL = canonicalPath
   : new URL(Astro.url.pathname, siteUrl).toString();
 
 const pageTitle = title.includes('Naruka AI Labs') ? title : `${title} | Naruka AI Labs`;
+
+// HTML attributes cannot read CSS variables, so read --bg from tokens.css at build time.
+// Throws if the token is missing or is not a plain literal.
+const themeColor = readTokenDeclaration(tokensCss, '--bg');
 
 const schemaData = {
   '@context': 'https://schema.org',
@@ -67,6 +74,16 @@ const schemaData = {
 <html lang="en" class="dark" data-theme="dark">
   <head>
     <meta charset="UTF-8" />
+    {/* Motion gate: reveal targets are hidden by CSS only while data-motion="pending". If the motion script has not taken over after 2.5 s, content is shown (state "failed"). */}
+    <script is:inline>
+      (function () {
+        var root = document.documentElement;
+        root.setAttribute('data-motion', 'pending');
+        setTimeout(function () {
+          if (root.getAttribute('data-motion') === 'pending') root.setAttribute('data-motion', 'failed');
+        }, 2500);
+      })();
+    </script>
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <meta name="generator" content={Astro.generator} />
@@ -79,8 +96,7 @@ const schemaData = {
     <title>{pageTitle}</title>
     <meta name="title" content={pageTitle} />
     <meta name="description" content={description} />
-    {/* theme-color must be a literal value (HTML attributes cannot read CSS variables). Keep in sync with --bg in tokens.css. */}
-    <meta name="theme-color" content="#1A1D23" />
+    <meta name="theme-color" content={themeColor} />
     <meta name="color-scheme" content="dark" />
 
     <!-- Open Graph / Facebook -->
@@ -101,14 +117,7 @@ const schemaData = {
     <!-- Critical Font Preloading (Self-Hosted) -->
     <link
       rel="preload"
-      href="/fonts/inter-400.woff2"
-      as="font"
-      type="font/woff2"
-      crossorigin
-    />
-    <link
-      rel="preload"
-      href="/fonts/plus-jakarta-sans-700.woff2"
+      href="/fonts/inter-tight-latin-wght-normal.woff2"
       as="font"
       type="font/woff2"
       crossorigin
@@ -116,6 +125,9 @@ const schemaData = {
 
     <!-- JSON-LD Structured Data -->
     <script type="application/ld+json" set:html={JSON.stringify(schemaData)} />
+
+    <!-- Client-side page transitions. Only here, exactly once. -->
+    <ClientRouter />
   </head>
   <body>
     <Background />
@@ -125,6 +137,9 @@ const schemaData = {
       <slot />
     </main>
     <Footer />
+    <script>
+      import '../lib/motion/entry.ts';
+    </script>
   </body>
 </html>
 

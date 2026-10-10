@@ -60,7 +60,7 @@ const socials = [
     <!-- Announces mode changes to screen readers -->
     <p class="sr-only" id="auth-live" role="status" aria-live="polite"></p>
 
-    <div class="auth" id="auth">
+    <div class="auth" id="auth" data-reveal>
       <div class="forms-container">
         <div class="signin-signup">
           <!-- SIGN IN -->
@@ -138,47 +138,13 @@ const socials = [
 </BaseLayout>
 
 <script>
+  import { bindPageLifecycle, createGate } from '../../lib/lifecycle/page-lifecycle.ts';
+  import { setupAuthToggle } from '../../lib/ui/auth-toggle.ts';
+
   // Vanilla JS. No network requests, no storage, no auth: the forms are inert.
-  function byId<T extends HTMLElement>(id: string): T {
-    const el = document.getElementById(id);
-    if (!el) throw new Error(`#${id} is missing`);
-    return el as T;
-  }
-
-  const auth = byId<HTMLDivElement>('auth');
-  const live = byId<HTMLParagraphElement>('auth-live');
-  const signInForm = byId<HTMLFormElement>('form-signin');
-  const signUpForm = byId<HTMLFormElement>('form-signup');
-  const signUpPanel = byId<HTMLDivElement>('panel-signup'); // left panel: "New here?" + Sign up button
-  const signInPanel = byId<HTMLDivElement>('panel-signin'); // right panel: "One of us?" + Sign in button
-  const signInTitle = byId<HTMLHeadingElement>('title-signin');
-  const signUpTitle = byId<HTMLHeadingElement>('title-signup');
-
-  // Only the visible form and its matching panel can be reached by keyboard or screen reader.
-  function setMode(signUp: boolean, moveFocus: boolean): void {
-    auth.classList.toggle('sign-up-mode', signUp);
-    signInForm.inert = signUp;
-    signUpForm.inert = !signUp;
-    signUpPanel.inert = signUp;
-    signInPanel.inert = !signUp;
-
-    live.textContent = signUp ? 'Sign up form shown.' : 'Sign in form shown.';
-
-    // The button that was just pressed becomes inert, so move focus to the new form heading.
-    if (moveFocus) (signUp ? signUpTitle : signInTitle).focus({ preventScroll: true });
-  }
-
-  byId<HTMLButtonElement>('show-signup').addEventListener('click', () => setMode(true, true));
-  byId<HTMLButtonElement>('show-signin').addEventListener('click', () => setMode(false, true));
-
-  // Inert submit: cancel it and say so. Nothing is sent anywhere.
-  for (const form of [signInForm, signUpForm]) {
-    form.addEventListener('submit', (event) => {
-      event.preventDefault();
-      const note = form.querySelector<HTMLElement>('[data-form-note]');
-      if (note) note.textContent = 'This is a placeholder. Sign in and sign up are not available yet.';
-    });
-  }
+  // Bound once per session. Every enter, on first load and after each swap, looks for the toggle in the
+  // current DOM and does nothing on other pages.
+  bindPageLifecycle(createGate(() => setupAuthToggle({ document })), { document, window });
 </script>
 
 <style>
@@ -204,8 +170,18 @@ const socials = [
 
   /* ---------------- Card (reference: .container, 900 x 550) ---------------- */
   .auth {
+    /* Transition timings from the reference, declared once (R13.5 port). */
+    --auth-ease: ease-in-out;
+    --auth-dur-circle: 1.8s;
+    --auth-dur-wrapper: 1s;
+    --auth-delay: 0.7s;
+    --auth-dur-form: 0.2s;
+    --auth-dur-circle-mobile: 2s;
+    --auth-delay-mobile: 0.8s;
     position: relative;
     isolation: isolate;
+    /* Container-query units position the sliding circle and wrapper by transform only. */
+    container-type: size;
     width: 100%;
     max-width: 900px;
     height: 620px;
@@ -215,7 +191,6 @@ const socials = [
     background: var(--grad-surface-card);
     backdrop-filter: blur(var(--glass-blur-md));
     -webkit-backdrop-filter: blur(var(--glass-blur-md));
-    box-shadow: var(--shadow-card);
   }
 
   /* The big circle that slides between the two halves */
@@ -224,13 +199,18 @@ const socials = [
     position: absolute;
     height: 2000px;
     width: 2000px;
-    top: -10%;
-    right: 48%;
-    transform: translateY(-50%);
+    top: 0;
+    left: 0;
+    transform: translate(calc(52cqw - 2000px), calc(-10cqh - 1000px));
     background: linear-gradient(-45deg, var(--primary) 0%, var(--accent) 100%);
-    transition: 1.8s ease-in-out;
+    transition: transform var(--auth-dur-circle) var(--auth-ease);
     border-radius: 50%;
     z-index: 6;
+  }
+
+  /* will-change is applied only while a switch is running (toggled in auth-toggle.ts). */
+  .auth.is-switching::before {
+    will-change: transform;
   }
 
   .forms-container {
@@ -244,10 +224,10 @@ const socials = [
   .signin-signup {
     position: absolute;
     top: 50%;
-    transform: translate(-50%, -50%);
-    left: 75%;
+    left: 0;
     width: 50%;
-    transition: 1s 0.7s ease-in-out;
+    transform: translate(100%, -50%);
+    transition: transform var(--auth-dur-wrapper) var(--auth-delay) var(--auth-ease);
     display: grid;
     grid-template-columns: 1fr;
     z-index: 5;
@@ -260,7 +240,7 @@ const socials = [
     flex-direction: column;
     gap: var(--space-4);
     padding: 0 var(--space-8);
-    transition: all 0.2s 0.7s;
+    transition: opacity var(--auth-dur-form) var(--auth-delay);
     grid-column: 1 / 2;
     grid-row: 1 / 2;
   }
@@ -410,8 +390,7 @@ const socials = [
 
   /* ---------------- Sign-up mode ---------------- */
   .auth.sign-up-mode::before {
-    transform: translate(100%, -50%);
-    right: 52%;
+    transform: translate(48cqw, calc(-10cqh - 1000px));
   }
 
   .auth.sign-up-mode .left-panel .content {
@@ -419,7 +398,7 @@ const socials = [
   }
 
   .auth.sign-up-mode .signin-signup {
-    left: 25%;
+    transform: translate(0, -50%);
   }
 
   .auth.sign-up-mode form.sign-up-form {
@@ -452,14 +431,14 @@ const socials = [
 
     .signin-signup {
       width: 100%;
-      top: 95%;
-      transform: translate(-50%, -100%);
-      transition: 1s 0.8s ease-in-out;
+      top: 0;
+      left: 0;
+      transform: translate(0, calc(95cqh - 100%));
+      transition: transform var(--auth-dur-wrapper) var(--auth-delay-mobile) var(--auth-ease);
     }
 
-    .signin-signup,
     .auth.sign-up-mode .signin-signup {
-      left: 50%;
+      transform: translate(0, 5cqh);
     }
 
     .panels-container {
@@ -501,18 +480,14 @@ const socials = [
     .auth::before {
       width: 1500px;
       height: 1500px;
-      transform: translateX(-50%);
-      left: 30%;
-      bottom: 68%;
-      right: initial;
-      top: initial;
-      transition: 2s ease-in-out;
+      top: 0;
+      left: 0;
+      transform: translate(calc(30cqw - 750px), calc(32cqh - 1500px));
+      transition: transform var(--auth-dur-circle-mobile) var(--auth-ease);
     }
 
     .auth.sign-up-mode::before {
-      transform: translate(-50%, 100%);
-      bottom: 32%;
-      right: initial;
+      transform: translate(calc(30cqw - 750px), 68cqh);
     }
 
     .auth.sign-up-mode .left-panel .content {

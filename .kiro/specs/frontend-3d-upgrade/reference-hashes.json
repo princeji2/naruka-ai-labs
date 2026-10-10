@@ -1,0 +1,21 @@
+{
+  "algorithm": "sha256",
+  "folder": "refrence",
+  "baseCommit": "8c67f16326299bff283dbec1468c910105406eb3",
+  "files": {
+    "refrence/background.txt": "6cf5e5b0efcb6e5ea9dc117754e10e43e8b6d64db73273a49b081b0f3e095a15",
+    "refrence/cards/prompt for cards to make.txt": "88b8ab5480dafdb7aa668eda0d368bc89c97ecad7775a454b8b752b1250568e5",
+    "refrence/cards/Screenshot 2026-10-09 233633.png": "12d80cfc5b9459ea84586a6e1a644fe8f70cbf83d63b95b9b33555ea333fbd22",
+    "refrence/colour theam.png": "13ce45cc959a139b612b6c8178447a6c72a6b1ef18da628399352b8d9213f968",
+    "refrence/contact_page.png": "ac14dfcce77a68e41429f66030ee115e927ffd9b89ceb45b91a1f5ec38e51f63",
+    "refrence/DESIGN (2).md": "b7087cbad9f71b018de1b27564983c8437b931cede7e85ec4914ab72d32c4d95",
+    "refrence/DESIGN (3).md": "a4ae23f42bab473e37c6b28ef95084cd7fcfc883f7f762cd4862e0610ff1fa61",
+    "refrence/DESIGN (4).md": "bd6223e56fb8e687187b635b94f2ac47c49793b8547900af78647320365d3155",
+    "refrence/DESIGN (5).md": "c32afd172d365679902eca0428076c6ac26d2b9614c8f3686be4d250e612b3ef",
+    "refrence/DESIGN (6).md": "a18d8d86163cd35d9623e54a7fa40ec3ce6eea835e4f72beab06443e5f8729e0",
+    "refrence/FRONTEND_UPGRADE.md": "ed6f33ea847e89d29edf9a76af8064b610b9ea093a471e92ff79b7e690ba665c",
+    "refrence/GSAP.md": "c206cd2a00c3fcfc735f8961754e8a627023308aaf542398e8119bdb2fda6fdc",
+    "refrence/hero_section.md": "108d1fc9cb388c76a9993062f93ab888ee50572eb8503129d1ca69dc8d6b5b08",
+    "refrence/signin.txt": "695ebe1179d695bf634184c2e75ab64fd7bdfe630d596728c01fbf60aad746c1"
+  }
+}

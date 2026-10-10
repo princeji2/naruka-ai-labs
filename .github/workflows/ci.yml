@@ -18,11 +18,16 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
+        with:
+          # Full history: verify-source diffs against the phase base commit
+          # (8c67f16326299bff283dbec1468c910105406eb3).
+          fetch-depth: 0
 
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: 22
+          # >=22.18 is required for type stripping of .ts imports (design assumption A4).
+          node-version: '^22.18.0'
           cache: 'npm'
 
       - name: Install dependencies
@@ -34,5 +39,15 @@ jobs:
       - name: Type-check Astro & TypeScript
         run: npm run check
 
+      - name: Run logic tests
+        if: ${{ hashFiles('tests/logic/**/*.test.mjs') != '' }}
+        run: npm run test:logic
+
+      - name: Verify source rules
+        run: npm run verify:source -- --strict
+
       - name: Build static site
         run: npm run build
+
+      - name: Verify built output
+        run: npm run verify:dist

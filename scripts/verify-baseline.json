@@ -1,0 +1,4 @@
+{
+  "note": "Burn-down baseline for scripts/verify-source.mjs: known violations as { rule, file, count }. A count that rises fails (new violation); a count that falls below its entry fails too (\"baseline is stale\"), so delete or lower the entry in the phase that fixes it. `npm run verify:source -- --strict` ignores this file. Regenerate with `node scripts/verify-source.mjs --write-baseline` after reviewing the findings.",
+  "entries": []
+}

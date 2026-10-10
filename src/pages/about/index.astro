@@ -13,7 +13,7 @@ import Card from '../../components/ui/Card.astro';
   <div class="about-page">
     <!-- Header -->
     <section class="section about-hero-section">
-      <div class="container hero-content">
+      <div class="container hero-content" data-reveal>
         <Badge variant="in-development" text="Studio Background" />
         <h1 class="about-title">
           Engineering practical software <br />
@@ -166,8 +166,9 @@ import Card from '../../components/ui/Card.astro';
   }
 
   .about-title {
-    font-size: var(--font-size-6xl);
-    line-height: 1.15;
+    font-size: var(--font-size-display-2);
+    line-height: var(--line-height-display-2);
+    letter-spacing: var(--letter-spacing-display-2);
   }
 
   .about-lead {
@@ -272,7 +273,9 @@ import Card from '../../components/ui/Card.astro';
   }
 
   .section-title {
-    font-size: var(--font-size-5xl);
+    font-size: var(--font-size-display-3);
+    line-height: var(--line-height-display-3);
+    letter-spacing: var(--letter-spacing-display-3);
   }
 
   .section-lead {

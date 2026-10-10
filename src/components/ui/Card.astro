@@ -19,6 +19,10 @@
  * `image`         'shield.png' (resolved to /cards/shield.png) or an absolute path / URL.
  * `ctaLabel`      needs `href`. With `href` and no `ctaLabel`, the title becomes the link.
  *                 With both, the whole card is clickable through the CTA link.
+ * Depth: no shadows at rest, hover or focus. Hover and focus lift the card with `transform`, step the
+ * border colour and brighten the gradient. With full motion on a fine pointer at desktop width,
+ * src/lib/motion/card-tilt.ts (data-tilt) drives the lift and adds a +-5deg tilt, and also updates the
+ * --mx/--my cursor highlight. The CSS lift is the fallback everywhere else.
  * `class`         optional variants:
  *                 card-wide    large containers and long text: gentler hover (1.005 / -3px),
  *                              no corner illustration so text contrast is never affected.
@@ -145,27 +149,6 @@ const hasSlot = Astro.slots.has('default');
   </div>
 </article>
 
-<script>
-  // Optional cursor-following highlight. Fine pointers only, never under reduced motion.
-  const finePointer = window.matchMedia('(hover: hover) and (pointer: fine)');
-  const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
-
-  if (finePointer.matches && !reduceMotion.matches) {
-    document.addEventListener(
-      'pointermove',
-      (event) => {
-        if (!(event.target instanceof Element)) return;
-        const card = event.target.closest<HTMLElement>('.card');
-        if (!card) return;
-        const rect = card.getBoundingClientRect();
-        card.style.setProperty('--mx', `${event.clientX - rect.left}px`);
-        card.style.setProperty('--my', `${event.clientY - rect.top}px`);
-      },
-      { passive: true }
-    );
-  }
-</script>
-
 <style>
   .card {
     --card-hover-lift: -6px;
@@ -178,13 +161,13 @@ const hasSlot = Astro.slots.has('default');
     min-height: 220px;
     overflow: hidden;
     border-radius: var(--radius-2xl);
+    /* Depth comes from the gradient wash, a border colour step on hover and the lift: no shadows */
     border: 1px solid rgba(var(--white-rgb), 0.12);
-    box-shadow: var(--shadow-card);
     color: var(--color-text-primary);
     /* Glass: the gradient layer is slightly translucent, so this blurs the page background */
     backdrop-filter: blur(var(--glass-blur-sm));
     -webkit-backdrop-filter: blur(var(--glass-blur-sm));
-    transition: transform var(--transition-card), box-shadow var(--transition-card);
+    transition: transform var(--transition-card), border-color var(--transition-card);
     -webkit-tap-highlight-color: transparent;
   }
 
@@ -301,14 +284,17 @@ const hasSlot = Astro.slots.has('default');
     margin-top: var(--space-2);
   }
 
-  /* Muted description: text 78% / muted 22%, >= 4.9:1 on the tinted gradient even on hover */
+  /* Tagline: text 88% / muted 12%. --text-muted is 4.40:1 on the --surface-2 end of the neutral
+     gradient and --color-text-secondary drops to 4.0:1 on hover, so neither is used here.
+     Contrast of every text/gradient pair is declared in scripts/contrast-pairs.json. */
   .card-tagline {
     font-size: var(--font-size-sm);
     font-weight: var(--font-weight-semibold);
-    color: var(--text-muted);
+    color: color-mix(in srgb, var(--text) 88%, var(--text-muted));
     margin-top: calc(var(--space-2) * -1);
   }
 
+  /* Muted description: text 78% / muted 22% mix, lighter than muted, so it clears 4.5:1 on every gradient start */
   .card-desc {
     font-size: var(--font-size-sm);
     line-height: 1.6;
@@ -345,12 +331,15 @@ const hasSlot = Astro.slots.has('default');
     border-radius: inherit;
   }
 
-  /* Keyboard focus ring drawn around the whole card */
+  /* Keyboard focus ring drawn around the whole card. It uses --text, not --border-focus: the accent
+     ring measured 2.2 to 2.7:1 on the tinted gradient faces. --text clears 3:1 on every tint, at rest
+     and on hover/focus (pairs "Card <tint> <state>: focus ring on gradient start" in
+     scripts/contrast-pairs.json). Other components keep --border-focus. */
   .card-link:focus-visible {
     outline: none;
   }
   .card-link:focus-visible::after {
-    outline: var(--state-focus-outline);
+    outline: var(--state-focus-ring-width) solid var(--text);
     outline-offset: -2px;
     border-radius: var(--radius-2xl);
   }
@@ -380,12 +369,12 @@ const hasSlot = Astro.slots.has('default');
   }
 
   /* ---------------- Hover / keyboard focus ----------------
-     Lift -6px, scale 1.02, bigger shadow, brighter gradient, parallax illustration,
-     arrow slides right 4px. All 350ms on cubic-bezier(0.22, 1, 0.36, 1). */
+     Lift -6px and scale 1.02 through transform only, border one step brighter, brighter gradient,
+     parallax illustration, arrow slides right 4px. All 350ms on var(--ease-card). */
   @media (hover: hover) and (pointer: fine) {
     .card:hover {
       transform: translateY(var(--card-hover-lift)) scale(var(--card-hover-scale));
-      box-shadow: inset 0 1px 0 rgba(var(--white-rgb), 0.1), var(--shadow-card-lift);
+      border-color: var(--border-glass-hover);
       will-change: transform;
     }
     .card:hover .card-bg::after,
@@ -403,7 +392,7 @@ const hasSlot = Astro.slots.has('default');
   /* Keyboard focus mirrors hover (works on touch-sized screens with a keyboard too) */
   .card:has(.card-link:focus-visible) {
     transform: translateY(var(--card-hover-lift)) scale(var(--card-hover-scale));
-    box-shadow: inset 0 1px 0 rgba(var(--white-rgb), 0.1), var(--shadow-card-lift);
+    border-color: var(--border-glass-hover);
   }
   .card:has(.card-link:focus-visible) .card-bg::after {
     opacity: 1;
@@ -424,6 +413,21 @@ const hasSlot = Astro.slots.has('default');
     .card:active {
       transform: scale(0.985);
     }
+  }
+
+  /* ---------------- Tilt hand-over ----------------
+     src/lib/motion/card-tilt.ts sets data-tilt on every card while it is registered (full motion,
+     fine pointer, desktop width) and then owns `transform` for lift, tilt and press, so CSS never
+     writes transform at the same time. The CSS transition on transform is dropped too, otherwise it
+     would smooth every inline update GSAP writes. Border, art, arrow and glow stay CSS. */
+  .card[data-tilt],
+  .card[data-tilt]:hover,
+  .card[data-tilt]:active,
+  .card[data-tilt]:has(.card-link:focus-visible) {
+    transform: none;
+  }
+  .card[data-tilt] {
+    transition: border-color var(--transition-card);
   }
 
   /* ---------------- Variants (via the `class` prop) ---------------- */
@@ -496,7 +500,9 @@ const hasSlot = Astro.slots.has('default');
   }
 
   @media (prefers-contrast: more) {
-    .card {
+    .card,
+    .card:hover,
+    .card:has(.card-link:focus-visible) {
       border-color: var(--border-glass-active);
     }
   }

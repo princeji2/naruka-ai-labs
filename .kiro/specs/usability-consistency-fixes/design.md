@@ -356,7 +356,11 @@ For all `font-size` declarations in the Astro_Source, the value is a `var(--font
 
 ### Property 2: Distinct font size budget and floor
 
-For the set of all `font-size` declarations in the Astro_Source, resolving each token to its value gives 10 or fewer distinct sizes (with `--font-size-base` and `--font-size-md` counted once and each fluid token counted once), and every resolved size, including each fluid minimum, is 12px or larger.
+For the set of all Body_Font_Size `font-size` declarations in the Astro_Source (every `font-size` that does not reference a Display_Token), resolving each token to its value gives 10 or fewer distinct sizes (with `--font-size-base` and `--font-size-md` counted once and each fluid token counted once), and every resolved size, including each fluid minimum, is 12px or larger.
+
+The Display_Tokens `--font-size-display-1..3` are excluded from that count and checked as a separate group: at most 3, each defined in the Token_File, none below 12px at its minimum.
+
+> Amended by frontend-3d-upgrade, 2026-10-10: the cap of 10 now counts Body_Font_Sizes only. No task status in this spec was changed.
 
 **Validates: Requirements 1.2, 1.3**
 
@@ -388,6 +392,8 @@ For all badges rendered in the built HTML, the text inside `.badge-label` equals
 
 For all `--font-size-*` and `--radius-*` custom properties in `src/styles/tokens.css`, the value after the change equals the value before the change.
 
+> Note (frontend-3d-upgrade, 2026-10-10): the three new Display_Tokens (`--font-size-display-1..3`) are added properties. No existing value changed, so this property still holds for the original tokens.
+
 **Validates: Requirements 1.7, 2.6**
 
 ## Testing Strategy
@@ -414,28 +420,39 @@ Get-ChildItem src -Recurse -Include *.astro,*.css |
 
 # any font-size not written as a font-size token
 Get-ChildItem src -Recurse -Include *.astro,*.css |
-  Select-String -Pattern 'font-size\s*:\s*(?!var\(--font-size-)'
+  Select-String -Pattern 'font-size\s*:(?>\s*)(?!var\(--font-size-|max\(16px,\s*var\(--font-size-sm\)\))'
 
 # the dropped token is no longer referenced
 Get-ChildItem src -Recurse -Include *.astro,*.css |
   Select-String -Pattern 'var\(--font-size-xl\)'
 ```
 
-Count distinct resolved sizes (Property 2). The result must list 10 entries or fewer, none below 12, and no `$null` entry (a `$null` means an undefined token).
+> Amended by frontend-3d-upgrade, 2026-10-10: the second search above also allows exactly one literal, `max(16px, var(--font-size-sm))`, the iOS no-zoom guard on form inputs (inputs below 16px make iOS Safari zoom on focus). It is used in `src/components/ui/Input.astro`. The `(?>\s*)` atomic group is also new: without it the old lookahead backtracked into the space after the colon and matched every declaration. No other non-token `font-size` is allowed, and `scanFontSizeBudget` in `scripts/lib/scan-rules.mjs` makes the same single exception.
+
+Count distinct resolved sizes (Property 2). The Body group must list 10 entries or fewer, none below 12, and no `$null` entry (a `$null` means an undefined token). The Display group is reported separately: at most 3 names, each one of `display-1`, `display-2`, `display-3`.
+
+> Amended by frontend-3d-upgrade, 2026-10-10: the pattern now also matches hyphenated names such as `display-1` (the old pattern `([0-9a-z]+)\)` skipped them and gave a misleading pass), and the two groups are reported separately.
 
 ```powershell
 $resolved = @{
   'xs'='12'; 'sm'='14'; 'base'='17'; 'md'='17'; 'lg'='18'; 'xl'='19'; '2xl'='21';
   '3xl'='25.5'; '4xl'='28'; '5xl'='fluid 21-36'; '6xl'='fluid 25.5-48'; '7xl'='fluid 28-60'
 }
-Get-ChildItem src -Recurse -Include *.astro,*.css |
-  Select-String -Pattern 'font-size\s*:\s*var\(--font-size-([0-9a-z]+)\)' -AllMatches |
+$names = Get-ChildItem src -Recurse -Include *.astro,*.css |
+  Select-String -Pattern 'font-size\s*:\s*var\(--font-size-([0-9a-z]+(?:-[0-9]+)?)\)' -AllMatches |
   ForEach-Object { $_.Matches } |
-  ForEach-Object { $resolved[$_.Groups[1].Value] } |
+  ForEach-Object { $_.Groups[1].Value } |
   Sort-Object -Unique
+
+'Body_Font_Sizes (limit 10):'
+$names | Where-Object { $_ -notmatch '^display-[0-9]+$' } |
+  ForEach-Object { $resolved[$_] } | Sort-Object -Unique
+
+'Display_Tokens in use (limit 3):'
+$names | Where-Object { $_ -match '^display-[0-9]+$' }
 ```
 
-Expected output: `12`, `14`, `17`, `18`, `21`, `25.5`, `28`, `fluid 21-36`, `fluid 25.5-48`, `fluid 28-60` (10 entries).
+Expected output: Body `12`, `14`, `17`, `18`, `21`, `25.5`, `28`, `fluid 21-36`, `fluid 25.5-48`, `fluid 28-60` (10 entries); Display: none until a later spec uses them, and never more than 3.
 
 Confirm the Token_File is untouched (Property 7):
 

@@ -2,8 +2,10 @@
 import BaseLayout from '../layouts/BaseLayout.astro';
 import Badge from '../components/Badge.astro';
 import Button from '../components/Button.astro';
-import HeroPrism from '../components/HeroPrism.astro';
 import Card from '../components/ui/Card.astro';
+import Scene3D from '../components/scene/Scene3D.astro';
+import ScenePoster from '../components/scene/ScenePoster.astro';
+import ConstellationIsland from '../components/scene/ConstellationIsland.tsx';
 ---
 
 <BaseLayout
@@ -13,47 +15,58 @@ import Card from '../components/ui/Card.astro';
 >
   <!-- 1. Hero Section -->
   <section class="hero-section section">
-    <HeroPrism />
     <div class="container hero-container">
-      <div class="hero-badge-wrap">
-        <Badge variant="in-development" text="Founder-Led Product Studio" />
-        <span class="location-tag">Based in India · Building Globally</span>
+      <div class="hero-copy">
+        <div class="hero-badge-wrap">
+          <Badge variant="in-development" text="Founder-Led Product Studio" />
+          <span class="location-tag">Based in India · Building Globally</span>
+        </div>
+
+        <h1 class="hero-title">
+          Naruka AI Labs builds{' '}<span class="text-gradient-brand">practical AI-powered software</span> products.
+        </h1>
+
+        <p class="hero-lead">
+          An independent studio founded by Prince Naruka. We turn complex administrative and educational friction into fast, reliable software with clean architectures and grounded intelligence.
+        </p>
+
+        <div class="hero-actions">
+          <Button href="/products" variant="filled" size="lg" data-magnetic>
+            Explore Products →
+          </Button>
+          <Button href="/about" variant="secondary" size="lg">
+            Our Story & Principles
+          </Button>
+        </div>
+
+        <!-- Product status strip: restates facts already stated below, nothing new is claimed -->
+        <ul class="hero-products" aria-label="Current products">
+          <li>
+            <a href="/products/setu" class="hero-product hero-product-setu">
+              <span class="hero-product-dot" aria-hidden="true"></span>
+              <span class="hero-product-name">Setu</span>
+              <span class="hero-product-meta">Interoperability gateway · In active development</span>
+            </a>
+          </li>
+          <li>
+            <a href="/products/field-book" class="hero-product hero-product-fieldbook">
+              <span class="hero-product-dot" aria-hidden="true"></span>
+              <span class="hero-product-name">Field Book</span>
+              <span class="hero-product-meta">Campus attendance ledger · Live prototype</span>
+            </a>
+          </li>
+        </ul>
       </div>
 
-      <h1 class="hero-title">
-        Naruka AI Labs builds{' '}<span class="text-gradient-brand">practical AI-powered software</span> products.
-      </h1>
-
-      <p class="hero-lead">
-        An independent studio founded by Prince Naruka. We turn complex administrative and educational friction into fast, reliable software with clean architectures and grounded intelligence.
-      </p>
-
-      <div class="hero-actions">
-        <Button href="/products" variant="primary" size="lg">
-          Explore Products →
-        </Button>
-        <Button href="/about" variant="secondary" size="lg">
-          Our Story & Principles
-        </Button>
+      <!-- Decorative scene: right column from 768px up, dimmed behind the copy below that.
+           The scene box has an aspect-ratio, so it never shifts layout. data-parallax is on this
+           decorative wrapper only, never on text. -->
+      <div class="hero-visual" data-parallax="0.15">
+        <Scene3D class="hero-scene">
+          <ScenePoster slot="poster" />
+          <ConstellationIsland client:visible={{ rootMargin: '200px' }} />
+        </Scene3D>
       </div>
-
-      <!-- Product status strip: restates facts already stated below, nothing new is claimed -->
-      <ul class="hero-products" aria-label="Current products">
-        <li>
-          <a href="/products/setu" class="hero-product hero-product-setu">
-            <span class="hero-product-dot" aria-hidden="true"></span>
-            <span class="hero-product-name">Setu</span>
-            <span class="hero-product-meta">Interoperability gateway · In active development</span>
-          </a>
-        </li>
-        <li>
-          <a href="/products/field-book" class="hero-product hero-product-fieldbook">
-            <span class="hero-product-dot" aria-hidden="true"></span>
-            <span class="hero-product-name">Field Book</span>
-            <span class="hero-product-meta">Campus attendance ledger · Live prototype</span>
-          </a>
-        </li>
-      </ul>
     </div>
   </section>
 
@@ -337,14 +350,79 @@ import Card from '../components/ui/Card.astro';
     overflow: hidden;
   }
 
+  /* Layout: one column under 768px (scene sits behind the copy), text left and scene right from 768px.
+     The container is a flex item of the section, so z-index applies without position; that makes it the
+     stacking context for the visual (z-index: -1 puts the scene behind the copy, above the page). */
   .hero-container {
-    position: relative;
     z-index: 1;
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    align-items: center;
+    gap: var(--space-3xl);
+  }
+
+  .hero-copy {
+    min-width: 0;
     display: flex;
     flex-direction: column;
     align-items: center;
     text-align: center;
-    max-width: 1040px;
+  }
+
+  /* Mobile: the scene fills the hero behind the text. Absolute, so it takes no space in the flow. */
+  .hero-visual {
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    display: grid;
+    place-items: center;
+    overflow: hidden;
+    pointer-events: none;
+  }
+
+  .hero-visual :global(.hero-scene) {
+    width: 120%;
+    opacity: 0.25;
+  }
+
+  /* Scrim over the dimmed scene so text keeps its contrast whatever the particles do.
+     Worst case, a fully lit particle shows at 0.25 * (1 - 0.7) = 7.5% over the page; the contrast pairs
+     "Home hero on mobile" in scripts/contrast-pairs.json assume 8%. Keep them in sync if these change. */
+  .hero-visual::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: rgba(var(--bg-rgb), 0.7);
+  }
+
+  @media (min-width: 768px) {
+    .hero-container {
+      grid-template-columns: minmax(0, 1.5fr) minmax(0, 1fr);
+    }
+
+    .hero-copy {
+      align-items: flex-start;
+      text-align: left;
+    }
+
+    /* Top-aligned, so the scene is in the first viewport even when the display headline makes the copy tall */
+    .hero-visual {
+      position: relative;
+      inset: auto;
+      z-index: auto;
+      display: block;
+      overflow: visible;
+      align-self: start;
+    }
+
+    .hero-visual::after {
+      display: none;
+    }
+
+    .hero-visual :global(.hero-scene) {
+      width: 100%;
+      opacity: 1;
+    }
   }
 
   /* Staged entrance on load: a one-time sequence, so it can afford a little length.
@@ -365,16 +443,16 @@ import Card from '../components/ui/Card.astro';
     to { opacity: 1; }
   }
 
-  .hero-container > * {
+  .hero-copy > * {
     animation: hero-rise 700ms var(--ease-out) both;
   }
-  .hero-container > :nth-child(2) { animation-delay: 60ms; }
-  .hero-container > :nth-child(3) { animation-delay: 120ms; }
-  .hero-container > :nth-child(4) { animation-delay: 180ms; }
-  .hero-container > :nth-child(5) { animation-delay: 260ms; }
+  .hero-copy > :nth-child(2) { animation-delay: 60ms; }
+  .hero-copy > :nth-child(3) { animation-delay: 120ms; }
+  .hero-copy > :nth-child(4) { animation-delay: 180ms; }
+  .hero-copy > :nth-child(5) { animation-delay: 260ms; }
 
   @media (prefers-reduced-motion: reduce) {
-    .hero-container > * {
+    .hero-copy > * {
       animation: hero-fade 200ms ease both;
     }
   }
@@ -388,18 +466,26 @@ import Card from '../components/ui/Card.astro';
     margin-bottom: var(--space-lg);
   }
 
+
+
   .location-tag {
     font-size: var(--font-size-xs);
     color: var(--text-muted);
     font-weight: 500;
   }
 
+  /* Hero headline: display-1 type tokens. overflow-wrap is the safety net so a long word can never push the
+     page sideways (nothing is hyphenated or truncated, and the text is unchanged). */
   .hero-title {
+    font-size: var(--font-size-display-1);
+    line-height: var(--line-height-display-1);
+    letter-spacing: var(--letter-spacing-display-1);
+    overflow-wrap: break-word;
     margin-bottom: var(--space-xl);
   }
 
   .hero-lead {
-    font-size: var(--font-size-xl);
+    font-size: var(--font-size-lg);
     color: var(--text-secondary);
     max-width: 640px;
     margin-bottom: var(--space-2xl);
@@ -448,7 +534,6 @@ import Card from '../components/ui/Card.astro';
     height: var(--space-3);
     border-radius: var(--radius-full);
     background: var(--product-accent);
-    box-shadow: 0 0 var(--space-4) var(--product-accent);
     flex-shrink: 0;
   }
 
@@ -484,6 +569,15 @@ import Card from '../components/ui/Card.astro';
     }
   }
 
+  /* Text-left layout from 768px: left-align the rows that are centred on mobile. Kept after the base rules. */
+  @media (min-width: 768px) {
+    .hero-badge-wrap,
+    .hero-actions,
+    .hero-products {
+      justify-content: flex-start;
+    }
+  }
+
   /* Section Heading */
   .section-heading {
     text-align: center;
@@ -494,8 +588,12 @@ import Card from '../components/ui/Card.astro';
     margin-bottom: var(--space-3xl);
   }
 
+  /* Section headlines: display-3 type tokens, with the same long-word safety net as the hero */
   .section-title {
-    font-size: var(--font-size-5xl);
+    font-size: var(--font-size-display-3);
+    line-height: var(--line-height-display-3);
+    letter-spacing: var(--letter-spacing-display-3);
+    overflow-wrap: break-word;
   }
 
   .section-lead {

@@ -13,7 +13,7 @@ import Card from '../../components/ui/Card.astro';
   <div class="products-page">
     <!-- Header Section -->
     <section class="page-header section">
-      <div class="container header-content">
+      <div class="container header-content" data-reveal>
         <Badge variant="in-development" text="Studio Portfolio" />
         <h1 class="page-title">
           Practical software, <br />
@@ -171,6 +171,9 @@ import Card from '../../components/ui/Card.astro';
   }
 
   .page-title {
+    font-size: var(--font-size-display-2);
+    line-height: var(--line-height-display-2);
+    letter-spacing: var(--letter-spacing-display-2);
     margin-bottom: var(--space-xs);
   }
 

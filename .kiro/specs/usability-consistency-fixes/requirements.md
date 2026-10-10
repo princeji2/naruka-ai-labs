@@ -26,7 +26,9 @@ Current state observed in the repository:
 - **Radius_Token**: Any `--radius-*` custom property defined in the Token_File.
 - **Astro_Source**: All `.astro` files under `src/`, and `src/styles/global.css` for counting purposes.
 - **Fixed_Size_Clamp**: A hardcoded `clamp()` font size whose maximum is within 2px of a discrete (non-fluid) Font_Size_Token. It is treated as a fixed size and mapped to that discrete token, because a fluid token would grow the text far beyond the original maximum.
-- **Distinct_Font_Size**: A unique resolved font size among all `font-size` declarations in the Astro_Source. Tokens that resolve to the same value, such as `--font-size-base` and `--font-size-md`, count once. Each fluid token counts once.
+- **Distinct_Font_Size**: A unique resolved font size among all Body_Font_Size `font-size` declarations in the Astro_Source. Tokens that resolve to the same value, such as `--font-size-base` and `--font-size-md`, count once. Each fluid token counts once. The Display_Tokens are not counted (amended by frontend-3d-upgrade, 2026-10-10).
+- **Display_Token**: One of at most 3 tokens `--font-size-display-1`, `--font-size-display-2` and `--font-size-display-3` in the Token_File, for hero and section headlines, each with a matching `--line-height-display-N` and `--letter-spacing-display-N`. A `font-size` that references a Display_Token is not a Body_Font_Size (added by frontend-3d-upgrade, 2026-10-10).
+- **Body_Font_Size**: Any resolved `font-size` in the Astro_Source that is not a Display_Token (added by frontend-3d-upgrade, 2026-10-10).
 - **Distinct_Radius**: A unique value among all `border-radius` declarations in the Astro_Source. A shorthand that mixes `0` with one Radius_Token, such as `0 var(--radius-xs) var(--radius-xs) 0`, counts as that Radius_Token.
 - **Badge_Component**: `src/components/Badge.astro`, which renders the status and label badges used across the Site.
 - **Badge_Label**: The visible text inside a Badge_Component, from the `text` prop or the variant default.
@@ -50,15 +52,15 @@ Current state observed in the repository:
 
 #### Acceptance Criteria
 
-1. THE Astro_Source SHALL declare every `font-size` value as a Font_Size_Token reference, with no hardcoded `rem`, `px` or `em` values.
-2. THE Astro_Source SHALL contain 10 or fewer Distinct_Font_Sizes.
+1. THE Astro_Source SHALL declare every `font-size` value as a Font_Size_Token reference, with no hardcoded `rem`, `px` or `em` values. The only exception is `max(16px, var(--font-size-sm))` on form inputs, the iOS no-zoom guard (inputs below 16px make iOS Safari zoom on focus). (Amended by frontend-3d-upgrade, 2026-10-10.)
+2. THE Astro_Source SHALL contain 10 or fewer Distinct_Font_Sizes, counting Body_Font_Sizes only. The Display_Tokens (`--font-size-display-1..3`) are excluded from this count and are checked separately: at most 3, all defined in the Token_File, none below 12px. (Amended by frontend-3d-upgrade, 2026-10-10.)
 3. THE Astro_Source SHALL resolve every `font-size` declaration to 12px or larger.
 4. WHEN a hardcoded font size is replaced, THE Site SHALL use the Font_Size_Token whose resolved value is closest to the original size, with a shift of 2px or less wherever a Font_Size_Token exists within 2px of the original size.
 5. WHEN a hardcoded `clamp()` font size is replaced, THE Site SHALL apply the following rules in order:
    - IF the original maximum is within 2px of a discrete Font_Size_Token, THEN THE Site SHALL treat the `clamp()` as a Fixed_Size_Clamp and use that discrete token, following criterion 4. The `.hero-lead` rule in `src/pages/index.astro`, `clamp(1.1rem, 2vw, 1.25rem)` with a 20px maximum, SHALL use `--font-size-2xl` (21px).
    - OTHERWISE THE Site SHALL use the fluid Font_Size_Token (`--font-size-5xl`, `--font-size-6xl` or `--font-size-7xl`) whose maximum is closest to the original maximum.
 6. WHERE two Font_Size_Tokens differ by 2px or less, THE Site SHALL be permitted to use only one of them in order to meet the Distinct_Font_Size limit in criterion 2.
-7. THE Token_File SHALL keep the same values for all `--font-size-*` properties as before this change.
+7. THE Token_File SHALL keep the same values for all `--font-size-*` properties as before this change. (The Display_Tokens added later by frontend-3d-upgrade, 2026-10-10, are new properties; no existing value changed.)
 8. WHEN the Build_Command is run, THE Site SHALL complete the build with exit code 0.
 9. WHEN the Check_Command is run, THE Site SHALL complete the check with exit code 0 and report 0 errors.
 10. WHEN the Astro_Source is searched for `font-size:` followed by a numeric `rem`, `px` or `em` value or a `clamp(` expression, THE search SHALL return no matches.

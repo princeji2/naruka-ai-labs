@@ -1,0 +1,57 @@
+---
+// Scene3D.astro: reserves the box before any script runs, hosts the poster, and labels the region
+// for assistive technology. The default slot takes the React island (hydrated with `client:visible`).
+//
+// Usage:
+//   <Scene3D class="hero-scene">
+//     <ScenePoster slot="poster" />
+//     <ConstellationIsland client:visible={{ rootMargin: '200px' }} />
+//   </Scene3D>
+//
+// The island sets `data-scene-state` on this element: `poster` (default), `live`, or `failed`.
+// Set `--scene-aspect` (for example `16 / 9`) on the element or a parent to change the ratio.
+type Props = { class?: string } & (
+  | { decorative?: true; label?: string }
+  | { decorative: false; label: string }
+);
+
+const props = Astro.props;
+const decorative = props.decorative !== false;
+const label = props.decorative === false ? props.label.trim() : undefined;
+if (!decorative && !label) {
+  throw new Error('Scene3D: "label" is required (and must not be empty) when decorative is false.');
+}
+const className = props.class ?? '';
+---
+
+<div
+  class={`scene ${className}`.trim()}
+  data-scene-state="poster"
+  aria-hidden={decorative ? 'true' : undefined}
+  role={decorative ? undefined : 'img'}
+  aria-label={decorative ? undefined : label}
+>
+  <slot name="poster" />
+  <div class="scene-layer"><slot /></div>
+</div>
+
+<style>
+  .scene {
+    position: relative;
+    width: 100%;
+    aspect-ratio: var(--scene-aspect, 1 / 1);
+    contain: layout paint;
+  }
+
+  /* Canvas layer: fades in with opacity only, above the poster */
+  .scene-layer {
+    position: absolute;
+    inset: 0;
+    opacity: 0;
+    transition: opacity var(--transition-slow);
+  }
+
+  .scene[data-scene-state='live'] .scene-layer {
+    opacity: 1;
+  }
+</style>

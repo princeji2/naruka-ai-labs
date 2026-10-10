@@ -91,7 +91,7 @@ const describedBy = [errorId, hintId].filter(Boolean).join(' ') || undefined;
     background: var(--bg);
     border: 1px solid var(--border);
     border-radius: var(--radius-md);
-    transition: border-color var(--transition-fast), box-shadow var(--transition-fast);
+    transition: border-color var(--transition-fast), outline-color var(--transition-fast);
   }
 
   .field-input::placeholder {
@@ -105,11 +105,11 @@ const describedBy = [errorId, hintId].filter(Boolean).join(' ') || undefined;
     }
   }
 
-  /* Focus ring in the Primary colour */
+  /* Focus ring: outline keeps a 3:1 indicator against --bg (WCAG 2.2 AA, Req 9.4) */
   .field-input:focus-visible {
-    outline: none;
     border-color: var(--primary);
-    box-shadow: 0 0 0 3px rgba(var(--primary-rgb), 0.4);
+    outline: 2px solid var(--border-focus);
+    outline-offset: 2px;
   }
 
   .field-input:disabled {
@@ -125,7 +125,8 @@ const describedBy = [errorId, hintId].filter(Boolean).join(' ') || undefined;
 
   .has-error .field-input:focus-visible {
     border-color: var(--danger);
-    box-shadow: 0 0 0 3px rgba(var(--danger-rgb), 0.4);
+    outline: 2px solid var(--danger);
+    outline-offset: 2px;
   }
 
   .field-hint {

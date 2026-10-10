@@ -12,9 +12,11 @@ import Card from '../../components/ui/Card.astro';
   <div class="legal-page">
     <section class="section">
       <div class="container legal-container">
-        <Badge variant="neutral" text="Legal Information" />
-        <h1 class="legal-title">Privacy Policy</h1>
-        <p class="legal-date">Last Updated: October 2026 · Plain Language Disclosure</p>
+        <div class="legal-hero" data-reveal>
+          <Badge variant="neutral" text="Legal Information" />
+          <h1 class="legal-title">Privacy Policy</h1>
+          <p class="legal-date">Last Updated: October 2026 · Plain Language Disclosure</p>
+        </div>
 
         <!-- Advisory Notice -->
         <Card class="card-compact" headingLevel={2} title="Review Notice:" gradient="primary">
@@ -103,8 +105,19 @@ import Card from '../../components/ui/Card.astro';
     gap: var(--space-md);
   }
 
+  /* Intro block: badge, title and date. The only reveal hook on the page; the
+     clause cards animate on their own through the global .card reveal selector. */
+  .legal-hero {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-sm);
+    margin-bottom: var(--space-lg);
+  }
+
   .legal-title {
-    font-size: var(--font-size-6xl);
+    font-size: var(--font-size-display-2);
+    line-height: var(--line-height-display-2);
+    letter-spacing: var(--letter-spacing-display-2);
   }
 
   .legal-date {

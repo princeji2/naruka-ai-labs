@@ -13,9 +13,9 @@
      1. TYPOGRAPHY FOUNDATIONS
      Self-hosted font stacks + Apple-derived clean scale
      -------------------------------------------------------------------------- */
-  --font-display: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
-  --font-body: 'Inter', -apple-system, BlinkMacSystemFont, 'SF Pro Text', 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
-  --font-mono: 'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+  --font-display: 'Inter Tight', 'Inter Tight Fallback', -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+  --font-body: 'Inter Tight', 'Inter Tight Fallback', -apple-system, BlinkMacSystemFont, 'SF Pro Text', 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+  --font-mono: 'Inter Tight', 'Inter Tight Fallback', ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
 
   /* Discrete Typography Scale (xs through 4xl) */
   --font-size-xs: 12px;        /* Apple xs=12px (WCAG AA readability minimum) */
@@ -42,6 +42,15 @@
   --font-size-7xl-max: 68px;                 /* Max: 68px (hero display) */
   --font-size-7xl: clamp(var(--font-size-7xl-min), 5.4vw + 9px, var(--font-size-7xl-max));
 
+  /* Display Typography Tokens (frontend-3d-upgrade, 2026-10-10; documented non-colour exception).
+     Hero and headline sizes only, kept out of the Body_Font_Size cap of 10. At most 3.
+     Fluid between 360px and 1440px viewports; defaults from the GSAP type scale
+     (224px hero shown there, capped lower here because the Naruka copy is longer).
+     Each size has a matching --line-height-display-N and --letter-spacing-display-N below. */
+  --font-size-display-1: clamp(44px, 9.26vw + 10.67px, 144px);   /* Hero headline */
+  --font-size-display-2: clamp(36px, 6.02vw + 14.33px, 101px);   /* Page and large section headlines */
+  --font-size-display-3: clamp(28px, 3.52vw + 15.33px, 66px);    /* Section headlines */
+
   /* Font Weights */
   --font-weight-regular: 400;
   --font-weight-medium: 500;
@@ -54,12 +63,18 @@
   --line-height-snug: 1.2;
   --line-height-base: 1.4705;  /* 25px line-height on 17px base per Apple spec */
   --line-height-relaxed: 1.65;
+  --line-height-display-1: 0.95;
+  --line-height-display-2: 1;
+  --line-height-display-3: 1.1;
 
   /* Letter Spacing (tighten as size grows, body stays near 0) */
   --letter-spacing-tight: -0.03em;
   --letter-spacing-snug: -0.02em;
   --letter-spacing-normal: 0em;
   --letter-spacing-wide: 0.05em;
+  --letter-spacing-display-1: -0.03em;
+  --letter-spacing-display-2: -0.02em;
+  --letter-spacing-display-3: -0.011em;
 
   /* --------------------------------------------------------------------------
      2. CLEAN SPACING SCALE (Clean, non-redundant powers & multiples)

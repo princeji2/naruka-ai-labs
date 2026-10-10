@@ -11,19 +11,24 @@ import Card from '../components/ui/Card.astro';
 >
   <div class="error-page section">
     <div class="container error-container">
-      <Badge variant="demo-data" text="Error 404" />
-      <h1 class="error-title">Page not found</h1>
-      <p class="error-lead">
-        The route you are trying to access does not exist on this site. If you were looking for our active product architectures or studio background, explore the links below.
-      </p>
+      <!-- Intro block: badge, title, lead and actions. The only reveal hook on the page; the
+           hint card animates on its own through the global .card reveal selector, so data-reveal
+           is kept off it to avoid nesting a reveal hook inside a .card. -->
+      <div class="error-intro" data-reveal>
+        <Badge variant="demo-data" text="Error 404" />
+        <h1 class="error-title">Page not found</h1>
+        <p class="error-lead">
+          The route you are trying to access does not exist on this site. If you were looking for our active product architectures or studio background, explore the links below.
+        </p>
 
-      <div class="error-actions">
-        <Button href="/" variant="primary" size="lg">
-          Return to Home
-        </Button>
-        <Button href="/products" variant="secondary" size="lg">
-          Explore Products
-        </Button>
+        <div class="error-actions">
+          <Button href="/" variant="primary" size="lg">
+            Return to Home
+          </Button>
+          <Button href="/products" variant="secondary" size="lg">
+            Explore Products
+          </Button>
+        </div>
       </div>
 
       <div class="error-hint">
@@ -52,20 +57,28 @@ import Card from '../components/ui/Card.astro';
     align-items: center;
     text-align: center;
     max-width: 680px;
+    gap: var(--space-xl);
+  }
+
+  /* Intro block: badge, title, lead and actions share one reveal hook. */
+  .error-intro {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
     gap: var(--space-md);
+    width: 100%;
   }
 
   .error-title {
-    font-size: var(--font-size-6xl);
-    font-weight: var(--font-weight-extrabold);
-    line-height: var(--line-height-tight);
+    font-size: var(--font-size-display-2);
+    line-height: var(--line-height-display-2);
+    letter-spacing: var(--letter-spacing-display-2);
   }
 
   .error-lead {
     font-size: var(--font-size-lg);
     color: var(--color-text-secondary);
     line-height: var(--line-height-relaxed);
-    margin-bottom: var(--space-lg);
   }
 
   .error-actions {
@@ -74,7 +87,7 @@ import Card from '../components/ui/Card.astro';
     gap: var(--space-md);
     flex-wrap: wrap;
     justify-content: center;
-    margin-bottom: var(--space-2xl);
+    margin-top: var(--space-sm);
   }
 
   .error-hint {

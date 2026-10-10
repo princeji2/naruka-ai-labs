@@ -14,7 +14,7 @@ import Card from '../../../components/ui/Card.astro';
     <!-- Breadcrumbs / Kicker -->
     <section class="section detail-hero-section">
       <div class="container hero-layout">
-        <div class="hero-text-col">
+        <div class="hero-text-col" data-reveal>
           <div class="kicker-row">
             <a href="/products" class="breadcrumb-link">← All Products</a>
             <span class="sep">/</span>
@@ -331,8 +331,9 @@ import Card from '../../../components/ui/Card.astro';
   }
 
   .detail-title {
-    font-size: var(--font-size-6xl);
-    line-height: var(--line-height-tight);
+    font-size: var(--font-size-display-2);
+    line-height: var(--line-height-display-2);
+    letter-spacing: var(--letter-spacing-display-2);
   }
 
   .text-gradient-emerald {
@@ -455,7 +456,9 @@ import Card from '../../../components/ui/Card.astro';
   }
 
   .section-title {
-    font-size: var(--font-size-5xl);
+    font-size: var(--font-size-display-3);
+    line-height: var(--line-height-display-3);
+    letter-spacing: var(--letter-spacing-display-3);
   }
 
   .section-lead {

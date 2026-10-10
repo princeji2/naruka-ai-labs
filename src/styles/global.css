@@ -69,8 +69,10 @@ html {
 /* Accessible Skip Link */
 .skip-link {
   position: absolute;
-  top: -100px;
+  top: var(--space-md);
   left: var(--space-md);
+  /* Parked above the viewport; moved with transform so no layout property animates. */
+  transform: translateY(calc(-100% - var(--space-md) - var(--space-lg)));
   padding: var(--space-sm) var(--space-lg);
   background: var(--primary);
   color: var(--on-brand);
@@ -79,11 +81,11 @@ html {
   border-radius: var(--radius-sm);
   z-index: 1000;
   text-decoration: none;
-  transition: top var(--transition-fast);
+  transition: transform var(--transition-fast);
 }
 
 .skip-link:focus-visible {
-  top: var(--space-md);
+  transform: translateY(0);
   outline: var(--state-focus-outline);
   outline-offset: var(--state-focus-ring-offset);
 }
@@ -197,14 +199,12 @@ code, pre {
   -webkit-backdrop-filter: blur(var(--glass-blur-md)) saturate(140%);
   border: 1px solid var(--border-glass);
   border-radius: var(--radius-lg);
-  box-shadow: var(--shadow-card);
-  transition: border-color var(--transition-base), box-shadow var(--transition-base);
+  transition: border-color var(--transition-base);
 }
 
 @media (hover: hover) and (pointer: fine) {
   .glass-panel:hover {
     border-color: var(--border-glass-hover);
-    box-shadow: var(--shadow-card-hover);
   }
 }
 
@@ -251,37 +251,14 @@ code, pre {
   color: var(--color-text-muted);
 }
 
-/* Scroll reveal (progressive enhancement).
-   Browsers with scroll-driven animations ease surfaces in as they enter the viewport.
-   Everything else renders in its final state, so there is never hidden content or a flash.
-   Uses opacity + the independent `translate` property, so it never fights hover transforms. */
-@keyframes reveal-in {
-  from {
-    opacity: 0;
-    translate: 0 20px;
-  }
-  to {
-    opacity: 1;
-    translate: 0 0;
-  }
-}
-
-@supports (animation-timeline: view()) {
-  main .section-heading,
-  main .glass-panel,
-  main .card {
-    animation: reveal-in linear both;
-    animation-timeline: view();
-    animation-range: entry 0% entry 40%;
-  }
-}
-
-@media (prefers-reduced-motion: reduce) {
-  main .section-heading,
-  main .glass-panel,
-  main .card {
-    animation: none;
-  }
+/* Scroll reveal gate.
+   The reveal itself is a GSAP ScrollTrigger batch (src/lib/motion/reveal.ts). Until it takes over,
+   the inline script in BaseLayout keeps <html data-motion="pending"> and the targets are hidden here
+   so there is no flash. If the script never arrives, the attribute flips to "failed" after 2.5 s
+   (or is never set without JavaScript) and the content is simply visible. Keep this selector in sync
+   with REVEAL_SELECTOR in reveal.ts. */
+html[data-motion='pending'] :is(main .section-heading, main .glass-panel, main .card, [data-reveal]) {
+  opacity: 0;
 }
 
 /* Touch Targets >= 44px (WCAG Success Criterion 2.5.5 / 2.5.8) */

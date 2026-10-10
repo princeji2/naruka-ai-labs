@@ -1,0 +1,696 @@
+{
+  "pbtResults": {},
+  "executionHistory": {
+    "1.2 Record the phase base and the reference hashes": [
+      {
+        "executionId": "cf785b41-a2da-4e1d-a92c-ffed92ff8f37",
+        "chatSessionId": "sess_dbc71a4d-d4fd-4001-9af4-1d9961331bbe",
+        "timestamp": 1791621233828
+      },
+      {
+        "executionId": "cf785b41-a2da-4e1d-a92c-ffed92ff8f37",
+        "chatSessionId": "sess_dbc71a4d-d4fd-4001-9af4-1d9961331bbe",
+        "timestamp": 1791621471569
+      }
+    ],
+    "1.3 Capture the pre-upgrade baseline snapshot": [
+      {
+        "executionId": "cf785b41-a2da-4e1d-a92c-ffed92ff8f37",
+        "chatSessionId": "sess_dbc71a4d-d4fd-4001-9af4-1d9961331bbe",
+        "timestamp": 1791621234097
+      },
+      {
+        "executionId": "cf785b41-a2da-4e1d-a92c-ffed92ff8f37",
+        "chatSessionId": "sess_dbc71a4d-d4fd-4001-9af4-1d9961331bbe",
+        "timestamp": 1791621471980
+      }
+    ],
+    "1.14 Implement the source-scan rule libraries": [
+      {
+        "executionId": "cf785b41-a2da-4e1d-a92c-ffed92ff8f37",
+        "chatSessionId": "sess_dbc71a4d-d4fd-4001-9af4-1d9961331bbe",
+        "timestamp": 1791621501708
+      },
+      {
+        "executionId": "cf785b41-a2da-4e1d-a92c-ffed92ff8f37",
+        "chatSessionId": "sess_dbc71a4d-d4fd-4001-9af4-1d9961331bbe",
+        "timestamp": 1791622477641
+      }
+    ],
+    "1.4 Install the Approved_Packages with exact versions": [
+      {
+        "executionId": "cf785b41-a2da-4e1d-a92c-ffed92ff8f37",
+        "chatSessionId": "sess_dbc71a4d-d4fd-4001-9af4-1d9961331bbe",
+        "timestamp": 1791622484191
+      },
+      {
+        "executionId": "cf785b41-a2da-4e1d-a92c-ffed92ff8f37",
+        "chatSessionId": "sess_dbc71a4d-d4fd-4001-9af4-1d9961331bbe",
+        "timestamp": 1791622709318
+      }
+    ],
+    "1.9 Implement the token bridge": [
+      {
+        "executionId": "cf785b41-a2da-4e1d-a92c-ffed92ff8f37",
+        "chatSessionId": "sess_dbc71a4d-d4fd-4001-9af4-1d9961331bbe",
+        "timestamp": 1791622484983
+      },
+      {
+        "executionId": "cf785b41-a2da-4e1d-a92c-ffed92ff8f37",
+        "chatSessionId": "sess_dbc71a4d-d4fd-4001-9af4-1d9961331bbe",
+        "timestamp": 1791622709247
+      }
+    ],
+    "1.10 Implement the page lifecycle gate": [
+      {
+        "executionId": "cf785b41-a2da-4e1d-a92c-ffed92ff8f37",
+        "chatSessionId": "sess_dbc71a4d-d4fd-4001-9af4-1d9961331bbe",
+        "timestamp": 1791622485518
+      },
+      {
+        "executionId": "cf785b41-a2da-4e1d-a92c-ffed92ff8f37",
+        "chatSessionId": "sess_dbc71a4d-d4fd-4001-9af4-1d9961331bbe",
+        "timestamp": 1791622709428
+      }
+    ],
+    "1.5 Install and self-host Inter Tight, and switch all text to it": [
+      {
+        "executionId": "cf785b41-a2da-4e1d-a92c-ffed92ff8f37",
+        "chatSessionId": "sess_dbc71a4d-d4fd-4001-9af4-1d9961331bbe",
+        "timestamp": 1791622715289
+      },
+      {
+        "executionId": "cf785b41-a2da-4e1d-a92c-ffed92ff8f37",
+        "chatSessionId": "sess_dbc71a4d-d4fd-4001-9af4-1d9961331bbe",
+        "timestamp": 1791623008971
+      }
+    ],
+    "1.11 Implement the Scroll_Controller": [
+      {
+        "executionId": "cf785b41-a2da-4e1d-a92c-ffed92ff8f37",
+        "chatSessionId": "sess_dbc71a4d-d4fd-4001-9af4-1d9961331bbe",
+        "timestamp": 1791622715878
+      },
+      {
+        "executionId": "cf785b41-a2da-4e1d-a92c-ffed92ff8f37",
+        "chatSessionId": "sess_dbc71a4d-d4fd-4001-9af4-1d9961331bbe",
+        "timestamp": 1791623009033
+      }
+    ],
+    "1.6 Remove the old fonts only if nothing references them": [
+      {
+        "executionId": "cf785b41-a2da-4e1d-a92c-ffed92ff8f37",
+        "chatSessionId": "sess_dbc71a4d-d4fd-4001-9af4-1d9961331bbe",
+        "timestamp": 1791623019829
+      },
+      {
+        "executionId": "cf785b41-a2da-4e1d-a92c-ffed92ff8f37",
+        "chatSessionId": "sess_dbc71a4d-d4fd-4001-9af4-1d9961331bbe",
+        "timestamp": 1791623289335
+      }
+    ],
+    "1.8 Wire the React integration, TypeScript options and npm scripts": [
+      {
+        "executionId": "cf785b41-a2da-4e1d-a92c-ffed92ff8f37",
+        "chatSessionId": "sess_dbc71a4d-d4fd-4001-9af4-1d9961331bbe",
+        "timestamp": 1791623019901
+      },
+      {
+        "executionId": "cf785b41-a2da-4e1d-a92c-ffed92ff8f37",
+        "chatSessionId": "sess_dbc71a4d-d4fd-4001-9af4-1d9961331bbe",
+        "timestamp": 1791623289248
+      }
+    ],
+    "1.12 Implement the motion layer and the page entry": [
+      {
+        "executionId": "cf785b41-a2da-4e1d-a92c-ffed92ff8f37",
+        "chatSessionId": "sess_dbc71a4d-d4fd-4001-9af4-1d9961331bbe",
+        "timestamp": 1791623020530
+      },
+      {
+        "executionId": "cf785b41-a2da-4e1d-a92c-ffed92ff8f37",
+        "chatSessionId": "sess_dbc71a4d-d4fd-4001-9af4-1d9961331bbe",
+        "timestamp": 1791623290344
+      }
+    ],
+    "1.7 Add the display type tokens and amend the old font-size check": [
+      {
+        "executionId": "cf785b41-a2da-4e1d-a92c-ffed92ff8f37",
+        "chatSessionId": "sess_dbc71a4d-d4fd-4001-9af4-1d9961331bbe",
+        "timestamp": 1791623306399
+      },
+      {
+        "executionId": "948b2bff-6da5-4d7e-b32f-ce1ff5d4d83d",
+        "chatSessionId": "sess_dbc71a4d-d4fd-4001-9af4-1d9961331bbe",
+        "timestamp": 1791624025793
+      }
+    ],
+    "1.13 Wire the foundation into `BaseLayout.astro` and `global.css`": [
+      {
+        "executionId": "cf785b41-a2da-4e1d-a92c-ffed92ff8f37",
+        "chatSessionId": "sess_dbc71a4d-d4fd-4001-9af4-1d9961331bbe",
+        "timestamp": 1791623306658
+      },
+      {
+        "executionId": "cf785b41-a2da-4e1d-a92c-ffed92ff8f37",
+        "chatSessionId": "sess_dbc71a4d-d4fd-4001-9af4-1d9961331bbe",
+        "timestamp": 1791623687224
+      }
+    ],
+    "1.16 Implement `scripts/verify-dist.mjs`": [
+      {
+        "executionId": "cf785b41-a2da-4e1d-a92c-ffed92ff8f37",
+        "chatSessionId": "sess_dbc71a4d-d4fd-4001-9af4-1d9961331bbe",
+        "timestamp": 1791623306732
+      },
+      {
+        "executionId": "cf785b41-a2da-4e1d-a92c-ffed92ff8f37",
+        "chatSessionId": "sess_dbc71a4d-d4fd-4001-9af4-1d9961331bbe",
+        "timestamp": 1791623687143
+      }
+    ],
+    "1.15 Implement `scripts/verify-source.mjs` and the burn-down baseline": [
+      {
+        "executionId": "948b2bff-6da5-4d7e-b32f-ce1ff5d4d83d",
+        "chatSessionId": "sess_dbc71a4d-d4fd-4001-9af4-1d9961331bbe",
+        "timestamp": 1791624043855
+      },
+      {
+        "executionId": "948b2bff-6da5-4d7e-b32f-ce1ff5d4d83d",
+        "chatSessionId": "sess_dbc71a4d-d4fd-4001-9af4-1d9961331bbe",
+        "timestamp": 1791624544332
+      }
+    ],
+    "1.17 Wire the checks into CI": [
+      {
+        "executionId": "948b2bff-6da5-4d7e-b32f-ce1ff5d4d83d",
+        "chatSessionId": "sess_dbc71a4d-d4fd-4001-9af4-1d9961331bbe",
+        "timestamp": 1791624544443
+      },
+      {
+        "executionId": "948b2bff-6da5-4d7e-b32f-ce1ff5d4d83d",
+        "chatSessionId": "sess_dbc71a4d-d4fd-4001-9af4-1d9961331bbe",
+        "timestamp": 1791624641242
+      }
+    ],
+    "1.34 Checkpoint: Phase 1 Phase_Summary and HARD STOP": [
+      {
+        "executionId": "948b2bff-6da5-4d7e-b32f-ce1ff5d4d83d",
+        "chatSessionId": "sess_dbc71a4d-d4fd-4001-9af4-1d9961331bbe",
+        "timestamp": 1791624641298
+      },
+      {
+        "executionId": "948b2bff-6da5-4d7e-b32f-ce1ff5d4d83d",
+        "chatSessionId": "sess_dbc71a4d-d4fd-4001-9af4-1d9961331bbe",
+        "timestamp": 1791624839642
+      }
+    ],
+    "1. Phase 1: Foundation (dependencies, Astro React integration, Lenis and ScrollTrigger with cleanup, Inter Tight font, display type tokens)": [
+      {
+        "executionId": "948b2bff-6da5-4d7e-b32f-ce1ff5d4d83d",
+        "chatSessionId": "sess_dbc71a4d-d4fd-4001-9af4-1d9961331bbe",
+        "timestamp": 1791624839726
+      }
+    ],
+    "2.1 Implement the Background_Component logic modules": [
+      {
+        "executionId": "e18c942c-0214-409b-8dab-65555f02c6e2",
+        "chatSessionId": "sess_dbc71a4d-d4fd-4001-9af4-1d9961331bbe",
+        "timestamp": 1791625022392
+      },
+      {
+        "executionId": "e18c942c-0214-409b-8dab-65555f02c6e2",
+        "chatSessionId": "sess_dbc71a4d-d4fd-4001-9af4-1d9961331bbe",
+        "timestamp": 1791625235378
+      }
+    ],
+    "2.3 Rewrite `Background.astro` and remove the vendored script": [
+      {
+        "executionId": "e18c942c-0214-409b-8dab-65555f02c6e2",
+        "chatSessionId": "sess_dbc71a4d-d4fd-4001-9af4-1d9961331bbe",
+        "timestamp": 1791625236310
+      },
+      {
+        "executionId": "e18c942c-0214-409b-8dab-65555f02c6e2",
+        "chatSessionId": "sess_dbc71a4d-d4fd-4001-9af4-1d9961331bbe",
+        "timestamp": 1791625823826
+      }
+    ],
+    "2.4 Restyle `Button.astro`: outlined pills everywhere, gradient-stroke primary, one filled hero CTA (Open_Decision 2, resolved 2026-10-10)": [
+      {
+        "executionId": "e18c942c-0214-409b-8dab-65555f02c6e2",
+        "chatSessionId": "sess_dbc71a4d-d4fd-4001-9af4-1d9961331bbe",
+        "timestamp": 1791625236892
+      },
+      {
+        "executionId": "e18c942c-0214-409b-8dab-65555f02c6e2",
+        "chatSessionId": "sess_dbc71a4d-d4fd-4001-9af4-1d9961331bbe",
+        "timestamp": 1791625823609
+      }
+    ],
+    "2.5 Restyle `Card.astro` with no box-shadow and add card tilt (Open_Decision 1, resolved 2026-10-10)": [
+      {
+        "executionId": "e18c942c-0214-409b-8dab-65555f02c6e2",
+        "chatSessionId": "sess_dbc71a4d-d4fd-4001-9af4-1d9961331bbe",
+        "timestamp": 1791625237517
+      },
+      {
+        "executionId": "e18c942c-0214-409b-8dab-65555f02c6e2",
+        "chatSessionId": "sess_dbc71a4d-d4fd-4001-9af4-1d9961331bbe",
+        "timestamp": 1791625823727
+      }
+    ],
+    "2.6 Restyle `Navbar.astro` and add the header effect": [
+      {
+        "executionId": "e18c942c-0214-409b-8dab-65555f02c6e2",
+        "chatSessionId": "sess_dbc71a4d-d4fd-4001-9af4-1d9961331bbe",
+        "timestamp": 1791625830138
+      },
+      {
+        "executionId": "e18c942c-0214-409b-8dab-65555f02c6e2",
+        "chatSessionId": "sess_dbc71a4d-d4fd-4001-9af4-1d9961331bbe",
+        "timestamp": 1791626294852
+      }
+    ],
+    "2.7 Restyle `Footer.astro`": [
+      {
+        "executionId": "e18c942c-0214-409b-8dab-65555f02c6e2",
+        "chatSessionId": "sess_dbc71a4d-d4fd-4001-9af4-1d9961331bbe",
+        "timestamp": 1791625830715
+      },
+      {
+        "executionId": "e18c942c-0214-409b-8dab-65555f02c6e2",
+        "chatSessionId": "sess_dbc71a4d-d4fd-4001-9af4-1d9961331bbe",
+        "timestamp": 1791626295282
+      }
+    ],
+    "2.8 Register the new motion effects": [
+      {
+        "executionId": "e18c942c-0214-409b-8dab-65555f02c6e2",
+        "chatSessionId": "sess_dbc71a4d-d4fd-4001-9af4-1d9961331bbe",
+        "timestamp": 1791626303740
+      },
+      {
+        "executionId": "e18c942c-0214-409b-8dab-65555f02c6e2",
+        "chatSessionId": "sess_dbc71a4d-d4fd-4001-9af4-1d9961331bbe",
+        "timestamp": 1791626510208
+      }
+    ],
+    "2.9 Extend `verify-source` for Phase 2": [
+      {
+        "executionId": "e18c942c-0214-409b-8dab-65555f02c6e2",
+        "chatSessionId": "sess_dbc71a4d-d4fd-4001-9af4-1d9961331bbe",
+        "timestamp": 1791626510969
+      },
+      {
+        "executionId": "e18c942c-0214-409b-8dab-65555f02c6e2",
+        "chatSessionId": "sess_dbc71a4d-d4fd-4001-9af4-1d9961331bbe",
+        "timestamp": 1791626978438
+      }
+    ],
+    "2.11 Checkpoint: Phase 2 Phase_Summary and HARD STOP": [
+      {
+        "executionId": "e18c942c-0214-409b-8dab-65555f02c6e2",
+        "chatSessionId": "sess_dbc71a4d-d4fd-4001-9af4-1d9961331bbe",
+        "timestamp": 1791626978510
+      },
+      {
+        "executionId": "e18c942c-0214-409b-8dab-65555f02c6e2",
+        "chatSessionId": "sess_dbc71a4d-d4fd-4001-9af4-1d9961331bbe",
+        "timestamp": 1791627323431
+      }
+    ],
+    "2. Phase 2: Shared components (navbar, footer, buttons, cards, background)": [
+      {
+        "executionId": "e18c942c-0214-409b-8dab-65555f02c6e2",
+        "chatSessionId": "sess_dbc71a4d-d4fd-4001-9af4-1d9961331bbe",
+        "timestamp": 1791627323652
+      }
+    ],
+    "3.0 Phase 2 follow-ups: card focus ring and tilt scope": [
+      {
+        "executionId": "c848d03e-c33d-4904-b768-0c43e928abbd",
+        "chatSessionId": "sess_dbc71a4d-d4fd-4001-9af4-1d9961331bbe",
+        "timestamp": 1791627993467
+      },
+      {
+        "executionId": "59f39eba-4462-4fe7-9840-82c33ac5cf39",
+        "chatSessionId": "sess_dbc71a4d-d4fd-4001-9af4-1d9961331bbe",
+        "timestamp": 1791628259947
+      }
+    ],
+    "3.1 Implement the particle field and link logic": [
+      {
+        "executionId": "c848d03e-c33d-4904-b768-0c43e928abbd",
+        "chatSessionId": "sess_dbc71a4d-d4fd-4001-9af4-1d9961331bbe",
+        "timestamp": 1791627994016
+      },
+      {
+        "executionId": "59f39eba-4462-4fe7-9840-82c33ac5cf39",
+        "chatSessionId": "sess_dbc71a4d-d4fd-4001-9af4-1d9961331bbe",
+        "timestamp": 1791628260323
+      }
+    ],
+    "3.4 Implement the scene runtime logic": [
+      {
+        "executionId": "c848d03e-c33d-4904-b768-0c43e928abbd",
+        "chatSessionId": "sess_dbc71a4d-d4fd-4001-9af4-1d9961331bbe",
+        "timestamp": 1791627995236
+      },
+      {
+        "executionId": "59f39eba-4462-4fe7-9840-82c33ac5cf39",
+        "chatSessionId": "sess_dbc71a4d-d4fd-4001-9af4-1d9961331bbe",
+        "timestamp": 1791628041982
+      },
+      {
+        "executionId": "59f39eba-4462-4fe7-9840-82c33ac5cf39",
+        "chatSessionId": "sess_dbc71a4d-d4fd-4001-9af4-1d9961331bbe",
+        "timestamp": 1791628260395
+      }
+    ],
+    "3.10 Implement the lazy Scene_3D (`ConstellationScene.tsx`)": [
+      {
+        "executionId": "59f39eba-4462-4fe7-9840-82c33ac5cf39",
+        "chatSessionId": "sess_dbc71a4d-d4fd-4001-9af4-1d9961331bbe",
+        "timestamp": 1791628267900
+      },
+      {
+        "executionId": "59f39eba-4462-4fe7-9840-82c33ac5cf39",
+        "chatSessionId": "sess_dbc71a4d-d4fd-4001-9af4-1d9961331bbe",
+        "timestamp": 1791628656595
+      }
+    ],
+    "3.12 Add the scroll-driven motion registrations": [
+      {
+        "executionId": "59f39eba-4462-4fe7-9840-82c33ac5cf39",
+        "chatSessionId": "sess_dbc71a4d-d4fd-4001-9af4-1d9961331bbe",
+        "timestamp": 1791628268373
+      },
+      {
+        "executionId": "59f39eba-4462-4fe7-9840-82c33ac5cf39",
+        "chatSessionId": "sess_dbc71a4d-d4fd-4001-9af4-1d9961331bbe",
+        "timestamp": 1791628913222
+      }
+    ],
+    "3.11 Implement the island shell, `Scene3D.astro` and `ScenePoster.astro`": [
+      {
+        "executionId": "59f39eba-4462-4fe7-9840-82c33ac5cf39",
+        "chatSessionId": "sess_dbc71a4d-d4fd-4001-9af4-1d9961331bbe",
+        "timestamp": 1791628656809
+      },
+      {
+        "executionId": "59f39eba-4462-4fe7-9840-82c33ac5cf39",
+        "chatSessionId": "sess_dbc71a4d-d4fd-4001-9af4-1d9961331bbe",
+        "timestamp": 1791628913396
+      },
+      {
+        "executionId": "59f39eba-4462-4fe7-9840-82c33ac5cf39",
+        "chatSessionId": "sess_dbc71a4d-d4fd-4001-9af4-1d9961331bbe",
+        "timestamp": 1791634851910
+      },
+      {
+        "executionId": "9b8eac20-e087-4a64-8a3b-8377030b6c07",
+        "chatSessionId": "sess_dbc71a4d-d4fd-4001-9af4-1d9961331bbe",
+        "timestamp": 1791646926161
+      },
+      {
+        "executionId": "7e664917-2c17-4193-9a22-798f59206548",
+        "chatSessionId": "sess_dbc71a4d-d4fd-4001-9af4-1d9961331bbe",
+        "timestamp": 1791649083210
+      }
+    ],
+    "3.13 Build the home page hero in `src/pages/index.astro`": [
+      {
+        "executionId": "59f39eba-4462-4fe7-9840-82c33ac5cf39",
+        "chatSessionId": "sess_dbc71a4d-d4fd-4001-9af4-1d9961331bbe",
+        "timestamp": 1791628913569
+      },
+      {
+        "executionId": "59f39eba-4462-4fe7-9840-82c33ac5cf39",
+        "chatSessionId": "sess_dbc71a4d-d4fd-4001-9af4-1d9961331bbe",
+        "timestamp": 1791629548277
+      }
+    ],
+    "3.14 Retire `HeroPrism.astro`": [
+      {
+        "executionId": "59f39eba-4462-4fe7-9840-82c33ac5cf39",
+        "chatSessionId": "sess_dbc71a4d-d4fd-4001-9af4-1d9961331bbe",
+        "timestamp": 1791629548357
+      },
+      {
+        "executionId": "59f39eba-4462-4fe7-9840-82c33ac5cf39",
+        "chatSessionId": "sess_dbc71a4d-d4fd-4001-9af4-1d9961331bbe",
+        "timestamp": 1791629857513
+      }
+    ],
+    "3.15 Make the Scene_3D dist checks mandatory": [
+      {
+        "executionId": "59f39eba-4462-4fe7-9840-82c33ac5cf39",
+        "chatSessionId": "sess_dbc71a4d-d4fd-4001-9af4-1d9961331bbe",
+        "timestamp": 1791629548456
+      },
+      {
+        "executionId": "59f39eba-4462-4fe7-9840-82c33ac5cf39",
+        "chatSessionId": "sess_dbc71a4d-d4fd-4001-9af4-1d9961331bbe",
+        "timestamp": 1791629857616
+      }
+    ],
+    "3.16 Add the `ClientRouter` to `BaseLayout.astro` and make the page lifecycle router-safe": [
+      {
+        "executionId": "59f39eba-4462-4fe7-9840-82c33ac5cf39",
+        "chatSessionId": "sess_dbc71a4d-d4fd-4001-9af4-1d9961331bbe",
+        "timestamp": 1791629857782
+      },
+      {
+        "executionId": "59f39eba-4462-4fe7-9840-82c33ac5cf39",
+        "chatSessionId": "sess_dbc71a4d-d4fd-4001-9af4-1d9961331bbe",
+        "timestamp": 1791630283359
+      }
+    ],
+    "3.17 Audit and adapt every existing script for `astro:before-swap` / `astro:after-swap`": [
+      {
+        "executionId": "59f39eba-4462-4fe7-9840-82c33ac5cf39",
+        "chatSessionId": "sess_dbc71a4d-d4fd-4001-9af4-1d9961331bbe",
+        "timestamp": 1791630283555
+      },
+      {
+        "executionId": "59f39eba-4462-4fe7-9840-82c33ac5cf39",
+        "chatSessionId": "sess_dbc71a4d-d4fd-4001-9af4-1d9961331bbe",
+        "timestamp": 1791634851737
+      }
+    ],
+    "3.18 Flip the verify checks to expect the router": [
+      {
+        "executionId": "7e664917-2c17-4193-9a22-798f59206548",
+        "chatSessionId": "sess_dbc71a4d-d4fd-4001-9af4-1d9961331bbe",
+        "timestamp": 1791649095129
+      },
+      {
+        "executionId": "e4a82db3-64d0-4f3c-ad08-4cddb75c5e94",
+        "chatSessionId": "sess_dbc71a4d-d4fd-4001-9af4-1d9961331bbe",
+        "timestamp": 1791649743424
+      },
+      {
+        "executionId": "a92337b7-97d9-4325-887e-53c6b491d429",
+        "chatSessionId": "sess_dbc71a4d-d4fd-4001-9af4-1d9961331bbe",
+        "timestamp": 1791650405300
+      }
+    ],
+    "3.20 Checkpoint: Phase 3 Phase_Summary and HARD STOP": [
+      {
+        "executionId": "a92337b7-97d9-4325-887e-53c6b491d429",
+        "chatSessionId": "sess_dbc71a4d-d4fd-4001-9af4-1d9961331bbe",
+        "timestamp": 1791650438968
+      },
+      {
+        "executionId": "a92337b7-97d9-4325-887e-53c6b491d429",
+        "chatSessionId": "sess_dbc71a4d-d4fd-4001-9af4-1d9961331bbe",
+        "timestamp": 1791650621464
+      }
+    ],
+    "3. Phase 3: Hero and home page 3D": [
+      {
+        "executionId": "a92337b7-97d9-4325-887e-53c6b491d429",
+        "chatSessionId": "sess_dbc71a4d-d4fd-4001-9af4-1d9961331bbe",
+        "timestamp": 1791650621833
+      }
+    ],
+    "4.1 Contact reference gate: verify the new export (ask only if it is missing or unreadable)": [
+      {
+        "executionId": "c60f2746-70ed-45ed-aae6-b9d6d32e1a68",
+        "chatSessionId": "sess_d6b92cef-bfcd-4a2d-baf1-e78a748649ec",
+        "timestamp": 1791650824048
+      },
+      {
+        "executionId": "c60f2746-70ed-45ed-aae6-b9d6d32e1a68",
+        "chatSessionId": "sess_d6b92cef-bfcd-4a2d-baf1-e78a748649ec",
+        "timestamp": 1791650860723
+      },
+      {
+        "executionId": "c60f2746-70ed-45ed-aae6-b9d6d32e1a68",
+        "chatSessionId": "sess_d6b92cef-bfcd-4a2d-baf1-e78a748649ec",
+        "timestamp": 1791650871029
+      }
+    ],
+    "4.2 Add the Contact reference size check to `verify-source`": [
+      {
+        "executionId": "c60f2746-70ed-45ed-aae6-b9d6d32e1a68",
+        "chatSessionId": "sess_d6b92cef-bfcd-4a2d-baf1-e78a748649ec",
+        "timestamp": 1791650824495
+      },
+      {
+        "executionId": "c60f2746-70ed-45ed-aae6-b9d6d32e1a68",
+        "chatSessionId": "sess_d6b92cef-bfcd-4a2d-baf1-e78a748649ec",
+        "timestamp": 1791650879329
+      },
+      {
+        "executionId": "c60f2746-70ed-45ed-aae6-b9d6d32e1a68",
+        "chatSessionId": "sess_d6b92cef-bfcd-4a2d-baf1-e78a748649ec",
+        "timestamp": 1791651134495
+      }
+    ],
+    "4.3 Restyle and animate the About page": [
+      {
+        "executionId": "c60f2746-70ed-45ed-aae6-b9d6d32e1a68",
+        "chatSessionId": "sess_d6b92cef-bfcd-4a2d-baf1-e78a748649ec",
+        "timestamp": 1791650824770
+      },
+      {
+        "executionId": "c60f2746-70ed-45ed-aae6-b9d6d32e1a68",
+        "chatSessionId": "sess_d6b92cef-bfcd-4a2d-baf1-e78a748649ec",
+        "timestamp": 1791651186664
+      },
+      {
+        "executionId": "c60f2746-70ed-45ed-aae6-b9d6d32e1a68",
+        "chatSessionId": "sess_d6b92cef-bfcd-4a2d-baf1-e78a748649ec",
+        "timestamp": 1791651646840
+      }
+    ],
+    "4.4 Restyle and animate the Products pages": [
+      {
+        "executionId": "c60f2746-70ed-45ed-aae6-b9d6d32e1a68",
+        "chatSessionId": "sess_d6b92cef-bfcd-4a2d-baf1-e78a748649ec",
+        "timestamp": 1791650825057
+      },
+      {
+        "executionId": "c60f2746-70ed-45ed-aae6-b9d6d32e1a68",
+        "chatSessionId": "sess_d6b92cef-bfcd-4a2d-baf1-e78a748649ec",
+        "timestamp": 1791651654189
+      },
+      {
+        "executionId": "c60f2746-70ed-45ed-aae6-b9d6d32e1a68",
+        "chatSessionId": "sess_d6b92cef-bfcd-4a2d-baf1-e78a748649ec",
+        "timestamp": 1791651889544
+      }
+    ],
+    "4.5 Restyle the Privacy and Terms pages": [
+      {
+        "executionId": "c60f2746-70ed-45ed-aae6-b9d6d32e1a68",
+        "chatSessionId": "sess_d6b92cef-bfcd-4a2d-baf1-e78a748649ec",
+        "timestamp": 1791650825495
+      },
+      {
+        "executionId": "c60f2746-70ed-45ed-aae6-b9d6d32e1a68",
+        "chatSessionId": "sess_d6b92cef-bfcd-4a2d-baf1-e78a748649ec",
+        "timestamp": 1791651896822
+      },
+      {
+        "executionId": "c60f2746-70ed-45ed-aae6-b9d6d32e1a68",
+        "chatSessionId": "sess_d6b92cef-bfcd-4a2d-baf1-e78a748649ec",
+        "timestamp": 1791652199560
+      }
+    ],
+    "4.6 Restyle the 404 page": [
+      {
+        "executionId": "c60f2746-70ed-45ed-aae6-b9d6d32e1a68",
+        "chatSessionId": "sess_d6b92cef-bfcd-4a2d-baf1-e78a748649ec",
+        "timestamp": 1791650825777
+      },
+      {
+        "executionId": "c60f2746-70ed-45ed-aae6-b9d6d32e1a68",
+        "chatSessionId": "sess_d6b92cef-bfcd-4a2d-baf1-e78a748649ec",
+        "timestamp": 1791652207224
+      },
+      {
+        "executionId": "c60f2746-70ed-45ed-aae6-b9d6d32e1a68",
+        "chatSessionId": "sess_d6b92cef-bfcd-4a2d-baf1-e78a748649ec",
+        "timestamp": 1791652476924
+      }
+    ],
+    "4.7 Port the Signin_Spec to the sign-in page": [
+      {
+        "executionId": "c60f2746-70ed-45ed-aae6-b9d6d32e1a68",
+        "chatSessionId": "sess_d6b92cef-bfcd-4a2d-baf1-e78a748649ec",
+        "timestamp": 1791650826065
+      },
+      {
+        "executionId": "c60f2746-70ed-45ed-aae6-b9d6d32e1a68",
+        "chatSessionId": "sess_d6b92cef-bfcd-4a2d-baf1-e78a748649ec",
+        "timestamp": 1791652563879
+      }
+    ],
+    "4.8 Build the Contact page from the confirmed reference": [
+      {
+        "executionId": "c60f2746-70ed-45ed-aae6-b9d6d32e1a68",
+        "chatSessionId": "sess_d6b92cef-bfcd-4a2d-baf1-e78a748649ec",
+        "timestamp": 1791650826351
+      }
+    ],
+    "4.9 Checkpoint: Phase 4 Phase_Summary and HARD STOP": [
+      {
+        "executionId": "c60f2746-70ed-45ed-aae6-b9d6d32e1a68",
+        "chatSessionId": "sess_d6b92cef-bfcd-4a2d-baf1-e78a748649ec",
+        "timestamp": 1791650826787
+      }
+    ],
+    "5.1 Burn the baseline down to zero and switch CI to strict": [
+      {
+        "executionId": "c60f2746-70ed-45ed-aae6-b9d6d32e1a68",
+        "chatSessionId": "sess_d6b92cef-bfcd-4a2d-baf1-e78a748649ec",
+        "timestamp": 1791650827050
+      }
+    ],
+    "5.2 Run the full automated verification": [
+      {
+        "executionId": "c60f2746-70ed-45ed-aae6-b9d6d32e1a68",
+        "chatSessionId": "sess_d6b92cef-bfcd-4a2d-baf1-e78a748649ec",
+        "timestamp": 1791650827352
+      }
+    ],
+    "5.3 QA: Test_Widths and Reduced_Motion_Mode on every route": [
+      {
+        "executionId": "c60f2746-70ed-45ed-aae6-b9d6d32e1a68",
+        "chatSessionId": "sess_d6b92cef-bfcd-4a2d-baf1-e78a748649ec",
+        "timestamp": 1791650827638
+      }
+    ],
+    "5.4 QA: lifecycle, leaks, console and failure modes": [
+      {
+        "executionId": "c60f2746-70ed-45ed-aae6-b9d6d32e1a68",
+        "chatSessionId": "sess_d6b92cef-bfcd-4a2d-baf1-e78a748649ec",
+        "timestamp": 1791650828044
+      }
+    ],
+    "5.5 QA: keyboard, focus and contrast": [
+      {
+        "executionId": "c60f2746-70ed-45ed-aae6-b9d6d32e1a68",
+        "chatSessionId": "sess_d6b92cef-bfcd-4a2d-baf1-e78a748649ec",
+        "timestamp": 1791650828322
+      }
+    ],
+    "5.6 QA: performance measurements for the home page": [
+      {
+        "executionId": "c60f2746-70ed-45ed-aae6-b9d6d32e1a68",
+        "chatSessionId": "sess_d6b92cef-bfcd-4a2d-baf1-e78a748649ec",
+        "timestamp": 1791650828717
+      }
+    ],
+    "5.7 Final checkpoint: Phase 5 Phase_Summary and HARD STOP": [
+      {
+        "executionId": "c60f2746-70ed-45ed-aae6-b9d6d32e1a68",
+        "chatSessionId": "sess_d6b92cef-bfcd-4a2d-baf1-e78a748649ec",
+        "timestamp": 1791650829007
+      }
+    ]
+  }
+}

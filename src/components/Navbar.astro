@@ -75,10 +75,12 @@ function isActive(href: string) {
 
   <!-- Mobile Drawer Overlay & Panel.
        Lives outside <header>: the header's backdrop-filter would otherwise become the
-       containing block for this fixed layer and clip it to the 72px bar. -->
+       containing block for this fixed layer and clip it to the 72px bar.
+       data-lenis-prevent: while the drawer is open Lenis is stopped, and this keeps wheel and touch
+       scrolling native inside the panel. -->
   <div class="mobile-drawer" id="mobile-nav-drawer" aria-hidden="true">
     <div class="mobile-drawer-backdrop" id="mobile-drawer-backdrop"></div>
-    <div class="mobile-drawer-content" role="dialog" aria-modal="true" aria-label="Mobile Navigation">
+    <div class="mobile-drawer-content" role="dialog" aria-modal="true" aria-label="Mobile Navigation" data-lenis-prevent>
       <div class="mobile-drawer-header">
         <Logo size={28} />
         <button
@@ -87,7 +89,7 @@ function isActive(href: string) {
           id="mobile-close-btn"
           aria-label="Close navigation menu"
         >
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
             <line x1="18" y1="6" x2="6" y2="18"></line>
             <line x1="6" y1="6" x2="18" y2="18"></line>
           </svg>
@@ -142,121 +144,78 @@ function isActive(href: string) {
   </div>
 
 <script>
-  function setupMobileMenu() {
-    const toggleBtn = document.getElementById('mobile-menu-toggle');
-    const closeBtn = document.getElementById('mobile-close-btn');
-    const backdrop = document.getElementById('mobile-drawer-backdrop');
-    const drawer = document.getElementById('mobile-nav-drawer');
+  import { bindPageLifecycle, createGate } from '../lib/lifecycle/page-lifecycle.ts';
+  import { scrollController } from '../lib/scroll/index.ts';
+  import { setupMobileMenu } from '../lib/ui/mobile-menu.ts';
 
-    if (!toggleBtn || !drawer) return;
-
-    let isOpen = false;
-
-    function getFocusable() {
-      if (!drawer) return [];
-      return Array.from(
-        drawer.querySelectorAll<HTMLElement>(
-          'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])'
-        )
-      );
-    }
-
-    function openMenu() {
-      isOpen = true;
-      toggleBtn?.setAttribute('aria-expanded', 'true');
-      drawer?.setAttribute('aria-hidden', 'false');
-      drawer?.classList.add('is-open');
-      document.body.style.overflow = 'hidden';
-      // Focus the close button after transition starts
-      setTimeout(() => {
-        closeBtn?.focus();
-      }, 50);
-    }
-
-    function closeMenu() {
-      isOpen = false;
-      toggleBtn?.setAttribute('aria-expanded', 'false');
-      drawer?.setAttribute('aria-hidden', 'true');
-      drawer?.classList.remove('is-open');
-      document.body.style.overflow = '';
-      toggleBtn?.focus();
-    }
-
-    toggleBtn.addEventListener('click', () => {
-      if (isOpen) closeMenu();
-      else openMenu();
-    });
-
-    closeBtn?.addEventListener('click', closeMenu);
-    backdrop?.addEventListener('click', closeMenu);
-
-    // Trap focus inside drawer and handle Escape key
-    window.addEventListener('keydown', (e) => {
-      if (!isOpen) return;
-
-      if (e.key === 'Escape') {
-        e.preventDefault();
-        closeMenu();
-        return;
-      }
-
-      if (e.key === 'Tab') {
-        const focusable = getFocusable();
-        if (focusable.length === 0) return;
-
-        const first = focusable[0];
-        const last = focusable[focusable.length - 1];
-
-        if (e.shiftKey) {
-          if (document.activeElement === first) {
-            e.preventDefault();
-            last.focus();
-          }
-        } else {
-          if (document.activeElement === last) {
-            e.preventDefault();
-            first.focus();
-          }
-        }
-      }
-    });
-
-    // Close when clicking internal links
-    const mobileLinks = drawer.querySelectorAll('.mobile-nav-link');
-    mobileLinks.forEach((link) => {
-      link.addEventListener('click', closeMenu);
-    });
-  }
-
-  setupMobileMenu();
-  document.addEventListener('astro:after-swap', setupMobileMenu);
+  // Bound once per session. Each enter re-queries the current page's drawer; each leave (astro:before-swap,
+  // pagehide) closes it, releases the scroll lock and removes every listener. See src/lib/ui/mobile-menu.ts.
+  bindPageLifecycle(
+    createGate(() =>
+      setupMobileMenu({
+        document,
+        window,
+        lockScroll: (reason) => scrollController.lock(reason),
+      })
+    ),
+    { document, window }
+  );
 </script>
 
 <style>
+  /* Header: transparent at the top of the page. Once the page has scrolled, the motion layer sets
+     data-scrolled and the background layer (::before) and the hairline (::after) fade in. Only opacity
+     changes. The blur lives on the background layer so it fades in with it.
+     Fallbacks that show the layer at once: no JavaScript, or the motion script failed to take over. */
   .site-header {
     position: sticky;
     top: 0;
     z-index: 100;
+  }
+
+  .site-header::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    z-index: -1;
     background: rgba(var(--bg-rgb), 0.72);
     backdrop-filter: blur(var(--glass-blur-lg)) saturate(160%);
     -webkit-backdrop-filter: blur(var(--glass-blur-lg)) saturate(160%);
-    border-bottom: 1px solid var(--border-subtle);
+    opacity: 0;
+    transition: opacity var(--transition-base);
+    pointer-events: none;
   }
 
-  /* Hairline highlight under the bar instead of a hard divider */
+  /* 1px --border hairline along the bottom edge */
   .site-header::after {
     content: '';
     position: absolute;
     left: 0;
     right: 0;
-    bottom: -1px;
+    bottom: 0;
     height: 1px;
-    background: linear-gradient(90deg, transparent 0%, rgba(var(--primary-rgb), 0.28) 50%, transparent 100%);
+    background: var(--border);
+    opacity: 0;
+    transition: opacity var(--transition-base);
     pointer-events: none;
   }
 
+  .site-header[data-scrolled]::before,
+  .site-header[data-scrolled]::after,
+  html[data-motion='failed'] .site-header::before,
+  html[data-motion='failed'] .site-header::after {
+    opacity: 1;
+  }
+
+  @media (scripting: none) {
+    .site-header::before,
+    .site-header::after {
+      opacity: 1;
+    }
+  }
+
   @media (prefers-reduced-transparency: reduce) {
-    .site-header {
+    .site-header::before {
       background: var(--color-surface-base);
       backdrop-filter: none;
       -webkit-backdrop-filter: none;
@@ -294,33 +253,37 @@ function isActive(href: string) {
   .nav-list {
     display: flex;
     align-items: center;
-    gap: var(--space-xs);
+    gap: var(--space-3);
     list-style: none;
   }
 
+  /* Ghost link: no fill, no border at rest, colour shift on hover. The transparent border reserves
+     the space the active state uses, so labels never shift. */
   .nav-link {
     display: inline-flex;
     align-items: center;
-    padding: var(--space-2) var(--space-4);
+    min-height: var(--target-min-size);
+    padding: 0 var(--space-5);
     font-size: var(--font-size-sm);
-    font-weight: var(--font-weight-medium);
+    font-weight: var(--font-weight-regular);
     color: var(--color-text-secondary);
+    background: transparent;
+    border: 1px solid transparent;
     border-radius: var(--radius-full);
-    transition: color var(--transition-fast), background-color var(--transition-fast);
+    transition: color var(--transition-fast), background-color var(--transition-fast), border-color var(--transition-fast);
   }
 
   @media (hover: hover) and (pointer: fine) {
     .nav-link:hover {
       color: var(--color-text-primary);
-      background: rgba(var(--white-rgb), 0.06);
     }
   }
 
-  /* Weight stays constant between states so the label never shifts width */
+  /* The current page keeps its tinted pill; weight stays constant between states. */
   .nav-link.active {
     color: var(--color-text-primary);
     background: rgba(var(--primary-rgb), 0.14);
-    box-shadow: inset 0 0 0 1px rgba(var(--primary-rgb), 0.3);
+    border-color: rgba(var(--primary-rgb), 0.3);
   }
 
   .nav-link:focus-visible {
@@ -335,6 +298,7 @@ function isActive(href: string) {
     gap: var(--space-4);
   }
 
+  /* Outlined round button, the icon-sized sibling of the secondary pill next to it */
   .github-icon-link {
     display: inline-flex;
     align-items: center;
@@ -342,18 +306,20 @@ function isActive(href: string) {
     width: var(--target-min-size);
     height: var(--target-min-size);
     border-radius: var(--radius-full);
-    color: var(--color-text-secondary);
-    border: 1px solid var(--border-subtle);
-    background: rgba(var(--white-rgb), 0.02);
-    transition: color var(--transition-fast), border-color var(--transition-fast), background-color var(--transition-fast);
+    color: var(--color-text-primary);
+    background: transparent;
+    border: 1px solid var(--text);
+    transition: border-color var(--transition-fast), transform var(--transition-instant);
   }
 
   @media (hover: hover) and (pointer: fine) {
     .github-icon-link:hover {
-      color: var(--color-text-primary);
-      border-color: var(--border-glass-hover);
-      background: rgba(var(--white-rgb), 0.06);
+      border-color: color-mix(in srgb, var(--text) 80%, transparent);
     }
+  }
+
+  .github-icon-link:active {
+    transform: scale(0.97);
   }
 
   .github-icon-link:focus-visible {
@@ -371,23 +337,24 @@ function isActive(href: string) {
     }
   }
 
-  /* Mobile Toggle Button */
+  /* Mobile Toggle Button: borderless round icon button (GSAP_Spec "Borderless Icon Button") */
   .mobile-toggle {
     display: inline-flex;
     align-items: center;
     justify-content: center;
     width: var(--target-min-size);
     height: var(--target-min-size);
-    background: rgba(var(--white-rgb), 0.04);
-    border: 1px solid var(--border-glass);
-    border-radius: var(--radius-full);
+    padding: 0;
+    background: transparent;
+    border: 0;
+    border-radius: 50%;
     color: var(--color-text-primary);
     cursor: pointer;
-    transition: border-color var(--transition-fast), background-color var(--transition-fast);
+    transition: transform var(--transition-instant);
   }
 
   .mobile-toggle:active {
-    background: rgba(var(--white-rgb), 0.1);
+    transform: scale(0.94);
   }
 
   .mobile-toggle:focus-visible {
@@ -401,6 +368,8 @@ function isActive(href: string) {
     }
   }
 
+  /* Three bars, all positioned at the same spot and moved with transform only.
+     The middle bar is the span; the top and bottom bars are the box's pseudo elements. */
   .hamburger-box {
     width: 20px;
     height: 14px;
@@ -409,30 +378,37 @@ function isActive(href: string) {
   }
 
   .hamburger-inner,
-  .hamburger-inner::before,
-  .hamburger-inner::after {
-    width: 20px;
-    height: 2px;
-    background-color: var(--color-text-primary);
-    border-radius: var(--radius-xs);
+  .hamburger-box::before,
+  .hamburger-box::after {
+    content: '';
     position: absolute;
     left: 0;
-    transition: transform var(--transition-fast);
+    top: 6px;
+    width: 20px;
+    height: 2px;
+    background-color: currentColor;
+    border-radius: var(--radius-xs);
+    transition: transform var(--transition-base);
   }
 
-  .hamburger-inner {
-    top: 50%;
-    transform: translateY(-50%);
+  .hamburger-box::before {
+    transform: translateY(-6px);
   }
 
-  .hamburger-inner::before {
-    content: '';
-    top: -6px;
+  .hamburger-box::after {
+    transform: translateY(6px);
   }
 
-  .hamburger-inner::after {
-    content: '';
-    bottom: -6px;
+  .mobile-toggle[aria-expanded='true'] .hamburger-inner {
+    transform: scaleX(0);
+  }
+
+  .mobile-toggle[aria-expanded='true'] .hamburger-box::before {
+    transform: rotate(45deg);
+  }
+
+  .mobile-toggle[aria-expanded='true'] .hamburger-box::after {
+    transform: rotate(-45deg);
   }
 
   /* Mobile Drawer */
@@ -464,6 +440,7 @@ function isActive(href: string) {
     opacity: 1;
   }
 
+  /* No box-shadow: the panel edge is a 1px --border hairline. */
   .mobile-drawer-content {
     position: absolute;
     top: 0;
@@ -471,13 +448,14 @@ function isActive(href: string) {
     bottom: 0;
     width: min(85vw, 360px);
     background: var(--color-surface-card);
-    border-left: 1px solid var(--border-glass);
+    border-left: 1px solid var(--border);
     padding: var(--space-xl) var(--space-lg);
     display: flex;
     flex-direction: column;
+    overflow-y: auto;
+    overscroll-behavior: contain;
     transform: translateX(100%);
     transition: transform 0.28s var(--ease-drawer);
-    box-shadow: -10px 0 30px rgba(var(--black-rgb), 0.7);
   }
 
   .mobile-drawer.is-open .mobile-drawer-content {
@@ -491,17 +469,24 @@ function isActive(href: string) {
     margin-bottom: var(--space-2xl);
   }
 
+  /* Borderless round icon button, like the menu toggle */
   .mobile-close-btn {
     width: var(--target-min-size);
     height: var(--target-min-size);
+    padding: 0;
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    background: rgba(var(--white-rgb), 0.05);
-    border: 1px solid var(--border-glass);
-    border-radius: var(--radius-full);
+    background: transparent;
+    border: 0;
+    border-radius: 50%;
     color: var(--color-text-primary);
     cursor: pointer;
+    transition: transform var(--transition-instant);
+  }
+
+  .mobile-close-btn:active {
+    transform: scale(0.94);
   }
 
   .mobile-close-btn:focus-visible {
@@ -516,6 +501,7 @@ function isActive(href: string) {
     gap: var(--space-sm);
   }
 
+  /* The transparent left border reserves the space the active bar uses, so labels never shift. */
   .mobile-nav-link {
     display: flex;
     align-items: center;
@@ -523,14 +509,22 @@ function isActive(href: string) {
     font-size: var(--font-size-lg);
     font-weight: var(--font-weight-semibold);
     color: var(--color-text-secondary);
+    border-left: 3px solid transparent;
     border-radius: var(--radius-sm);
     min-height: var(--target-min-size);
+    transition: color var(--transition-fast), background-color var(--transition-fast);
+  }
+
+  @media (hover: hover) and (pointer: fine) {
+    .mobile-nav-link:hover {
+      color: var(--color-text-primary);
+    }
   }
 
   .mobile-nav-link.active {
     color: var(--color-text-primary);
     background: rgba(var(--primary-rgb), 0.12);
-    border-left: 3px solid var(--accent-indigo);
+    border-left-color: var(--accent-indigo);
   }
 
   .mobile-nav-link:focus-visible {
@@ -544,17 +538,18 @@ function isActive(href: string) {
     flex-direction: column;
     gap: var(--space-md);
     padding-top: var(--space-xl);
-    border-top: 1px solid var(--border-subtle);
+    border-top: 1px solid var(--border);
   }
 
   .mobile-contact-card {
     padding: var(--space-md);
     background: rgba(var(--white-rgb), 0.03);
-    border: 1px solid var(--border-glass);
+    border: 1px solid var(--border);
     border-radius: var(--radius-md);
     display: flex;
     flex-direction: column;
     gap: var(--space-1);
+    min-height: var(--target-min-size);
   }
 
   .mobile-contact-card:focus-visible {
@@ -572,7 +567,7 @@ function isActive(href: string) {
   .mobile-contact-value {
     font-size: var(--font-size-md);
     font-weight: var(--font-weight-semibold);
-    color: var(--accent-indigo-light);
+    color: var(--color-text-brand);
   }
 
   .mobile-social-links {
@@ -584,11 +579,18 @@ function isActive(href: string) {
   }
 
   .mobile-social-link {
+    display: inline-flex;
+    align-items: center;
+    min-height: var(--target-min-size);
+    padding: 0 var(--space-sm);
     border-radius: var(--radius-xs);
+    transition: color var(--transition-fast);
   }
 
-  .mobile-social-link:hover {
-    color: var(--color-text-primary);
+  @media (hover: hover) and (pointer: fine) {
+    .mobile-social-link:hover {
+      color: var(--color-text-primary);
+    }
   }
 
   .mobile-social-link:focus-visible {

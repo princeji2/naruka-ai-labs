@@ -1,8 +1,14 @@
 ---
 interface Props {
   href?: string;
-  variant?: 'primary' | 'secondary' | 'ghost';
-  /** 'icon' renders a square icon-only button. Pass an aria-label for it. */
+  /**
+   * primary    gradient-stroke pill (outlined, transparent fill)
+   * secondary  outlined pill
+   * ghost      text only
+   * filled     solid fill; reserved for the single hero CTA (wired in Phase 3), used nowhere else
+   */
+  variant?: 'primary' | 'secondary' | 'ghost' | 'filled';
+  /** 'icon' renders a round icon-only button. Pass an aria-label for it. */
   size?: 'sm' | 'md' | 'lg' | 'icon';
   external?: boolean;
   type?: 'button' | 'submit' | 'reset';
@@ -59,7 +65,8 @@ const stateClasses = [
 </Element>
 
 <style>
-  /* One button shape across the site: 12px radius. Sizes change padding and type only. */
+  /* One button shape across the site: a full pill. Sizes change padding and type only.
+     No box-shadow on any button. The only solid fill is the `filled` variant (hero CTA). */
   .btn {
     display: inline-flex;
     align-items: center;
@@ -70,14 +77,14 @@ const stateClasses = [
     letter-spacing: -0.005em;
     text-decoration: none;
     text-align: center;
-    border-radius: var(--radius-md);
+    border-radius: var(--radius-full);
     cursor: pointer;
+    background: transparent;
     border: 1px solid transparent;
-    transition: background-color var(--transition-fast),
-                border-color var(--transition-fast),
+    transition: border-color var(--transition-fast),
                 color var(--transition-fast),
-                transform var(--transition-instant),
-                box-shadow var(--transition-fast);
+                opacity var(--transition-fast),
+                transform var(--transition-instant);
     /* Long labels wrap on narrow screens instead of forcing horizontal scroll */
     white-space: normal;
     max-width: 100%;
@@ -105,7 +112,7 @@ const stateClasses = [
     font-size: var(--font-size-md);
   }
 
-  /* Icon button: square, 44px minimum touch target */
+  /* Icon button: round, 44px minimum touch target */
   .btn-icon {
     width: var(--target-min-size);
     padding: 0;
@@ -116,7 +123,7 @@ const stateClasses = [
   .btn:focus-visible {
     outline: var(--state-focus-outline);
     outline-offset: var(--state-focus-ring-offset);
-    border-radius: var(--radius-md);
+    border-radius: var(--radius-full);
   }
 
   /* Press feedback fires on pointer-down, not release.
@@ -125,42 +132,68 @@ const stateClasses = [
     transform: scale(0.97);
   }
 
-  /* Primary: filled green. --on-brand text on --primary is 5.5:1 (white would be ~3:1) */
+  /* Primary: gradient-stroke pill. Transparent fill, text colour, 1.5px stroke from --grad-studio-brand.
+     Fallback (no mask-composite support): a solid --primary border. */
   .btn-primary {
+    color: var(--color-text-primary);
+    border-width: 1.5px;
+    border-color: var(--primary);
+  }
+
+  @supports (mask-composite: exclude) or (-webkit-mask-composite: xor) {
+    .btn-primary {
+      border-color: transparent;
+    }
+    /* The stroke: a gradient layer on the border box, masked down to a ring of the padding width
+       (content-box mask XOR full mask). The radius follows the button, so it stays a clean pill.
+       Only opacity animates; the mask colour is irrelevant (only its alpha counts). */
+    .btn-primary::before {
+      content: '';
+      position: absolute;
+      inset: -1.5px;
+      padding: 1.5px;
+      border-radius: inherit;
+      background: var(--grad-studio-brand);
+      -webkit-mask: linear-gradient(var(--text) 0 0) content-box, linear-gradient(var(--text) 0 0);
+      -webkit-mask-composite: xor;
+      mask: linear-gradient(var(--text) 0 0) content-box, linear-gradient(var(--text) 0 0);
+      mask-composite: exclude;
+      opacity: 0.8;
+      transition: opacity var(--transition-fast);
+      pointer-events: none;
+    }
+  }
+
+  /* Secondary: outlined pill, transparent fill, text-colour border */
+  .btn-secondary {
+    color: var(--color-text-primary);
+    border-color: var(--text);
+  }
+
+  /* Ghost: text only until hovered */
+  .btn-ghost {
+    color: var(--color-text-secondary);
+  }
+
+  /* Filled: the single hero CTA only (wired in Phase 3). Solid fill, no shadow. */
+  .btn-filled {
     background: var(--primary);
     color: var(--on-brand);
-    border-color: rgba(var(--white-rgb), 0.14);
-    box-shadow: inset 0 1px 0 rgba(var(--white-rgb), 0.22), 0 6px 20px -6px var(--accent-indigo-glow);
-  }
-
-  /* Secondary: outline on a quiet glass fill */
-  .btn-secondary {
-    background: var(--grad-surface-glass);
-    color: var(--color-text-primary);
-    border-color: var(--border);
-    backdrop-filter: blur(var(--glass-blur-sm));
-    -webkit-backdrop-filter: blur(var(--glass-blur-sm));
-  }
-
-  /* Ghost: text-only until hovered */
-  .btn-ghost {
-    background: transparent;
-    color: var(--color-text-secondary);
   }
 
   /* Touch devices: :active (above) is the feedback. Hover only where hover exists. */
   @media (hover: hover) and (pointer: fine) {
-    .btn-primary:hover:not(:disabled):not(.is-disabled) {
-      background: var(--primary-hover);
-      box-shadow: inset 0 1px 0 rgba(var(--white-rgb), 0.28), 0 10px 28px -6px var(--accent-indigo-glow);
+    .btn-primary:hover:not(:disabled):not(.is-disabled)::before {
+      opacity: 1;
     }
     .btn-secondary:hover:not(:disabled):not(.is-disabled) {
-      background: rgba(var(--white-rgb), 0.08);
-      border-color: var(--primary);
+      border-color: color-mix(in srgb, var(--text) 80%, transparent);
     }
     .btn-ghost:hover:not(:disabled):not(.is-disabled) {
       color: var(--color-text-primary);
-      background: rgba(var(--white-rgb), 0.06);
+    }
+    .btn-filled:hover:not(:disabled):not(.is-disabled) {
+      background: var(--primary-hover);
     }
   }
 
@@ -170,7 +203,6 @@ const stateClasses = [
     opacity: var(--state-disabled-opacity);
     cursor: var(--state-disabled-cursor);
     pointer-events: none;
-    box-shadow: none;
     transform: none;
   }
 
@@ -197,23 +229,17 @@ const stateClasses = [
     }
   }
 
-  /* Error State */
+  /* Error State: stays outlined, never a fill */
   .btn.is-error {
-    background: var(--state-error-bg);
+    background: transparent;
     border-color: var(--state-error-border);
     color: var(--state-error-text);
-    box-shadow: none;
+  }
+  .btn.is-error::before {
+    display: none;
   }
   .btn.is-error:focus-visible {
     outline: var(--state-error-focus-ring);
-  }
-
-  @media (prefers-reduced-transparency: reduce) {
-    .btn-secondary {
-      background: var(--color-surface-raised);
-      backdrop-filter: none;
-      -webkit-backdrop-filter: none;
-    }
   }
 
   @media (prefers-reduced-motion: reduce) {

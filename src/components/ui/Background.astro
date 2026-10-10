@@ -2,162 +2,190 @@
 /**
  * Background.astro
  *
- * Site-wide animated background. Ported from refrence/background.txt (particles-bg.tsx).
- * The markup, gradient colours, particle config and light/dark colour sets are the reference's,
- * unchanged. Adaptations, all for the Astro stack:
- *   1. React/Tailwind -> Astro + scoped CSS (Tailwind classes translated 1:1, see styles below).
- *   2. particles.js is served from /vendor/particles.min.js (vendored, MIT) instead of the
- *      jsDelivr CDN, so the site CSP (script-src 'self') stays untouched.
- *   3. The reference div is `absolute` and 100vh tall. It is mounted inside a fixed wrapper so it
- *      stays behind every page while scrolling.
- *   4. The wrapper cannot receive pointer events (page content sits above it), so pointer events
- *      are forwarded to the particles canvas to keep the hover "grab" and click "push" effects.
- *   5. prefers-reduced-motion: particles are not loaded. The static gradient remains.
- *   6. A scrim (--background-scrim) sits between the gradient and the particles so text keeps
- *      4.5:1 contrast over the bright corner of the reference gradient. Set it to 0 to disable.
+ * Site-wide animated background. Reproduces the look of refrence/background.txt (particles-bg.tsx):
+ * drifting dots, thin links, hover "grab" lines and click "push", drawn by a bundled, typed canvas-2D
+ * module (src/lib/background/). Adaptations:
+ *   1. The particles.js script (jsDelivr CDN in the reference, then vendored) is replaced by the
+ *      bundled module. public/vendor/particles.min.js is gone, so script-src 'self' stays untouched.
+ *   2. The reference @ts-ignore directives are gone; everything is typed.
+ *   3. The reference hex colours are replaced by Design_Tokens: particles use --accent, links and
+ *      strokes use --secondary (read once through the token bridge), the gradient uses tokens.
+ *   4. Dark-only: the reference light colour set and its MutationObserver are dropped.
+ *   5. The wrapper is fixed and sits behind every page. Pointer events are read from window, so the
+ *      old synthetic-event forwarding is not needed.
+ *   6. Reduced motion draws one static frame. Drawing pauses while the tab is hidden.
+ *   7. A scrim (--background-scrim) sits between the gradient and the canvas so text keeps contrast.
+ *      Set it to 0 to disable.
  */
 ---
 
 <div class="site-background" aria-hidden="true">
-  <div id="particles-js" class="particles-bg"></div>
+  <canvas></canvas>
 </div>
 
 <script>
-  // Minimal typing for the globals that particles.js attaches to window.
-  interface ParticlesInstance {
-    pJS: { fn: { vendors: { destroypJS: () => void } } };
-  }
-  type ParticlesWindow = Window & {
-    particlesJS?: (tagId: string, params: Record<string, unknown>) => void;
-    pJSDom?: ParticlesInstance[];
-  };
+  import { bindPageLifecycle, createGate, type Cleanup } from '../../lib/lifecycle/page-lifecycle.ts';
+  import { createTokenReader } from '../../lib/theme/tokens.ts';
+  import { MOTION_QUERIES } from '../../lib/scroll/scroll-controller.ts';
+  import {
+    capParticles,
+    createParticles,
+    particleCountForArea,
+    push,
+    resizeField,
+    step,
+    type Bounds,
+    type Particle,
+    type Point,
+  } from '../../lib/background/particle-field.ts';
+  import { MOBILE_QUERY, POINTER_QUERY, readQualityInput, resolveQuality } from '../../lib/background/quality.ts';
+  import { clearField, drawField, fitCanvas, type BackgroundPalette } from '../../lib/background/render.ts';
 
-  const PARTICLES_SRC = '/vendor/particles.min.js';
+  /** A click on any of these does not push particles. */
+  const INTERACTIVE = 'a, button, input, select, textarea, summary, label, [role="button"]';
 
-  function initParticles(isDark: boolean) {
-    const w = window as ParticlesWindow;
+  function setupBackground(): Cleanup | void {
+    // Fresh lookup on every enter, so a swapped-in page gets its own canvas.
+    const canvas = document.querySelector<HTMLCanvasElement>('.site-background canvas');
+    const ctx = canvas?.getContext('2d') ?? null;
+    if (canvas === null || ctx === null) return;
 
-    // cleanup old canvas
-    const oldCanvas = document.querySelector('#particles-js canvas');
-    if (oldCanvas) oldCanvas.remove();
-
-    if (w.pJSDom && w.pJSDom.length > 0) {
-      w.pJSDom.forEach((p) => p.pJS.fn.vendors.destroypJS());
-      w.pJSDom = [];
+    let palette: BackgroundPalette;
+    try {
+      const tokens = createTokenReader(document);
+      palette = {
+        particle: tokens.color('--accent'),
+        link: tokens.color('--secondary'),
+        stroke: tokens.color('--secondary'),
+      };
+    } catch (error) {
+      // The gradient alone stays visible when a token is missing.
+      if (import.meta.env.DEV) console.warn('[background] token not available, canvas disabled', error);
+      return;
     }
 
-    const colors = isDark
-      ? {
-          particles: '#00f5ff',
-          lines: '#00d9ff',
-          accent: '#0096c7',
-        }
-      : {
-          particles: '#0277bd',
-          lines: '#0288d1',
-          accent: '#039be5',
-        };
+    const wrapper = canvas.parentElement ?? canvas;
+    const controller = new AbortController();
+    const { signal } = controller;
 
-    w.particlesJS?.('particles-js', {
-      particles: {
-        number: { value: 140, density: { enable: true, value_area: 800 } },
-        color: { value: colors.particles },
-        shape: { type: 'circle', stroke: { width: 0.5, color: colors.accent } },
-        opacity: {
-          value: 0.7,
-          random: true,
-          anim: { enable: true, speed: 1, opacity_min: 0.3 },
-        },
-        size: {
-          value: 3,
-          random: true,
-          anim: { enable: true, speed: 2, size_min: 1 },
-        },
-        line_linked: {
-          enable: true,
-          distance: 160,
-          color: colors.lines,
-          opacity: 0.4,
-          width: 1.2,
-        },
-        move: { enable: true, speed: 2, random: true, out_mode: 'bounce' },
-      },
-      interactivity: {
-        detect_on: 'canvas',
-        events: {
-          onhover: { enable: true, mode: 'grab' },
-          onclick: { enable: true, mode: 'push' },
-          resize: true,
-        },
-        modes: {
-          grab: { distance: 220, line_linked: { opacity: 0.8 } },
-          push: { particles_nb: 4 },
-          repulse: { distance: 180, duration: 0.4 },
-        },
-      },
-      retina_detect: true,
-    });
-  }
+    let quality = resolveQuality(readQualityInput(window));
+    let particles: Particle[] = [];
+    let bounds: Bounds = { width: 0, height: 0 };
+    let sizedDpr = 0;
+    let pointer: Point | null = null;
+    let frameId = 0;
+    let lastTime = 0;
 
-  /**
-   * Page content covers the background, so the canvas never receives real pointer events.
-   * Re-dispatch them on the canvas so particles.js sees them as it would in the reference.
-   */
-  function forwardPointerEvents() {
-    const INTERACTIVE = 'a, button, input, select, textarea, summary, label, [role="button"]';
-
-    const send = (type: string, e: MouseEvent) => {
-      const canvas = document.querySelector<HTMLCanvasElement>('#particles-js canvas');
-      if (!canvas) return;
-      canvas.dispatchEvent(new MouseEvent(type, { clientX: e.clientX, clientY: e.clientY }));
+    const drawStatic = (): void => {
+      drawField(ctx, particles, bounds, palette, quality.config, quality.pointerFeatures ? pointer : null);
     };
 
-    window.addEventListener('mousemove', (e) => send('mousemove', e), { passive: true });
-    document.documentElement.addEventListener('mouseleave', (e) => send('mouseleave', e), { passive: true });
+    /** Sizes the canvas and fits the particle count to the area. Skipped when nothing changed. */
+    const applySize = (width: number, height: number, force: boolean): void => {
+      const cssWidth = Math.floor(width);
+      const cssHeight = Math.floor(height);
+      if (!force && cssWidth === bounds.width && cssHeight === bounds.height && quality.dpr === sizedDpr) return;
+      bounds = fitCanvas(canvas, ctx, cssWidth, cssHeight, quality.dpr);
+      sizedDpr = quality.dpr;
+      const target = particleCountForArea(bounds, quality.config);
+      if (particles.length === 0) particles = createParticles(bounds, target, Math.random, quality.config);
+      else resizeField(particles, bounds, target, Math.random, quality.config);
+      // Resizing the backing store clears it, so redraw at once.
+      drawStatic();
+    };
+
+    const frame = (now: number): void => {
+      frameId = 0;
+      if (document.hidden || !quality.animate) return;
+      step(particles, bounds, now - lastTime, quality.config);
+      lastTime = now;
+      drawField(ctx, particles, bounds, palette, quality.config, quality.pointerFeatures ? pointer : null);
+      frameId = requestAnimationFrame(frame);
+    };
+
+    const start = (): void => {
+      if (frameId !== 0 || document.hidden || !quality.animate) return;
+      lastTime = performance.now();
+      frameId = requestAnimationFrame(frame);
+    };
+
+    const stop = (): void => {
+      if (frameId !== 0) cancelAnimationFrame(frameId);
+      frameId = 0;
+    };
+
+    const measure = (): void => applySize(wrapper.clientWidth, wrapper.clientHeight, false);
+
+    /** Re-reads the viewport class and motion preference, then re-fits everything. */
+    const refreshQuality = (): void => {
+      quality = resolveQuality(readQualityInput(window));
+      if (!quality.pointerFeatures) pointer = null;
+      applySize(wrapper.clientWidth, wrapper.clientHeight, true);
+      if (quality.animate) start();
+      else stop();
+    };
+
+    // Initial size and first frame, then the animation loop (reduced motion keeps the static frame).
+    applySize(wrapper.clientWidth, wrapper.clientHeight, true);
+    start();
+
+    const observer = new ResizeObserver(measure);
+    observer.observe(wrapper);
+
+    window.addEventListener('resize', measure, { passive: true, signal });
     window.addEventListener(
-      'click',
-      (e) => {
-        // Clicking a link or button should not also spawn particles.
-        if (e.target instanceof Element && e.target.closest(INTERACTIVE)) return;
-        send('click', e);
+      'pointermove',
+      (event: PointerEvent) => {
+        if (!quality.pointerFeatures) return;
+        pointer = { x: event.clientX, y: event.clientY };
       },
-      { passive: true }
+      { passive: true, signal },
     );
-  }
+    document.documentElement.addEventListener(
+      'pointerleave',
+      () => {
+        pointer = null;
+      },
+      { passive: true, signal },
+    );
+    window.addEventListener(
+      'pointerdown',
+      (event: PointerEvent) => {
+        if (!quality.pointerFeatures || !event.isPrimary) return;
+        // Clicking a link or button should not also spawn particles.
+        if (event.target instanceof Element && event.target.closest(INTERACTIVE) !== null) return;
+        push(particles, { x: event.clientX, y: event.clientY }, quality.config.pushCount, Math.random, quality.config, bounds);
+        capParticles(particles, quality.config.maxCount);
+      },
+      { passive: true, signal },
+    );
+    document.addEventListener(
+      'visibilitychange',
+      () => {
+        if (document.hidden) stop();
+        else start();
+      },
+      { signal },
+    );
+    for (const query of [MOBILE_QUERY, POINTER_QUERY, MOTION_QUERIES.reduced]) {
+      window.matchMedia(query).addEventListener('change', refreshQuality, { signal });
+    }
 
-  function setupBackground() {
-    if (!document.getElementById('particles-js')) return;
-    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
-
-    const script = document.createElement('script');
-    script.src = PARTICLES_SRC;
-    script.async = true;
-    document.body.appendChild(script);
-
-    script.onload = () => {
-      const html = document.documentElement;
-      const detectDark = () =>
-        html.classList.contains('dark') || html.getAttribute('data-theme') === 'dark';
-
-      // init first load
-      initParticles(detectDark());
-
-      // re-init when the theme class / attribute changes
-      const observer = new MutationObserver(() => initParticles(detectDark()));
-      observer.observe(html, {
-        attributes: true,
-        attributeFilter: ['class', 'data-theme'],
-      });
-
-      forwardPointerEvents();
+    return () => {
+      controller.abort();
+      stop();
+      observer.disconnect();
+      clearField(ctx, bounds);
+      particles = [];
+      pointer = null;
     };
   }
 
-  setupBackground();
+  bindPageLifecycle(createGate(setupBackground), { document, window });
 </script>
 
 <style>
-  /* Fixed wrapper: keeps the reference's absolute, viewport-high div behind all pages. */
+  /* Fixed wrapper: keeps the background behind all pages while scrolling. */
   .site-background {
     --background-scrim: 0.7;
     position: fixed;
@@ -165,28 +193,16 @@
     z-index: -3;
     overflow: hidden;
     pointer-events: none;
-  }
-
-  /* Reference classes, translated from Tailwind:
-     w-full h-screen absolute top-0 left-0 transition-colors duration-500
-     bg-gradient-to-tr from-[#e3f2fd] via-[#90caf9] to-[#64b5f6]
-     dark:from-[#000814] dark:via-[#003566] dark:to-[#0077b6] */
-  .particles-bg {
-    width: 100%;
-    height: 100vh;
-    position: absolute;
-    top: 0;
-    left: 0;
-    transition: background-color 500ms cubic-bezier(0.4, 0, 0.2, 1);
-    background-image: linear-gradient(to top right, #e3f2fd, #90caf9, #64b5f6);
-  }
-
-  :global(.dark) .particles-bg {
-    background-image: linear-gradient(to top right, #000814, #003566, #0077b6);
+    background-image: linear-gradient(
+      to top right,
+      var(--color-surface-deep),
+      var(--bg),
+      color-mix(in srgb, var(--secondary) 30%, var(--bg))
+    );
   }
 
   /* Scrim: darkens the gradient only (the canvas is lifted above it) for text contrast. */
-  .particles-bg::before {
+  .site-background::before {
     content: '';
     position: absolute;
     inset: 0;
@@ -195,9 +211,11 @@
     pointer-events: none;
   }
 
-  .particles-bg :global(canvas) {
+  .site-background canvas {
     position: relative;
     z-index: 1;
     display: block;
+    width: 100%;
+    height: 100%;
   }
 </style>

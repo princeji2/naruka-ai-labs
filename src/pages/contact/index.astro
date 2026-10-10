@@ -13,14 +13,16 @@ import Card from '../../components/ui/Card.astro';
   <div class="contact-page">
     <section class="section contact-hero-section">
       <div class="container contact-container">
-        <Badge variant="in-development" text="Direct Studio Channel" />
-        <h1 class="contact-title">
-          Get in touch with <br />
-          <span class="text-gradient-brand">Naruka AI Labs</span>.
-        </h1>
-        <p class="contact-lead">
-          We welcome direct conversations regarding our products, architectural reviews, and technical collaborations.
-        </p>
+        <div class="contact-intro" data-reveal>
+          <Badge variant="in-development" text="Direct Studio Channel" />
+          <h1 class="contact-title">
+            Get in touch with <br />
+            <span class="text-gradient-brand">Naruka AI Labs</span>.
+          </h1>
+          <p class="contact-lead">
+            We welcome direct conversations regarding our products, architectural reviews, and technical collaborations.
+          </p>
+        </div>
 
         <!-- Direct Contact Cards -->
         <div class="channels-grid">
@@ -116,42 +118,25 @@ import Card from '../../components/ui/Card.astro';
 </BaseLayout>
 
 <script>
-  function setupCopyButton() {
-    const copyBtn = document.getElementById('copy-btn');
-    const copyText = document.getElementById('copy-text');
-    if (!copyBtn || !copyText) return;
+  import { bindPageLifecycle, createGate } from '../../lib/lifecycle/page-lifecycle.ts';
+  import { setupCopyButton } from '../../lib/ui/copy-button.ts';
 
-    copyBtn.addEventListener('click', async () => {
-      copyBtn.setAttribute('aria-busy', 'true');
-      try {
-        if (!navigator.clipboard || !navigator.clipboard.writeText) {
-          throw new Error('Clipboard API not supported');
-        }
-        await navigator.clipboard.writeText('naruka@orgs.social');
-        copyText.textContent = 'Copied to Clipboard!';
-        copyBtn.classList.remove('is-error');
-        copyBtn.classList.add('copied');
-        setTimeout(() => {
-          copyText.textContent = 'Copy Address';
-          copyBtn.classList.remove('copied');
-          copyBtn.removeAttribute('aria-busy');
-        }, 2200);
-      } catch (err) {
-        console.warn('Clipboard write failed:', err);
-        copyText.textContent = 'Copy Failed — Select Below';
-        copyBtn.classList.remove('copied');
-        copyBtn.classList.add('is-error');
-        setTimeout(() => {
-          copyText.textContent = 'Copy Address';
-          copyBtn.classList.remove('is-error');
-          copyBtn.removeAttribute('aria-busy');
-        }, 3000);
-      }
-    });
-  }
-
-  setupCopyButton();
-  document.addEventListener('astro:after-swap', setupCopyButton);
+  // Bound once per session (the router does not re-run a module it has already run). Every enter, on first
+  // load and after each swap, looks for the copy button in the current DOM and does nothing on other pages.
+  bindPageLifecycle(
+    createGate(() =>
+      setupCopyButton({
+        document,
+        clipboard: navigator.clipboard,
+        warn: (message, error) => {
+          // DEV-only: production writes nothing to the console (Req 9.2). The user-visible
+          // "Copy Failed" state is handled in copy-button.ts regardless of this call.
+          if (import.meta.env.DEV) console.warn(message, error);
+        },
+      })
+    ),
+    { document, window }
+  );
 </script>
 
 <style>
@@ -173,9 +158,18 @@ import Card from '../../components/ui/Card.astro';
     max-width: 860px;
   }
 
+  .contact-intro {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--space-md);
+    width: 100%;
+  }
+
   .contact-title {
-    font-size: var(--font-size-6xl);
-    line-height: var(--line-height-tight);
+    font-size: var(--font-size-display-2);
+    line-height: var(--line-height-display-2);
+    letter-spacing: var(--letter-spacing-display-2);
   }
 
   .contact-lead {
@@ -241,8 +235,8 @@ import Card from '../../components/ui/Card.astro';
     font-family: var(--font-body);
     font-size: var(--font-size-sm);
     font-weight: var(--font-weight-semibold);
-    border-radius: var(--radius-md);
-    background: rgba(var(--white-rgb), 0.05);
+    border-radius: var(--radius-full);
+    background: transparent;
     border: 1px solid var(--border);
     color: var(--color-text-secondary);
     cursor: pointer;

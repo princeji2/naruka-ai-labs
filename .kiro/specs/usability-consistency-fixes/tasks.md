@@ -48,7 +48,8 @@ Tasks 5 to 8 are checkpoints and verification. The project has no test runner, s
     - **Property 1: Font sizes use only existing tokens**
     - From the repository root, run the three searches from the design's Testing Strategy. Each must return no matches:
       - `Get-ChildItem src -Recurse -Include *.astro,*.css | Select-String -Pattern 'font-size\s*:\s*(\d|\.|clamp)'`
-      - `Get-ChildItem src -Recurse -Include *.astro,*.css | Select-String -Pattern 'font-size\s*:\s*(?!var\(--font-size-)'`
+      - `Get-ChildItem src -Recurse -Include *.astro,*.css | Select-String -Pattern 'font-size\s*:(?>\s*)(?!var\(--font-size-|max\(16px,\s*var\(--font-size-sm\)\))'`
+      - _Amended by frontend-3d-upgrade, 2026-10-10: the second search allows exactly one literal, `max(16px, var(--font-size-sm))`, the iOS no-zoom guard on form inputs (`src/components/ui/Input.astro`). The task status is unchanged._
       - `Get-ChildItem src -Recurse -Include *.astro,*.css | Select-String -Pattern 'var\(--font-size-xl\)'`
     - Confirm every referenced `--font-size-*` name exists in `src/styles/tokens.css`, since a misspelled token is valid CSS and is not caught by the build.
     - Fix any leftover and rerun until all searches are clean.
@@ -56,7 +57,9 @@ Tasks 5 to 8 are checkpoints and verification. The project has no test runner, s
 
   - [x] 1.6 Count distinct resolved font sizes (Property 2)
     - **Property 2: Distinct font size budget and floor**
-    - Run the resolved-size script from the design's Testing Strategy. Expected output is exactly 10 entries: `12`, `14`, `17`, `18`, `21`, `25.5`, `28`, `fluid 21-36`, `fluid 25.5-48`, `fluid 28-60`. No entry may be below 12 and no `$null` entry may appear.
+    - Run the resolved-size script from the design's Testing Strategy. Expected Body_Font_Size output is exactly 10 entries: `12`, `14`, `17`, `18`, `21`, `25.5`, `28`, `fluid 21-36`, `fluid 25.5-48`, `fluid 28-60`. No entry may be below 12 and no `$null` entry may appear.
+    - The Display_Tokens (`--font-size-display-1..3`) are excluded from the count of 10 and listed as a separate group (at most 3, all defined in the Token_File, none below 12px).
+    - _Amended by frontend-3d-upgrade, 2026-10-10. The task status is unchanged._
     - **Validates: Requirements 1.2, 1.3**
 
 - [x] 2. Issue 2: Corner radii

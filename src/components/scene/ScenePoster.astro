@@ -1,0 +1,77 @@
+---
+// ScenePoster.astro: static, token-coloured poster for Scene_3D (lifted from HeroPrism's CSS layer).
+// No script, no network, no image. It sits under the canvas layer and stays visible whenever the
+// island is slow, fails, WebGL is unavailable, or the quality tier is `poster`.
+// Every colour comes from Design_Tokens.
+---
+
+<div class="scene-poster" aria-hidden="true">
+  <div class="poster-glow poster-glow-primary"></div>
+  <div class="poster-glow poster-glow-secondary"></div>
+  <div class="poster-flutes"></div>
+  <div class="poster-hairline"></div>
+</div>
+
+<style>
+  .scene-poster {
+    position: absolute;
+    inset: 0;
+    overflow: hidden;
+    pointer-events: none;
+    /* Dissolve into the page instead of ending on a hard edge */
+    -webkit-mask-image: linear-gradient(to bottom, rgb(var(--black-rgb)) 0%, rgb(var(--black-rgb)) 62%, transparent 100%);
+    mask-image: linear-gradient(to bottom, rgb(var(--black-rgb)) 0%, rgb(var(--black-rgb)) 62%, transparent 100%);
+  }
+
+  .poster-glow {
+    position: absolute;
+    border-radius: var(--radius-full);
+    filter: blur(var(--glass-blur-lg));
+    opacity: 0.65;
+  }
+
+  .poster-glow-primary {
+    top: -10%;
+    right: 5%;
+    width: 70%;
+    aspect-ratio: 1 / 1;
+    background: radial-gradient(circle, rgba(var(--primary-rgb), 0.24) 0%, rgba(var(--accent-rgb), 0.12) 50%, transparent 75%);
+  }
+
+  .poster-glow-secondary {
+    bottom: -5%;
+    left: 0;
+    width: 60%;
+    aspect-ratio: 1 / 1;
+    background: radial-gradient(circle, rgba(var(--accent-rgb), 0.18) 0%, rgba(var(--secondary-rgb), 0.08) 55%, transparent 75%);
+  }
+
+  /* Faint vertical flutes */
+  .poster-flutes {
+    position: absolute;
+    inset: 0;
+    opacity: 0.6;
+    background-image: repeating-linear-gradient(
+      90deg,
+      rgba(var(--white-rgb), 0.025) 0px,
+      rgba(var(--white-rgb), 0.01) 6px,
+      rgba(var(--black-rgb), 0.35) 12px,
+      rgba(var(--white-rgb), 0.035) 16px
+    );
+  }
+
+  .poster-hairline {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 1px;
+    background: linear-gradient(90deg, transparent 0%, rgba(var(--white-rgb), 0.12) 50%, transparent 100%);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .poster-glow {
+      filter: blur(20px);
+    }
+  }
+</style>
