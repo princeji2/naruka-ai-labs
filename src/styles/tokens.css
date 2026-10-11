@@ -47,8 +47,11 @@
      Fluid between 360px and 1440px viewports. Re-tuned for calm, editorial typography in the
      GSAP.md spirit: restrained sizes, weight 600, generous leading, colour used sparingly.
      Each size has a matching --line-height-display-N and --letter-spacing-display-N below.
-     Targets (360px -> 1440px): display-1 40 -> 72px, display-2 34 -> 60px, display-3 26 -> 42px. */
-  --font-size-display-1: clamp(40px, 2.96vw + 29.33px, 72px);    /* Hero headline (home only) */
+     Targets (360px -> 1440px): display-1 38 -> 64px, display-2 34 -> 60px, display-3 26 -> 42px.
+     display-1 lowered from 40 -> 72px to 38 -> 64px so the home H1 fits its hard line-count
+     ceiling (<=3 lines @1440, <=4 @360) without touching copy; at 72px it wrapped to 4/5 lines
+     at every measure 16-30ch. Hero is ~11% smaller at desktop as a result. */
+  --font-size-display-1: clamp(38px, 2.41vw + 29.33px, 64px);    /* Hero headline (home only) */
   --font-size-display-2: clamp(34px, 2.41vw + 25.33px, 60px);    /* Inner page and large section titles */
   --font-size-display-3: clamp(26px, 1.48vw + 20.67px, 42px);    /* Section headlines */
 

@@ -23,8 +23,7 @@ import Card from '../../../components/ui/Card.astro';
           </div>
 
           <h1 class="detail-title">
-            One record for every citizen, <br />
-            <span class="headline-emphasis">shared with consent</span> — not copied.
+            One record for every citizen,{' '}<span class="headline-emphasis">shared with consent</span> — not copied.
           </h1>
 
           <p class="detail-lead">
@@ -48,7 +47,10 @@ import Card from '../../../components/ui/Card.astro';
           </div>
 
           <div class="detail-ctas">
-            <Button href="#architecture" variant="primary" size="md">
+            <Button href="https://app.orgs.social" variant="primary" size="md" external={true}>
+              Open Live Setu ↗
+            </Button>
+            <Button href="#architecture" variant="secondary" size="md">
               Explore Architecture ↓
             </Button>
             <Button href="mailto:naruka@orgs.social?subject=Setu%20Inquiry" variant="secondary" size="md">

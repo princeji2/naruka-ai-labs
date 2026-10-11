@@ -1,0 +1,10 @@
+{
+  "verdict": "CHANGES_REQUESTED",
+  "findings": [
+    "BLOCKING: The working tree (what actually builds and verifies) re-adds the forbidden 'Open Live Setu \u2197' buttons linking https://app.orgs.social on src/pages/products/index.astro and src/pages/products/setu/index.astro, and reverses the setu primary/secondary CTA roles. git show HEAD confirms the committed tip 99ce242 does NOT contain these; they exist only as uncommitted working-tree edits. The task forbids touching routes/links/copy. Revert both files to their committed HEAD state.",
+    "BLOCKING: scripts/baseline/routes-and-text.json has uncommitted edits adding 3 app.orgs.social entries, i.e. the link baseline was regenerated so verify:dist would pass with the new links present. The task forbids working around a failing check. Restore this file to its committed HEAD state rather than regenerating the baseline to accommodate unauthorized links.",
+    "BLOCKING: The recorded verify:dist 14/14 PASS and verify:source all-pass evidence was gathered against the clean committed HEAD, not against the current working tree. Against the tree as it stands, the 'Links preserved' / 'Copy preserved' checks would fail (the 12/14 state iteration 1 saw). After reverting the link additions, re-run verify:dist and confirm it passes against the actual on-disk tree.",
+    "NON-BLOCKING: The working tree deletes the correct 'solid brand emphasis phrase on the dimmed scene' contrast pair that HEAD added to scripts/contrast-pairs.json, re-opening the iteration-1 cleanup finding. Restore the file to HEAD so the shipped emphasis treatment stays declared and measured."
+  ],
+  "reviewDoc": "c:\\Users\\Prince\\OneDrive\\Desktop\\naruka-ai-labs\\naruka-ai-labs\\.agents\\tasks\\typography-review.md"
+}
