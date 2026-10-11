@@ -17,7 +17,7 @@ import Card from '../../components/ui/Card.astro';
         <Badge variant="in-development" text="Studio Background" />
         <h1 class="about-title">
           Engineering practical software <br />
-          with <span class="text-gradient-brand">transparent principles</span>.
+          with <span class="headline-emphasis">transparent principles</span>.
         </h1>
         <p class="about-lead">
           Naruka AI Labs is an independent, founder-led software studio founded by Prince Naruka. We build focused digital products that remove operational friction across public services, events, and developer workflows.
@@ -161,21 +161,29 @@ import Card from '../../components/ui/Card.astro';
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: var(--space-md);
+    /* Page-header rhythm: badge -> H1 -> lead each separated by ~24px (--space-xl). */
+    gap: var(--space-xl);
     max-width: 840px;
   }
 
   .about-title {
     font-size: var(--font-size-display-2);
+    font-weight: var(--font-weight-semibold);
     line-height: var(--line-height-display-2);
     letter-spacing: var(--letter-spacing-display-2);
+    text-wrap: balance;
+    max-width: 22ch;
+  }
+
+  .headline-emphasis {
+    color: var(--color-text-brand);
   }
 
   .about-lead {
     font-size: var(--font-size-lg);
     color: var(--color-text-secondary);
-    max-width: 720px;
-    line-height: var(--line-height-relaxed);
+    max-width: 60ch;
+    line-height: 1.6;
   }
 
   /* Story Grid */
@@ -274,14 +282,18 @@ import Card from '../../components/ui/Card.astro';
 
   .section-title {
     font-size: var(--font-size-display-3);
+    font-weight: var(--font-weight-semibold);
     line-height: var(--line-height-display-3);
     letter-spacing: var(--letter-spacing-display-3);
+    text-wrap: balance;
+    max-width: 20ch;
   }
 
   .section-lead {
-    max-width: 680px;
+    max-width: 60ch;
     font-size: var(--font-size-lg);
     color: var(--color-text-secondary);
+    line-height: 1.6;
   }
 
   .values-grid {

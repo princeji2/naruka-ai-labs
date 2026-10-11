@@ -23,7 +23,7 @@ import ConstellationIsland from '../components/scene/ConstellationIsland.tsx';
         </div>
 
         <h1 class="hero-title">
-          Naruka AI Labs builds{' '}<span class="text-gradient-brand">practical AI-powered software</span> products.
+          Naruka AI Labs builds{' '}<span class="headline-emphasis">practical AI-powered software</span> products.
         </h1>
 
         <p class="hero-lead">
@@ -482,10 +482,25 @@ import ConstellationIsland from '../components/scene/ConstellationIsland.tsx';
      page sideways (nothing is hyphenated or truncated, and the text is unchanged). */
   .hero-title {
     font-size: var(--font-size-display-1);
+    font-weight: var(--font-weight-semibold);
     line-height: var(--line-height-display-1);
     letter-spacing: var(--letter-spacing-display-1);
+    text-wrap: balance;
     overflow-wrap: break-word;
+    max-width: 17ch;
     margin-bottom: var(--space-xl);
+  }
+
+  /* On mobile the hero copy is centred; keep the measure centred too. */
+  @media (max-width: 767px) {
+    .hero-title {
+      max-width: 18ch;
+    }
+  }
+
+  /* Solid single-phrase emphasis in the brand colour; no gradient text fill. */
+  .headline-emphasis {
+    color: var(--color-text-brand);
   }
 
   .hero-lead {
@@ -595,15 +610,19 @@ import ConstellationIsland from '../components/scene/ConstellationIsland.tsx';
   /* Section headlines: display-3 type tokens, with the same long-word safety net as the hero */
   .section-title {
     font-size: var(--font-size-display-3);
+    font-weight: var(--font-weight-semibold);
     line-height: var(--line-height-display-3);
     letter-spacing: var(--letter-spacing-display-3);
+    text-wrap: balance;
+    max-width: 20ch;
     overflow-wrap: break-word;
   }
 
   .section-lead {
-    max-width: 680px;
+    max-width: 60ch;
     font-size: var(--font-size-md);
     color: var(--text-secondary);
+    line-height: 1.6;
   }
 
   /* Showcase Grid */

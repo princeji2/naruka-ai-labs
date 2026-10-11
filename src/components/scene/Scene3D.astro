@@ -41,6 +41,9 @@ const className = props.class ?? '';
     width: 100%;
     aspect-ratio: var(--scene-aspect, 1 / 1);
     contain: layout paint;
+    /* Fade every edge so neither the poster nor the live canvas shows a rectangular frame. */
+    -webkit-mask-image: radial-gradient(ellipse 78% 78% at 50% 44%, rgb(var(--black-rgb)) 0%, rgb(var(--black-rgb)) 52%, transparent 100%);
+    mask-image: radial-gradient(ellipse 78% 78% at 50% 44%, rgb(var(--black-rgb)) 0%, rgb(var(--black-rgb)) 52%, transparent 100%);
   }
 
   /* Canvas layer: fades in with opacity only, above the poster */

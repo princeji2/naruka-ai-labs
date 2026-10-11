@@ -17,7 +17,7 @@ import Card from '../../components/ui/Card.astro';
           <Badge variant="in-development" text="Direct Studio Channel" />
           <h1 class="contact-title">
             Get in touch with <br />
-            <span class="text-gradient-brand">Naruka AI Labs</span>.
+            <span class="headline-emphasis">Naruka AI Labs</span>.
           </h1>
           <p class="contact-lead">
             We welcome direct conversations regarding our products, architectural reviews, and technical collaborations.
@@ -162,21 +162,31 @@ import Card from '../../components/ui/Card.astro';
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: var(--space-md);
+    /* Page-header rhythm: badge -> H1 -> lead each separated by ~24px (--space-xl). */
+    gap: var(--space-xl);
     width: 100%;
   }
 
   .contact-title {
     font-size: var(--font-size-display-2);
+    font-weight: var(--font-weight-semibold);
     line-height: var(--line-height-display-2);
     letter-spacing: var(--letter-spacing-display-2);
+    text-wrap: balance;
+    max-width: 22ch;
+  }
+
+  .headline-emphasis {
+    color: var(--color-text-brand);
   }
 
   .contact-lead {
     font-size: var(--font-size-lg);
     color: var(--color-text-secondary);
-    max-width: 680px;
-    margin-bottom: var(--space-xl);
+    max-width: 60ch;
+    line-height: 1.6;
+    /* Lead -> content rhythm (~48px). The intro gap already spaces badge -> H1 -> lead. */
+    margin-bottom: var(--space-3xl);
   }
 
   /* Channels Grid */

@@ -16,8 +16,8 @@ import Card from '../../components/ui/Card.astro';
       <div class="container header-content" data-reveal>
         <Badge variant="in-development" text="Studio Portfolio" />
         <h1 class="page-title">
-          Practical software, <br />
-          <span class="text-gradient-brand">built for real workflows</span>.
+          Practical software, built for <br />
+          <span class="headline-emphasis">real workflows</span>.
         </h1>
         <p class="page-lead">
           We build focused products designed to eliminate administrative friction and fragmented data silos. Every product is developed iteratively with solid technical foundations.
@@ -172,23 +172,31 @@ import Card from '../../components/ui/Card.astro';
 
   .page-title {
     font-size: var(--font-size-display-2);
+    font-weight: var(--font-weight-semibold);
     line-height: var(--line-height-display-2);
     letter-spacing: var(--letter-spacing-display-2);
-    margin-bottom: var(--space-xs);
+    text-wrap: balance;
+    max-width: 22ch;
+  }
+
+  .headline-emphasis {
+    color: var(--color-text-brand);
   }
 
   .header-content {
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: var(--space-md);
+    /* Page-header rhythm: badge -> H1 -> lead each separated by ~24px (--space-xl). */
+    gap: var(--space-xl);
     max-width: 820px;
   }
 
   .page-lead {
     font-size: var(--font-size-lg);
     color: var(--text-secondary);
-    max-width: 680px;
+    max-width: 60ch;
+    line-height: 1.6;
   }
 
   .products-list-section {

@@ -77,8 +77,7 @@
     { "label": "Home hero on mobile: lead paragraph on the dimmed scene", "fg": "--color-text-secondary", "bg": "color-mix(in srgb, var(--bg) 92%, var(--text))", "min": 4.5 },
     { "label": "Home hero on mobile: location tag on the dimmed scene", "fg": "--text-muted", "bg": "color-mix(in srgb, var(--bg) 92%, var(--text))", "min": 4.5 },
     { "label": "Home hero on mobile: product pill meta text on the pill over the dimmed scene", "fg": "--text-muted", "bg": "color-mix(in srgb, rgb(var(--white-rgb)) 3%, color-mix(in srgb, var(--bg) 92%, var(--text)))", "min": 4.5 },
-    { "label": "Home hero on mobile: gradient headline phrase (large text) on the dimmed scene", "fg": "--accent", "bg": "color-mix(in srgb, var(--bg) 92%, var(--text))", "min": 3 },
-    { "label": "Home hero on mobile: gradient headline phrase start colour on the dimmed scene", "fg": "--accent-indigo-light", "bg": "color-mix(in srgb, var(--bg) 92%, var(--text))", "min": 4.5 },
+    { "label": "Home hero on mobile: solid brand emphasis phrase on the dimmed scene", "fg": "--color-text-brand", "bg": "color-mix(in srgb, var(--bg) 92%, var(--text))", "min": 4.5 },
     { "label": "Home hero on mobile: badge text on the badge fill over the dimmed scene", "fg": "--accent-indigo-light", "bg": "color-mix(in srgb, var(--primary) 12%, color-mix(in srgb, var(--bg) 92%, var(--text)))", "min": 4.5 },
     { "label": "Home hero on mobile: focus ring on the dimmed scene", "fg": "--border-focus", "bg": "color-mix(in srgb, var(--bg) 92%, var(--text))", "min": 3 }
   ]

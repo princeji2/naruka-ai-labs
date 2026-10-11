@@ -5,6 +5,8 @@
  * density 140 per 800 area units, size 1 to 3 with size animation, opacity 0.3 to 0.7 with
  * opacity animation, speed 2 with random direction and bounce at the edges, link distance 160,
  * grab distance 220, push adds 4. No DOM access and no colours, so Node can import this module.
+ * The density and link-line opacity are then lowered ~1/3 (to 93 and 0.27) so the network stays
+ * quiet behind text; see DESKTOP_CONFIG.
  *
  * Units: positions in CSS px, velocities in px per second, `step` takes milliseconds.
  */
@@ -69,7 +71,9 @@ const REFERENCE_FPS = 60;
 export const MAX_STEP_MS = 100;
 
 export const DESKTOP_CONFIG: BackgroundConfig = {
-  densityValue: 140,
+  // Density and link-line opacity lowered ~1/3 from the reference (140 -> 93, 0.4 -> 0.27) so the
+  // network stays quiet behind text and does not compete with the hero scene.
+  densityValue: 93,
   densityArea: 800,
   maxCount: 220,
   speed: 2,
@@ -81,7 +85,7 @@ export const DESKTOP_CONFIG: BackgroundConfig = {
   opacityAnimSpeed: 1,
   strokeWidth: 0.5,
   linkDistance: 160,
-  linkOpacity: 0.4,
+  linkOpacity: 0.27,
   linkWidth: 1.2,
   grabDistance: 220,
   grabLinkOpacity: 0.8,

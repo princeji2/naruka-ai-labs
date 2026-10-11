@@ -3,13 +3,17 @@
 // No script, no network, no image. It sits under the canvas layer and stays visible whenever the
 // island is slow, fails, WebGL is unavailable, or the quality tier is `poster`.
 // Every colour comes from Design_Tokens.
+//
+// The visible striped rectangle the hero used to sit in came from this poster: the hard top
+// hairline, the full-opacity vertical flutes, and the hard box edges. It is now frameless — a radial
+// mask on .scene-poster (and on .scene in Scene3D.astro) fades every edge, the top hairline is gone,
+// and the flutes are faint internal texture only.
 ---
 
 <div class="scene-poster" aria-hidden="true">
   <div class="poster-glow poster-glow-primary"></div>
   <div class="poster-glow poster-glow-secondary"></div>
   <div class="poster-flutes"></div>
-  <div class="poster-hairline"></div>
 </div>
 
 <style>
@@ -18,9 +22,10 @@
     inset: 0;
     overflow: hidden;
     pointer-events: none;
-    /* Dissolve into the page instead of ending on a hard edge */
-    -webkit-mask-image: linear-gradient(to bottom, rgb(var(--black-rgb)) 0%, rgb(var(--black-rgb)) 62%, transparent 100%);
-    mask-image: linear-gradient(to bottom, rgb(var(--black-rgb)) 0%, rgb(var(--black-rgb)) 62%, transparent 100%);
+    /* Radial mask fades every edge so the scene has no visible rectangle or frame:
+       fully opaque at the centre, transparent before it reaches any edge. */
+    -webkit-mask-image: radial-gradient(ellipse 72% 72% at 50% 42%, rgb(var(--black-rgb)) 0%, rgb(var(--black-rgb)) 45%, transparent 100%);
+    mask-image: radial-gradient(ellipse 72% 72% at 50% 42%, rgb(var(--black-rgb)) 0%, rgb(var(--black-rgb)) 45%, transparent 100%);
   }
 
   .poster-glow {
@@ -46,27 +51,19 @@
     background: radial-gradient(circle, rgba(var(--accent-rgb), 0.18) 0%, rgba(var(--secondary-rgb), 0.08) 55%, transparent 75%);
   }
 
-  /* Faint vertical flutes */
+  /* Faint vertical flutes. Kept very subtle and edge-faded so they read as internal texture
+     on the glow, never as a striped rectangle. The radial mask on .scene-poster fades the ends. */
   .poster-flutes {
     position: absolute;
     inset: 0;
-    opacity: 0.6;
+    opacity: 0.25;
     background-image: repeating-linear-gradient(
       90deg,
-      rgba(var(--white-rgb), 0.025) 0px,
-      rgba(var(--white-rgb), 0.01) 6px,
-      rgba(var(--black-rgb), 0.35) 12px,
-      rgba(var(--white-rgb), 0.035) 16px
+      rgba(var(--white-rgb), 0.02) 0px,
+      rgba(var(--white-rgb), 0.008) 6px,
+      rgba(var(--black-rgb), 0.14) 12px,
+      rgba(var(--white-rgb), 0.025) 16px
     );
-  }
-
-  .poster-hairline {
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    height: 1px;
-    background: linear-gradient(90deg, transparent 0%, rgba(var(--white-rgb), 0.12) 50%, transparent 100%);
   }
 
   @media (prefers-reduced-motion: reduce) {

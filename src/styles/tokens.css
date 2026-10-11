@@ -44,12 +44,13 @@
 
   /* Display Typography Tokens (frontend-3d-upgrade, 2026-10-10; documented non-colour exception).
      Hero and headline sizes only, kept out of the Body_Font_Size cap of 10. At most 3.
-     Fluid between 360px and 1440px viewports; defaults from the GSAP type scale
-     (224px hero shown there, capped lower here because the Naruka copy is longer).
-     Each size has a matching --line-height-display-N and --letter-spacing-display-N below. */
-  --font-size-display-1: clamp(40px, 6.6vw + 12px, 108px);       /* Hero headline (capped so hero CTAs stay above the fold) */
-  --font-size-display-2: clamp(36px, 6.02vw + 14.33px, 101px);   /* Page and large section headlines */
-  --font-size-display-3: clamp(28px, 3.52vw + 15.33px, 66px);    /* Section headlines */
+     Fluid between 360px and 1440px viewports. Re-tuned for calm, editorial typography in the
+     GSAP.md spirit: restrained sizes, weight 600, generous leading, colour used sparingly.
+     Each size has a matching --line-height-display-N and --letter-spacing-display-N below.
+     Targets (360px -> 1440px): display-1 40 -> 72px, display-2 34 -> 60px, display-3 26 -> 42px. */
+  --font-size-display-1: clamp(40px, 2.96vw + 29.33px, 72px);    /* Hero headline (home only) */
+  --font-size-display-2: clamp(34px, 2.41vw + 25.33px, 60px);    /* Inner page and large section titles */
+  --font-size-display-3: clamp(26px, 1.48vw + 20.67px, 42px);    /* Section headlines */
 
   /* Font Weights */
   --font-weight-regular: 400;
@@ -63,18 +64,18 @@
   --line-height-snug: 1.2;
   --line-height-base: 1.4705;  /* 25px line-height on 17px base per Apple spec */
   --line-height-relaxed: 1.65;
-  --line-height-display-1: 0.95;
-  --line-height-display-2: 1;
-  --line-height-display-3: 1.1;
+  --line-height-display-1: 1.08;
+  --line-height-display-2: 1.12;
+  --line-height-display-3: 1.2;
 
   /* Letter Spacing (tighten as size grows, body stays near 0) */
   --letter-spacing-tight: -0.03em;
   --letter-spacing-snug: -0.02em;
   --letter-spacing-normal: 0em;
   --letter-spacing-wide: 0.05em;
-  --letter-spacing-display-1: -0.03em;
-  --letter-spacing-display-2: -0.02em;
-  --letter-spacing-display-3: -0.011em;
+  --letter-spacing-display-1: -0.02em;
+  --letter-spacing-display-2: -0.015em;
+  --letter-spacing-display-3: -0.01em;
 
   /* --------------------------------------------------------------------------
      2. CLEAN SPACING SCALE (Clean, non-redundant powers & multiples)

@@ -24,7 +24,7 @@ import Card from '../../../components/ui/Card.astro';
 
           <h1 class="detail-title">
             One record for every citizen, <br />
-            <span class="text-gradient-emerald">shared with consent</span> — not copied.
+            <span class="headline-emphasis">shared with consent</span> — not copied.
           </h1>
 
           <p class="detail-lead">
@@ -332,23 +332,23 @@ import Card from '../../../components/ui/Card.astro';
 
   .detail-title {
     font-size: var(--font-size-display-2);
+    font-weight: var(--font-weight-semibold);
     line-height: var(--line-height-display-2);
     letter-spacing: var(--letter-spacing-display-2);
+    text-wrap: balance;
+    max-width: 18ch;
   }
 
-  .text-gradient-emerald {
-    background: linear-gradient(100deg, color-mix(in srgb, var(--setu-emerald-light) 60%, var(--text)) 0%, var(--setu-emerald-light) 45%, var(--setu-emerald) 100%);
-    -webkit-background-clip: text;
-    background-clip: text;
-    -webkit-text-fill-color: transparent;
-    -webkit-box-decoration-break: clone;
-    box-decoration-break: clone;
+  /* Solid single-phrase emphasis in the brand colour; no gradient text fill. */
+  .headline-emphasis {
+    color: var(--color-text-brand);
   }
 
   .detail-lead {
     font-size: var(--font-size-lg);
     color: var(--color-text-secondary);
-    line-height: var(--line-height-relaxed);
+    max-width: 60ch;
+    line-height: 1.6;
   }
 
   /* Origins Callout (slot content) */
@@ -457,14 +457,18 @@ import Card from '../../../components/ui/Card.astro';
 
   .section-title {
     font-size: var(--font-size-display-3);
+    font-weight: var(--font-weight-semibold);
     line-height: var(--line-height-display-3);
     letter-spacing: var(--letter-spacing-display-3);
+    text-wrap: balance;
+    max-width: 20ch;
   }
 
   .section-lead {
-    max-width: 680px;
+    max-width: 60ch;
     font-size: var(--font-size-md);
     color: var(--text-secondary);
+    line-height: 1.6;
   }
 
   .tech-spec-grid {
